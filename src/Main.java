@@ -1,28 +1,30 @@
 import javax.swing.*;
 import java.awt.*;
-
+import BoardGames.goBang.*;
 public class Main {
+
+
+
+
+
+
+
     public static void main(String[] args) {
+
         // 创建一个顶层Frame，使用BorderLayout布局
         JFrame frame = new JFrame();
+        frame.setLocation(400,100);
         frame.setLayout(new BorderLayout());
-
-        // 创建五个JPanel，并设置不同的背景色
-        JPanel panel1 = new JPanel();
-        panel1.setBackground(Color.RED);
 
         JPanel panel2 = new JPanel();
         panel2.setBackground(Color.GREEN);
         panel2.setPreferredSize(new Dimension(1600,200));
 
-        JPanel panel3 = new JPanel();
-        panel3.setBackground(Color.BLUE);
-
         JPanel panel4 = new JPanel();
         panel4.setBackground(Color.YELLOW);
         panel4.setPreferredSize(new Dimension(400,1000));
 
-        JPanel panel5 = new JPanel();
+        JPanel panel5 = new GoBangChessBoard();
         panel5.setBackground(Color.WHITE);
         panel5.setPreferredSize(new Dimension(1200,1000));
 
