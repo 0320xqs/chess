@@ -6,9 +6,6 @@ import java.awt.*;
 import BoardGames.template.*;
 
 public class GoBangChessBoard extends chessBoard implements GoBangConfig {
-    Graphics g;
-    private Image BACKGROUND = CHESSBOARD;
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -24,6 +21,14 @@ public class GoBangChessBoard extends chessBoard implements GoBangConfig {
         }
         for (int j = 0; j < COLUMN; j++) {
             g.drawLine(X + SIZE * j, Y, X + SIZE * j, Y + SIZE * (ROW - 1));//纵向画线
+        }
+        for (int i = 0; i < ROW; i++) {
+            String number = Integer.toString(i);
+            g.drawString(number, X + SIZE * i-3, Y-5);
+        }
+        for (int i = 1; i < COLUMN; i++) {
+            String number = Integer.toString(i);
+            g.drawString(number, X-15, Y + SIZE * i);
         }
         //重绘出棋子
         for (int i = 0; i < ROW; i++) {

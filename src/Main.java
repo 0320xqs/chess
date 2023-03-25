@@ -4,11 +4,6 @@ import BoardGames.goBang.*;
 public class Main {
 
 
-
-
-
-
-
     public static void main(String[] args) {
 
         // 创建一个顶层Frame，使用BorderLayout布局
@@ -25,7 +20,6 @@ public class Main {
         panel4.setPreferredSize(new Dimension(400,1000));
 
         JPanel panel5 = new GoBangChessBoard();
-        panel5.setBackground(Color.WHITE);
         panel5.setPreferredSize(new Dimension(1200,1000));
 
 
