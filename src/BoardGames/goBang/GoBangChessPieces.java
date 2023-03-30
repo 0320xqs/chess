@@ -1,19 +1,25 @@
 package BoardGames.goBang;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GoBangChessPieces {
 
     private int X_coordinate, Y_coordinate;
 
-    private ImageIcon ChessImage;
+    private Image ChessImage;
 
-    public ImageIcon getChessImage() {
+    public Image getChessImage() {
         return ChessImage;
     }
 
-    public void setChessImage(ImageIcon chessImage) {
+    public void setChessImage(Image chessImage) {
         ChessImage = chessImage;
+    }
+    public GoBangChessPieces() {
+        X_coordinate = -1;
+        Y_coordinate = -1;
+        ChessImage=null;
     }
 
     public GoBangChessPieces(int x_coordinate, int y_coordinate) {
