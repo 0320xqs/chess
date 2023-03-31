@@ -1,7 +1,5 @@
 package BoardGames.goBang;
 
-import com.sun.rowset.internal.Row;
-
 import javax.swing.*;
 import java.awt.*;
 

@@ -3,11 +3,7 @@ package BoardGames.goBang;
 import BoardGames.template.Player;
 
 public class GoBangRules implements GoBangConfig {
-    private int[][] Begin;
-    //新增参数
-    public boolean currentPlayer;// true：黑子 false：白子 开始默认黑子先下
-    public boolean GameOver;//定义是否游戏结束
-    public int chessCount;//棋子数目
+
 
     //初始化
     public GoBangRules() {
@@ -16,7 +12,7 @@ public class GoBangRules implements GoBangConfig {
                 board[i][j] = 0;
             }
         }
-        currentPlayer = true;
+        CURRENT_PLAYER = true;
         GameOver = false;
         chessCount = 0;
     }
@@ -29,7 +25,7 @@ public class GoBangRules implements GoBangConfig {
 
     //下棋过程
     public void Process(Player player1, Player player2, GoBangChessPieces chess, GoBangRules gameStatus) {
-        if (currentPlayer) {
+        if (CURRENT_PLAYER) {
             player1.play(chess, gameStatus);
         } else {
             player2.play(chess, gameStatus);
@@ -166,7 +162,7 @@ public class GoBangRules implements GoBangConfig {
                 board[i][j] = 0;
             }
         }
-        currentPlayer = true;
+        CURRENT_PLAYER = true;
         GameOver = false;
         chessCount = 0;
     }
@@ -184,6 +180,6 @@ public class GoBangRules implements GoBangConfig {
         chessArray[chessCount - 1] = null;
         chessCount--;
         GameOver = false;
-        currentPlayer = !currentPlayer;
+        CURRENT_PLAYER = !CURRENT_PLAYER;
     }
 }

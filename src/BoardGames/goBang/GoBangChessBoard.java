@@ -9,19 +9,8 @@ import java.awt.event.MouseMotionListener;
 import BoardGames.template.*;
 
 public class GoBangChessBoard extends chessBoard implements GoBangConfig {
-    public GoBangRules gameStatus;
-    public String GAMEMODE;//游戏模式
-    public String AIMODE;//AI模式
-    public int AIDepth;
 
-    public GoBangChessBoard() {//棋盘类构造函数
-
-        GAMEMODE = "人 VS 人";
-        AIMODE = "小白";
-        AIDepth = 4;
-
-
-    }
+    GoBangFrame.EpicycleData epicycleData=new GoBangFrame().EpicycleData;
     //画棋盘和棋子
     Graphics g;
     private Image BACKGROUND = CHESSBOARD;
@@ -60,96 +49,7 @@ public class GoBangChessBoard extends chessBoard implements GoBangConfig {
         }
     }
 
-    class GoBangChessBoardListener implements MouseMotionListener, MouseListener {
 
-        @Override
-        public void mouseClicked(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            String chessType = gameStatus.currentPlayer ? "黑棋" : "白棋";
-            if (gameStatus.GameOver)//游戏结束，不能按
-                return;
-            int position_X = (e.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//得到棋子x坐标
-            int position_Y = (e.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//得到棋子y坐标
-            if (GAMEMODE.equals("人 VS 人")) {
-                GoBangChessPieces chess = new GoBangChessPieces(position_X, position_Y);
-                if (!gameStatus.findChess(position_X, position_Y)) {
-                    gameStatus.Process(player1, player2, chess, gameStatus);
-                    repaint();
-                }
-            } else if (GAMEMODE.equals("人 VS AI")||GAMEMODE.equals("AI VS 人")) {
-                GoBangChessPieces chess = new GoBangChessPieces(position_X, position_Y);
-                if (!gameStatus.findChess(position_X, position_Y)) {
-                    gameStatus.Process(player1, player2, chess, gameStatus);//人下棋
-                    chessType = gameStatus.currentPlayer ? "黑棋" : "白棋";
-                    gameStatus.Process(player1, player2, chess, gameStatus);//AI下棋
-                    repaint();
-                }
-            } else if (GAMEMODE.equals("AI VS AI")) {
-                System.out.println("gameStatus.currentPlayer的值是："+gameStatus.currentPlayer);
-                while (!gameStatus.GameOver) {
-                    gameStatus.Process(player1, player2, null, gameStatus);//AI2下棋
-                    if(!gameStatus.GameOver)
-                    {
-                        gameStatus.Process(player1, player2, null, gameStatus);//AI1下棋
-                    }
-
-                    repaint();
-                }
-                System.out.println("棋子数:"+gameStatus.chessCount);
-            }
-
-
-            if (gameStatus.GameOver == true) {
-                String msg = String.format("恭喜 %s 赢了", chessType);
-                JOptionPane.showMessageDialog(this, msg);
-            }
-
-            System.out.println("此时棋盘数组：");
-            for (int i = 0; i < ROWS; i++) {
-                for (int j = 0; j < COLS; j++) {
-                    System.out.print(gameStatus.board[i][j] + " ");
-                }
-                System.out.println();
-            }
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            int x1 = (e.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//对鼠标光标的x坐标进行转换
-            int y1 = (e.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//对鼠标光标的y坐标进行转换
-            if (x1 < 0 || x1 > ROWS || y1 < 0 || y1 > COLS || gameStatus.GameOver || gameStatus.findChess(x1, y1)) {
-                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//设置鼠标光标为默认形状
-            } else {
-                setCursor(new Cursor(Cursor.HAND_CURSOR));//设置鼠标光标为手型
-            }
-
-        }
-    }
 
 
 
