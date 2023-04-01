@@ -8,7 +8,7 @@ public abstract class Player {
     public int x_index;
     public int y_index;
 
-    public void play(GoBangChessPieces pieces, GoBangRules gameStatus) {
+    public void play(GoBangChessPieces pieces,GoBangRules gameStatus) {
 
     }
 }

@@ -1,31 +1,45 @@
 package BoardGames.goBang;
 
+import BoardGames.template.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
-public interface GoBangConfig {
-    int CHESSTYPENUM = 2;
-    int CHESSTYPE1 = 1;
-    int CHESSTYPE2 = 2;
-    int DIAMETER = 30;//棋子图片缩放？
-    int MARGIN = 35;//棋盘左上角坐标
-    int GRID_SPAN = 35;//一格长度
-    int ROWS = 15;//行数
-    int COLS = 15;//列数
-    int UIWIDTH = 1265;//UI显示长度
-    int UIHIGHTH = 985;//UI显示宽度
-    int[][] board = new int[ROWS][COLS];//棋盘记录
-    GoBangChessPieces[] chessArray = new GoBangChessPieces[ROWS * COLS];//存储下棋顺序
+public class GoBangConfig {
 
-    String GameMode[] = {"人 VS 人", "人 VS AI", "AI VS 人", "AI VS AI"};//游戏模式选择
-    String AI_Rate[] = {"小白", "新手", "普通"};//AI难度选择
+    public static String GAMEMODE;//游戏模式
+    public static String AIMODE;//AI模式
+    static public int AIDepth;
+
+    static public Player player1;//玩家1
+    static public Player player2;//玩家2
+    static int[][] Begin;
+    //新增参数
+    static boolean currentPlayer;// true：黑子 false：白子 开始默认黑子先下
+    static boolean GameOver;//定义是否游戏结束
+    static int chessCount;//棋子数目
+
+    static int CHESSTYPENUM = 2;
+    static int CHESSTYPE1 = 1;
+    static int CHESSTYPE2 = 2;
+    static int DIAMETER = 30;
+    static int MARGIN = 35;
+    static int GRID_SPAN = 35;//一格长度
+    static int ROWS = 15;//行数
+    static int COLS = 15;//列数
+    static int UIWIDTH = 1265;//UI显示长度
+    static int UIHIGHTH = 985;//UI显示宽度
+    static int[][] board = new int[ROWS][COLS];//棋盘记录
+    static GoBangChessPieces[] chessArray = new GoBangChessPieces[ROWS * COLS];//存储下棋顺序
+
+    public static String[] GameMode = {"人 VS 人", "人 VS AI", "AI VS 人", "AI VS AI"};//游戏模式选择
+    public static String[] AI_Rate = {"小白", "新手", "普通"};//AI难度选择
+
+    static Image BLACKCHESS = new ImageIcon("pic\\GoBang\\black.png").getImage();
+    static Image WHITECHESS = new ImageIcon("pic\\GoBang\\white.png").getImage();
+    static Image CHESSBOARD = new ImageIcon("pic\\GoBang\\ChessBoard.jpg").getImage();
 
 
-    Image BLACKCHESS = new ImageIcon("pic\\GoBang\\black.png").getImage();
-    Image WHITECHESS = new ImageIcon("pic\\GoBang\\white.png").getImage();
-    Image CHESSBOARD = new ImageIcon("pic\\GoBang\\ChessBoard.jpg").getImage();
 
-    Dimension dim1 = new Dimension(150, 20);//设置下拉框组件的大小
-    Dimension dim2 = new Dimension(120, 40);//设置按钮组件的大小
-    Dimension dim3 = new Dimension(140, 45);//设置右边按钮组件的大小
+
 }

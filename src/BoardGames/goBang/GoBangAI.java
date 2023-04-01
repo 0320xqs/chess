@@ -1,16 +1,17 @@
 package BoardGames.goBang;
 
 
-import BoardGames.template.*;
+import BoardGames.template.Player;
 
+
+import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class GoBangAI extends Player implements GoBangConfig {
-//    public int chessType;
-//    public int x_index;
-//    public int y_index;
+import static BoardGames.goBang.GoBangConfig.*;
+
+public class GoBangAI extends Player {
     /**
      * AI分数
      */
@@ -36,27 +37,27 @@ public class GoBangAI extends Player implements GoBangConfig {
     int BOARD_SIZE;
     private int[][] board = new int[50][50];
 
-    public GoBangAI(GoBangRules gamestatus,int Depth) {
-        BOARD_SIZE = gamestatus.ROWS;
+    public GoBangAI(GoBangRules gamestatus, int Depth) {
+        BOARD_SIZE = ROWS;
         x_index = -1;
         y_index = -1;
         computerScore = new int[BOARD_SIZE][BOARD_SIZE];
         computerScore_sort = new int[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = gamestatus.board[i][j];
+                this.board[i][j] = board[i][j];
             }
         }
         Role = 0;
-        this.Depth=Depth;
+        this.Depth = Depth;
     }
 
     public void play(GoBangChessPieces pieces, GoBangRules gameStatus) {
 
-        System.out.println("我思考的深度是:"+Depth);
+        System.out.println("我思考的深度是:" + Depth);
 
-        GoBangChessPieces bestChess=new GoBangChessPieces();
-        Role = gameStatus.CURRENT_PLAYER ? CHESSTYPE1 : CHESSTYPE2;//判断是什么颜色的棋子
+        GoBangChessPieces bestChess = new GoBangChessPieces();
+        Role = currentPlayer ? CHESSTYPE1 : CHESSTYPE2;//判断是什么颜色的棋子
 
         if (Role == CHESSTYPE1) {
             bestChess.setChessImage(BLACKCHESS);
@@ -66,20 +67,20 @@ public class GoBangAI extends Player implements GoBangConfig {
 //            board[x_index][y_index] = chessType;//2白棋
         }
         //AI开局
-        if (gameStatus.chessCount == 0) {
+        if (chessCount == 0) {
 
-            gameStatus.board[BOARD_SIZE / 2][BOARD_SIZE / 2] = Role;
-//            gameStatus.chessCount++;
+            board[BOARD_SIZE / 2][BOARD_SIZE / 2] = Role;
+//            chessCount++;
             bestChess.setX_coordinate(BOARD_SIZE / 2);
             bestChess.setY_coordinate(BOARD_SIZE / 2);
-            chessArray[gameStatus.chessCount++] = bestChess;
+            chessArray[chessCount++] = bestChess;
 //            chessBoard.wait = false;
-            gameStatus.CURRENT_PLAYER =!gameStatus.CURRENT_PLAYER;
+            currentPlayer = !currentPlayer;
             return;
         }
         for (int i = 0; i < BOARD_SIZE; i++) {//使用自己的board做思考，避免闪烁
             for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = gameStatus.board[i][j];
+                this.board[i][j] = board[i][j];
             }
         }
 
@@ -95,11 +96,11 @@ public class GoBangAI extends Player implements GoBangConfig {
         comy = 0;
         chessXYList = arouse(Role);
 
-        System.out.println("待选长度为："+chessXYList.size());
-        int value1 = maxMin(Role,Depth,-100000000, 100000000);
+        System.out.println("待选长度为：" + chessXYList.size());
+        int value1 = maxMin(Role, Depth, -100000000, 100000000);
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(String.format("%12d",computerScore[j][i]));//输出跟棋盘同向
+                System.out.print(String.format("%12d", computerScore[j][i]));//输出跟棋盘同向
             }
             System.out.println("");
         }
@@ -108,8 +109,8 @@ public class GoBangAI extends Player implements GoBangConfig {
         int judgeY = -1;
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(computerScore_sort[i][j]+" ");
-                if(computerScore_sort[i][j] >= judgeKill){//判杀（还能再加上随机性）
+                System.out.print(computerScore_sort[i][j] + " ");
+                if (computerScore_sort[i][j] >= judgeKill) {//判杀（还能再加上随机性）
                     judgeKill = computerScore_sort[i][j];
                     judgeX = i;
                     judgeY = j;
@@ -117,17 +118,17 @@ public class GoBangAI extends Player implements GoBangConfig {
             }
             System.out.println();
         }
-        System.out.println(judgeX+"我们在这里"+judgeY);
+        System.out.println(judgeX + "我们在这里" + judgeY);
         System.out.println(judgeKill);
-        if (judgeKill == 9 || judgeKill ==12){//对方有活四以上，优先去堵
+        if (judgeKill == 9 || judgeKill == 12) {//对方有活四以上，优先去堵
             GoBangChessPieces chess = new GoBangChessPieces(judgeX, judgeY);
             chessList.add(chess);
-        }else {
-            System.out.println("最优分数为："+value1);
+        } else {
+            System.out.println("最优分数为：" + value1);
             for (int i = 0; i < BOARD_SIZE; ++i) {
                 for (int j = 0; j < BOARD_SIZE; ++j) {
                     if (computerScore[i][j] == value1) {
-                        System.out.println("最优位置为："+(i+1)+"   "+(j+1));//输出跟棋盘同向
+                        System.out.println("最优位置为：" + (i + 1) + "   " + (j + 1));//输出跟棋盘同向
                         GoBangChessPieces chess = new GoBangChessPieces(i, j);
                         chessList.add(chess);
                     }
@@ -142,19 +143,19 @@ public class GoBangAI extends Player implements GoBangConfig {
         bestChess.setY_coordinate(comy);
         chessList.clear();
         chessXYList.clear();
-        gameStatus.board[comx][comy] = Role;
-        chessArray[gameStatus.chessCount++] = bestChess;
+        board[comx][comy] = Role;
+        chessArray[chessCount++] = bestChess;
 
 //        System.out.println("AI下棋中----------");
         //判赢
-        if (gameStatus.win(comx, comy, gameStatus.CURRENT_PLAYER)) {//判断是否胜利
-            gameStatus.GameOver = true;
+        if (gameStatus.win(comx, comy, currentPlayer)) {//判断是否胜利
+            GameOver = true;
             return;
-        } else if (gameStatus.chessCount == COLS * ROWS) {//判断是否全部下满
-            gameStatus.GameOver = true;
+        } else if (chessCount == COLS * ROWS) {//判断是否全部下满
+            GameOver = true;
             return;
         }
-        gameStatus.CURRENT_PLAYER = !gameStatus.CURRENT_PLAYER;//交换下棋顺序
+        currentPlayer = !currentPlayer;//交换下棋顺序
     }
 
     public boolean isWin(int f, int x, int y) {
@@ -255,6 +256,7 @@ public class GoBangAI extends Player implements GoBangConfig {
 
         return false;
     }
+
     /**
      * 启发函数
      *

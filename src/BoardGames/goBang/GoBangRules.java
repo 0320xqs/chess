@@ -1,18 +1,21 @@
 package BoardGames.goBang;
 
-import BoardGames.template.Player;
+import BoardGames.template.*;
 
-public class GoBangRules implements GoBangConfig {
+import java.awt.*;
+
+import static BoardGames.goBang.GoBangConfig.*;
+
+public class GoBangRules{
 
 
-    //初始化
     public GoBangRules() {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 board[i][j] = 0;
             }
         }
-        CURRENT_PLAYER = true;
+        currentPlayer = true;
         GameOver = false;
         chessCount = 0;
     }
@@ -23,12 +26,12 @@ public class GoBangRules implements GoBangConfig {
         return Begin;
     }
 
-    //下棋过程
-    public void Process(Player player1, Player player2, GoBangChessPieces chess, GoBangRules gameStatus) {
-        if (CURRENT_PLAYER) {
-            player1.play(chess, gameStatus);
-        } else {
-            player2.play(chess, gameStatus);
+    public void Process(Player player1, Player player2 , GoBangChessPieces chess, GoBangRules gameStatus) {
+        if(currentPlayer)
+        {
+            player1.play(chess,gameStatus);
+        }else {
+            player2.play(chess,gameStatus);
         }
     }
 
@@ -37,10 +40,12 @@ public class GoBangRules implements GoBangConfig {
         return true;
     }
 
-    //判赢
+    /**
+    判赢
+    **/
     public boolean win(int x, int y, boolean start) {
         int i, count = 1;
-        int BOARD_SIZE = ROWS;
+        int BOARD_SIZE = GoBangConfig.ROWS;
         int f = 0;
         if (start) {
             f = 1;
@@ -143,8 +148,7 @@ public class GoBangRules implements GoBangConfig {
         return false;//默认没有赢局
     }
 
-    //查找所在位置是否有棋子
-    public boolean findChess(int position_X, int position_Y) {
+    public boolean findChess(int position_X, int position_Y) {//查找所在位置是否有棋子
         for (GoBangChessPieces c : chessArray) {
             if (c != null && c.getX_coordinate() == position_X && c.getY_coordinate() == position_Y)
                 return true;
@@ -153,22 +157,21 @@ public class GoBangRules implements GoBangConfig {
 
     }
 
-    //重新开始
-    public void RestartGame() {
+
+    public void RestartGame() {//重新开始函数
         for (int i = 0; i < chessArray.length; i++)//设置为初始状态
             chessArray[i] = null;
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
+        for (int i = 0; i < GoBangConfig.ROWS; i++) {
+            for (int j = 0; j < GoBangConfig.COLS; j++) {
                 board[i][j] = 0;
             }
         }
-        CURRENT_PLAYER = true;
+        currentPlayer = true;
         GameOver = false;
         chessCount = 0;
     }
 
-    //悔棋
-    public void GoBack() {
+    public void GoBack() {//悔棋函数
         if (chessCount == 0) {
             return;
         }
@@ -180,6 +183,6 @@ public class GoBangRules implements GoBangConfig {
         chessArray[chessCount - 1] = null;
         chessCount--;
         GameOver = false;
-        CURRENT_PLAYER = !CURRENT_PLAYER;
+        currentPlayer = !currentPlayer;
     }
 }

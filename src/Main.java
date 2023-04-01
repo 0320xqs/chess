@@ -1,25 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import static BoardGames.goBang.GoBangConfig.*;
 
 import BoardGames.goBang.*;
-public class Main implements GoBangConfig{
-    private static JFrame frame;
-    private static GoBangChessBoard panel1;//棋盘panel
-    private static JPanel panel2;
-    private static JPanel panel3;
-    private static Button RestartButton;//声明重新开始按钮
-    private static Button WithdrawButton;//声明悔棋按钮
-    private static Button ExitButton;//声明退出按钮
-    static JComboBox  gameMode;
-    static JComboBox AIMode;
+public class Main{
+    private JFrame frame;
+    private GoBangChessBoard panel1;//棋盘panel
+    private JPanel panel2;
+    private JPanel panel3;
+    private Button RestartButton;//声明重新开始按钮
+    private Button WithdrawButton;//声明悔棋按钮
+    private Button ExitButton;//声明退出按钮
+    JComboBox gameMode;
+    JComboBox AIMode;
+    Dimension dim1 = new Dimension(150, 20);//设置下拉框组件的大小
+    Dimension dim2 = new Dimension(120, 40);//设置按钮组件的大小
+    Dimension dim3 = new Dimension(140, 45);//设置右边按钮组件的大小
 
-
-    public static void main(String[] args) {// 创建一个顶层Frame，使用BorderLayout布局
+    public Main() {
+        // 创建一个顶层Frame，使用BorderLayout布局
         frame = new JFrame();
         frame.setLocation(600, 100);
         frame.setLayout(new BorderLayout());
@@ -44,7 +45,7 @@ public class Main implements GoBangConfig{
             public void itemStateChanged(ItemEvent evt) {
                 if (evt.getStateChange() == ItemEvent.SELECTED) {
                     try {
-                        panel1.GAMEMODE = evt.getItem().toString();//选中的值
+                        GAMEMODE = evt.getItem().toString();//选中的值
                         panel1.GameModeSelect();
                         panel1.AIModeSelect();
                     } catch (Exception e) {
@@ -58,7 +59,7 @@ public class Main implements GoBangConfig{
             public void itemStateChanged(ItemEvent evt) {
                 if (evt.getStateChange() == ItemEvent.SELECTED) {
                     try {
-                        panel1.AIMODE = evt.getItem().toString();//选中的值
+                        AIMODE = evt.getItem().toString();//选中的值
                         panel1.AIModeSelect();
                     } catch (Exception e) {
                     }
@@ -104,7 +105,35 @@ public class Main implements GoBangConfig{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
 
+    private class MyButtonLister implements ActionListener {
+        //按钮处理事件类
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object obj = e.getSource();//获取事件源
+            if (obj == RestartButton) {//事件源是重新开始按钮
+                System.out.println("重新开始");
+                panel1.RestartGame();
+            } else if (obj == WithdrawButton) {//事件源是悔棋按钮
+                System.out.println("悔棋！");
+                panel1.GoBack();
+            } else if (obj == ExitButton) {//事件源是退出按钮
+                System.exit(0);
+            }
+        }
+    }
+
+    class CenteredComboBoxRenderer extends BasicComboBoxRenderer {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            setHorizontalAlignment(CENTER);
+            return this;
+        }
+    }
+
+    public static void main(String[] args) {
+        Main jf = new Main();//声明框架对象
     }
 
 }
