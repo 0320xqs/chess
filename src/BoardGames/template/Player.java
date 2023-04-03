@@ -1,14 +1,19 @@
 package BoardGames.template;
 
 import BoardGames.goBang.GoBangChessPieces;
-import BoardGames.goBang.GoBangRules;
+import BoardGames.goBang.GoBangConfig;
 
 public abstract class Player {
-    public int chessType;
-    public int x_index;
-    public int y_index;
+    public GoBangConfig Board;
+    public int Role;
+    public int Depth;
 
-    public void play(GoBangChessPieces pieces,GoBangRules gameStatus) {
-
+    public Player(GoBangConfig board, int role, int depth) {
+        Board = board;
+        Role = role;
+        Depth = depth;
+    }
+    public GoBangChessPieces play(GoBangChessPieces pieces){
+        return new GoBangChessPieces(0,0);
     }
 }

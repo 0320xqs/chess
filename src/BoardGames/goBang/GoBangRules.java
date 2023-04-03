@@ -2,37 +2,47 @@ package BoardGames.goBang;
 
 import BoardGames.template.*;
 
-import java.awt.*;
-
 import static BoardGames.goBang.GoBangConfig.*;
 
-public class GoBangRules{
+public class GoBangRules extends ChessRules{
 
-
-    public GoBangRules() {
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
-                board[i][j] = 0;
-            }
-        }
-        currentPlayer = true;
-        GameOver = false;
-        chessCount = 0;
-    }
-
+    /**
+     * 棋盘初始化
+     * **/
     public int[][] GetBegin() {
-        Begin = new int[ROWS][COLS];
+        int[][] A = new int[ROWS][COLS];
 
-        return Begin;
+        return A;
     }
 
-    public void Process(Player player1, Player player2 , GoBangChessPieces chess, GoBangRules gameStatus) {
-        if(currentPlayer)
-        {
-            player1.play(chess,gameStatus);
-        }else {
-            player2.play(chess,gameStatus);
+   /**
+    * 行棋过程-一步
+    * **/
+    public void Process(Player player1, Player player2, GoBangChessPieces chess) {
+        GoBangChessPieces tempChess;//临时棋子用于存储下一步棋
+        int x_index, y_index;
+        int Role;//1代表黑棋。2：代表白棋
+        Role = currentPlayer ? CHESSTYPE1 : CHESSTYPE2;
+        if (currentPlayer) {
+            tempChess = player1.play(chess);
+            tempChess.setChessImage(BLACKCHESS);
+        } else {
+            tempChess = player2.play(chess);
+            tempChess.setChessImage(WHITECHESS);
         }
+        x_index = tempChess.getX_coordinate();
+        y_index = tempChess.getY_coordinate();
+        board[x_index][y_index] = Role;
+        chessArray[chessCount++] = tempChess;
+        //判赢
+        if (win(x_index, y_index, currentPlayer)) {//判断是否胜利
+            GameOver = true;
+            return;
+        } else if (chessCount == COLS * ROWS) {//判断是否全部下满
+            GameOver = true;
+            return;
+        }
+        currentPlayer = !currentPlayer;//切换当前玩家
     }
 
     public Boolean End() {
@@ -41,11 +51,11 @@ public class GoBangRules{
     }
 
     /**
-    判赢
-    **/
+     * 判赢
+     * **/
     public boolean win(int x, int y, boolean start) {
         int i, count = 1;
-        int BOARD_SIZE = GoBangConfig.ROWS;
+        int BOARD_SIZE = ROWS;
         int f = 0;
         if (start) {
             f = 1;
@@ -148,7 +158,10 @@ public class GoBangRules{
         return false;//默认没有赢局
     }
 
-    public boolean findChess(int position_X, int position_Y) {//查找所在位置是否有棋子
+    /**
+     * 查找所在位置是否有棋子
+     * **/
+    public  boolean findChess(int position_X, int position_Y) {
         for (GoBangChessPieces c : chessArray) {
             if (c != null && c.getX_coordinate() == position_X && c.getY_coordinate() == position_Y)
                 return true;
@@ -157,21 +170,10 @@ public class GoBangRules{
 
     }
 
-
-    public void RestartGame() {//重新开始函数
-        for (int i = 0; i < chessArray.length; i++)//设置为初始状态
-            chessArray[i] = null;
-        for (int i = 0; i < GoBangConfig.ROWS; i++) {
-            for (int j = 0; j < GoBangConfig.COLS; j++) {
-                board[i][j] = 0;
-            }
-        }
-        currentPlayer = true;
-        GameOver = false;
-        chessCount = 0;
-    }
-
-    public void GoBack() {//悔棋函数
+    /**
+     * 悔棋
+     * **/
+    public void GoBack() {
         if (chessCount == 0) {
             return;
         }

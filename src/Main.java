@@ -5,9 +5,10 @@ import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import static BoardGames.goBang.GoBangConfig.*;
 
 import BoardGames.goBang.*;
-public class Main{
+
+public class Main  {
     private JFrame frame;
-    private GoBangChessBoard panel1;//棋盘panel
+    private GoBangFrame chessFrame;
     private JPanel panel2;
     private JPanel panel3;
     private Button RestartButton;//声明重新开始按钮
@@ -15,6 +16,7 @@ public class Main{
     private Button ExitButton;//声明退出按钮
     JComboBox gameMode;
     JComboBox AIMode;
+
     Dimension dim1 = new Dimension(150, 20);//设置下拉框组件的大小
     Dimension dim2 = new Dimension(120, 40);//设置按钮组件的大小
     Dimension dim3 = new Dimension(140, 45);//设置右边按钮组件的大小
@@ -25,9 +27,9 @@ public class Main{
         frame.setLocation(600, 100);
         frame.setLayout(new BorderLayout());
         //棋盘面板
-        panel1 = new GoBangChessBoard();
-        panel1.setBackground(Color.WHITE);
-        panel1.setPreferredSize(new Dimension(560, 560));
+        chessFrame = new GoBangFrame();
+        chessFrame.chessBoard.setBackground(Color.WHITE);
+        chessFrame.chessBoard.setPreferredSize(new Dimension(560, 560));
         //右面板
         panel2 = new JPanel();
         panel2.setBackground(Color.YELLOW);
@@ -35,10 +37,8 @@ public class Main{
 
         gameMode = new JComboBox(GameMode);
         gameMode.setRenderer(new CenteredComboBoxRenderer());
-//        gameMode.setPreferredSize(dim1);
 
         AIMode = new JComboBox(AI_Rate);
-//        AIMode.setPreferredSize(dim1);
         AIMode.setRenderer(new CenteredComboBoxRenderer());
 
         gameMode.addItemListener(new ItemListener() {
@@ -46,8 +46,8 @@ public class Main{
                 if (evt.getStateChange() == ItemEvent.SELECTED) {
                     try {
                         GAMEMODE = evt.getItem().toString();//选中的值
-                        panel1.GameModeSelect();
-                        panel1.AIModeSelect();
+                        chessFrame.GameModeSelect();
+                        chessFrame.AIModeSelect();
                     } catch (Exception e) {
                     }
                 }
@@ -60,7 +60,7 @@ public class Main{
                 if (evt.getStateChange() == ItemEvent.SELECTED) {
                     try {
                         AIMODE = evt.getItem().toString();//选中的值
-                        panel1.AIModeSelect();
+                        chessFrame.AIModeSelect();
                     } catch (Exception e) {
                     }
                 }
@@ -82,7 +82,6 @@ public class Main{
         WithdrawButton.setBackground(new Color(59, 89, 182));
         ExitButton.setForeground(Color.WHITE);
         ExitButton.setBackground(new Color(59, 89, 182));
-//        RestartButton.setFocusPainted(false);
         panel2.add(RestartButton);
         panel2.add(WithdrawButton);
         panel2.add(ExitButton);
@@ -98,7 +97,7 @@ public class Main{
         // 将三个JPanel添加到Frame的不同区域
         frame.add(panel3, BorderLayout.SOUTH);
         frame.add(panel2, BorderLayout.EAST);
-        frame.add(panel1, BorderLayout.CENTER);
+        frame.add(chessFrame.chessBoard, BorderLayout.CENTER);
 
         // 设置Frame的大小、可见性等其他属性
         frame.setSize(800, 800);
@@ -114,10 +113,10 @@ public class Main{
             Object obj = e.getSource();//获取事件源
             if (obj == RestartButton) {//事件源是重新开始按钮
                 System.out.println("重新开始");
-                panel1.RestartGame();
+                chessFrame.RestartGame();
             } else if (obj == WithdrawButton) {//事件源是悔棋按钮
                 System.out.println("悔棋！");
-                panel1.GoBack();
+                chessFrame.chessRules.GoBack();
             } else if (obj == ExitButton) {//事件源是退出按钮
                 System.exit(0);
             }
@@ -135,5 +134,4 @@ public class Main{
     public static void main(String[] args) {
         Main jf = new Main();//声明框架对象
     }
-
 }
