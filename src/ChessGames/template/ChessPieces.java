@@ -1,11 +1,11 @@
-package BoardGames.template;
+package ChessGames.template;
 
 import java.awt.*;
 
 public class ChessPieces {
 
-    private int X_coordinate, Y_coordinate;
-    private Image ChessImage;
+    private int X_coordinate, Y_coordinate;//棋子xy坐标
+    private Image ChessImage;//棋子图像
 
     public ChessPieces() {
         X_coordinate = -1;

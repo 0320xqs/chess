@@ -1,10 +1,10 @@
-package BoardGames.goBang;
+package ChessGames.GoBang;
 
 import java.awt.*;
 
-import BoardGames.template.*;
+import ChessGames.template.*;
 
-import static BoardGames.goBang.GoBangConfig.*;
+import static ChessGames.GoBang.GoBangConfig.*;
 
 public class GoBangChessBoard extends ChessBoard {
 

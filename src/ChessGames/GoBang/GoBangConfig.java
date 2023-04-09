@@ -1,20 +1,19 @@
-package BoardGames.goBang;
+package ChessGames.GoBang;
 
-import BoardGames.template.Config;
-import BoardGames.template.Player;
+import ChessGames.template.Player;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GoBangConfig extends Config {
+public class GoBangConfig {
     /**
      * UI
      **/
-    static int DIAMETER = 30;
-    static int MARGIN = 35;
-    static int GRID_SPAN = 35;//一格长度
-    static int ROWS = 15;//行数
-    static int COLS = 15;//列数
+    public static int DIAMETER = 30;
+    public static int MARGIN = 35;
+    public static int GRID_SPAN = 35;//一格长度
+    public static int ROWS = 15;//行数
+    public static int COLS = 15;//列数
 
     /**
      * 模式
@@ -22,8 +21,7 @@ public class GoBangConfig extends Config {
     public static String GAMEMODE;//游戏模式
     public static String AIMODE;//AI模式
     public static  int AIDepth;//AI难度
-    public static String[] GameMode = {"人 VS 人", "人 VS AI", "AI VS 人", "AI VS AI"};//游戏模式选择
-    public static String[] AI_Rate = {"小白", "新手", "普通"};//AI难度选择
+
     /**
      * 玩家
      **/
@@ -41,12 +39,11 @@ public class GoBangConfig extends Config {
     /**
      * 棋子
      **/
-    static int CHESSTYPENUM = 2;
-    static int CHESSTYPE1 = 1;
-    static int CHESSTYPE2 = 2;
-    static Image BLACKCHESS = new ImageIcon("pic\\GoBang\\black.png").getImage();
-    static Image WHITECHESS = new ImageIcon("pic\\GoBang\\white.png").getImage();
-    static Image CHESSBOARD = new ImageIcon("pic\\GoBang\\ChessBoard.jpg").getImage();
-
+    public static int CHESSTYPENUM = 2;
+    public static int CHESSTYPE1 = 1;
+    public static int CHESSTYPE2 = 2;
+    public static Image BLACKCHESS = new ImageIcon("pic\\GoBang\\black.png").getImage();
+    public static Image WHITECHESS = new ImageIcon("pic\\GoBang\\white.png").getImage();
+    public static Image CHESSBOARD = new ImageIcon("pic\\GoBang\\ChessBoard.jpg").getImage();
 
 }

@@ -1,33 +1,29 @@
-package BoardGames.goBang;
+package ChessGames.GoBang;
 
-import BoardGames.template.*;
+import ChessGames.template.*;
 
-import static BoardGames.goBang.GoBangConfig.*;
+import static ChessGames.GoBang.GoBangConfig.*;
 
 public class GoBangRules extends ChessRules{
 
-    /**
-     * 棋盘初始化
-     * **/
-    public int[][] GetBegin() {
-        int[][] A = new int[ROWS][COLS];
 
-        return A;
+    @Override
+    public int[][] GetBegin() {
+        return new int[ROWS][COLS];
     }
 
-   /**
-    * 行棋过程-一步
-    * **/
-    public void Process(Player player1, Player player2, GoBangChessPieces chess) {
+
+    @Override
+    public void Process(Player player1, Player player2, ChessPieces chess) {
         GoBangChessPieces tempChess;//临时棋子用于存储下一步棋
         int x_index, y_index;
         int Role;//1代表黑棋。2：代表白棋
         Role = currentPlayer ? CHESSTYPE1 : CHESSTYPE2;
         if (currentPlayer) {
-            tempChess = player1.play(chess);
+            tempChess = (GoBangChessPieces) player1.play((GoBangChessPieces) chess);
             tempChess.setChessImage(BLACKCHESS);
         } else {
-            tempChess = player2.play(chess);
+            tempChess = (GoBangChessPieces) player2.play((GoBangChessPieces) chess);
             tempChess.setChessImage(WHITECHESS);
         }
         x_index = tempChess.getX_coordinate();
@@ -50,9 +46,8 @@ public class GoBangRules extends ChessRules{
         return true;
     }
 
-    /**
-     * 判赢
-     * **/
+
+    @Override
     public boolean win(int x, int y, boolean start) {
         int i, count = 1;
         int BOARD_SIZE = ROWS;
@@ -158,9 +153,8 @@ public class GoBangRules extends ChessRules{
         return false;//默认没有赢局
     }
 
-    /**
-     * 查找所在位置是否有棋子
-     * **/
+
+    @Override
     public  boolean findChess(int position_X, int position_Y) {
         for (GoBangChessPieces c : chessArray) {
             if (c != null && c.getX_coordinate() == position_X && c.getY_coordinate() == position_Y)
@@ -170,9 +164,8 @@ public class GoBangRules extends ChessRules{
 
     }
 
-    /**
-     * 悔棋
-     * **/
+
+    @Override
     public void GoBack() {
         if (chessCount == 0) {
             return;

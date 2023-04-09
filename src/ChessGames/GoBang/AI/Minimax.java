@@ -1,36 +1,41 @@
-package BoardGames.goBang;
+package ChessGames.GoBang.AI;
 
-import BoardGames.template.Player;
+import ChessGames.GoBang.GoBangChessPieces;
+import ChessGames.GoBang.GoBangConfig;
+import ChessGames.template.ChessPieces;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class GoBangAI extends Player {
+public class Minimax {
+
+    public GoBangConfig Board;
+    public int Role;
+    public int Depth;
+
     /**
      * AI分数
      */
     private int[][] computerScore;
     private int[][] computerScore_sort;
-    LinkedList<ChessXY> chessXYList = new LinkedList<ChessXY>();//空格得分排序，便于启发函数
- //   private static int computerscore = 0; // 电脑最大分数
+    LinkedList<ChessXY> chessXYList = new LinkedList<>();//空格得分排序，便于启发函数
     private static int comx, comy; // 电脑下子坐标
-
     private final int HUO = 1;
     private final int CHONG = 2;
-   // private static int chesscou = 0;
+    
     /**
      * 记录找到的分数一样的棋子，随机下这些棋子中的一个，以防步法固定
      */
-    private ArrayList<ChessXY> chessList = new ArrayList<ChessXY>();//候选棋子
-
+    private ArrayList<ChessXY> chessList = new ArrayList<>();//候选棋子
     Random rand = new Random();
-
     int BOARD_SIZE;
     private int[][] board = new int[50][50];
 
-    public GoBangAI(GoBangConfig board, int role, int depth) {
-        super(board, role, depth);
+    public Minimax(GoBangConfig board, int role, int depth) {
+        Board = board;
+        Role = role;
+        Depth = depth;
         this.BOARD_SIZE = board.ROWS;
         this.computerScore = new int[BOARD_SIZE][BOARD_SIZE];
         computerScore_sort = new int[BOARD_SIZE][BOARD_SIZE];
@@ -40,20 +45,17 @@ public class GoBangAI extends Player {
             }
         }
     }
-    /**
-     * @Description 获取下一步棋子位置
-     * @return
-     */
-    @Override
-    public GoBangChessPieces play(GoBangChessPieces pieces){
-//        chessBoard.wait = true;//不让对方下棋
 
-        if (Board.chessCount == 0){
-//            System.out.println("我下过了");
-//            Board.board[BOARD_SIZE / 2][BOARD_SIZE / 2] = Role;
-//            Board.chessCount++;
-//            chessBoard.wait = false;
-            return new GoBangChessPieces(BOARD_SIZE / 2,BOARD_SIZE / 2);
+    /**
+     * @return
+     * @Description 获取下一步棋子位置
+     */
+    public ChessPieces play(ChessPieces pieces) {
+
+
+        if (Board.chessCount == 0) {
+
+            return new GoBangChessPieces(BOARD_SIZE / 2, BOARD_SIZE / 2);
         }
         for (int i = 0; i < BOARD_SIZE; i++) {//使用自己的board做思考，避免闪烁
             for (int j = 0; j < BOARD_SIZE; j++) {
@@ -61,7 +63,6 @@ public class GoBangAI extends Player {
             }
         }
 
-        System.out.println("sfdsjkgvhdkjhgkdhgsdgdfgfhgfhgfdhhhhhhhhhhhhhhhhhhhhhh");
         //初始化参数
         for (int i = 0; i < BOARD_SIZE; ++i) {
             for (int j = 0; j < BOARD_SIZE; ++j) {
@@ -71,12 +72,12 @@ public class GoBangAI extends Player {
         }
         comx = 0;
         comy = 0;
-        chessXYList= arouse(Role);
-        System.out.println("待选长度为："+chessXYList.size());
-        int value1 = maxMin(Role,Depth,-100000000, 100000000);
+        chessXYList = arouse(Role);
+        System.out.println("待选长度为：" + chessXYList.size());
+        int value1 = maxMin(Role, Depth, -100000000, 100000000);
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(String.format("%12d",computerScore[j][i]));//输出跟棋盘同向
+                System.out.print(String.format("%12d", computerScore[j][i]));//输出跟棋盘同向
             }
             System.out.println("");
         }
@@ -85,8 +86,8 @@ public class GoBangAI extends Player {
         int judgeY = -1;
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(computerScore_sort[i][j]+" ");
-                if(computerScore_sort[i][j] >= judgeKill){//判杀（还能再加上随机性）
+                System.out.print(computerScore_sort[i][j] + " ");
+                if (computerScore_sort[i][j] >= judgeKill) {//判杀（还能再加上随机性）
                     judgeKill = computerScore_sort[i][j];
                     judgeX = i;
                     judgeY = j;
@@ -94,17 +95,17 @@ public class GoBangAI extends Player {
             }
             System.out.println();
         }
-        System.out.println(judgeX+"我们在这里"+judgeY);
+        System.out.println(judgeX + "我们在这里" + judgeY);
         System.out.println(judgeKill);
-        if (judgeKill == 9 || judgeKill ==12){//对方有活四以上，优先去堵
+        if (judgeKill == 9 || judgeKill == 12) {//对方有活四以上，优先去堵
             ChessXY chess = new ChessXY(judgeX, judgeY);
             chessList.add(chess);
-        }else {
-            System.out.println("最优分数为："+value1);
+        } else {
+            System.out.println("最优分数为：" + value1);
             for (int i = 0; i < BOARD_SIZE; ++i) {
                 for (int j = 0; j < BOARD_SIZE; ++j) {
                     if (computerScore[i][j] == value1) {
-                        System.out.println("最优位置为："+(i+1)+"   "+(j+1));//输出跟棋盘同向
+                        System.out.println("最优位置为：" + (i + 1) + "   " + (j + 1));//输出跟棋盘同向
                         ChessXY chess = new ChessXY(i, j);
                         chessList.add(chess);
                     }
@@ -116,20 +117,15 @@ public class GoBangAI extends Player {
         comy = chessList.get(n).y;
         chessList.clear();
         chessXYList.clear();
-//        Board.board[comx][comy] = Role;
-//        this.Board.chessCount++;
-//        chessBoard.computerX = comx;
-//        chessBoard.computerY = comy;
-//        chessBoard.wait = false;
-        return new GoBangChessPieces(comx,comy);
+        return new GoBangChessPieces(comx, comy);
     }
+
     /**
-     *
-     * @Title: isWin
-     * @Description: 判断下该子是否能赢
      * @param @param f 颜色 @param @param x 坐标 @param @param y @param
      * @return boolean
      * @throws
+     * @Title: isWin
+     * @Description: 判断下该子是否能赢
      */
 
     public boolean isWin(int f, int x, int y) {
@@ -233,47 +229,48 @@ public class GoBangAI extends Player {
 
     /**
      * 启发函数
+     *
      * @param role
      * @return LinkedList<ChessXY>
      */
-    LinkedList<ChessXY> arouse(int role){
+    LinkedList<ChessXY> arouse(int role) {
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                if(board[i][j] == 0){
-                    getScore(i,j,role);//得到每个空位得分，更新得分数组
+                if (board[i][j] == 0) {
+                    getScore(i, j, role);//得到每个空位得分，更新得分数组
                 }
             }
         }
         int count = 0;
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(String.format("%12d",computerScore_sort[j][i]));//输出跟棋盘同向
+                System.out.print(String.format("%12d", computerScore_sort[j][i]));//输出跟棋盘同向
             }
             System.out.println();
         }
-        int [][]maxList = new int[BOARD_SIZE][BOARD_SIZE];
+        int[][] maxList = new int[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                if(computerScore_sort[i][j] != -1000000000){
+                if (computerScore_sort[i][j] != -1000000000) {
                     count++;
                 }
             }
 
         }
-        int maxValue=-1000000000;
+        int maxValue = -1000000000;
         int maxX = -1;
         int maxY = -1;
-        System.out.println("可用空间为："+count);
+        System.out.println("可用空间为：" + count);
         for (int h = 0; h < count; h++) {
-            maxValue=-1000000000;
+            maxValue = -1000000000;
             maxX = -1;
             maxY = -1;
             for (int i = 0; i < BOARD_SIZE; i++) {
                 for (int j = 0; j < BOARD_SIZE; j++) {
                     //  if(computerScore_sort[i][j] != -1000000000){
-                    if(maxList[i][j] == 0) {
-                        if(computerScore_sort[i][j] >= maxValue){
+                    if (maxList[i][j] == 0) {
+                        if (computerScore_sort[i][j] >= maxValue) {
                             maxValue = computerScore_sort[i][j];
                             maxX = i;
                             maxY = j;
@@ -283,18 +280,19 @@ public class GoBangAI extends Player {
             }
             if (maxValue < 1) continue;
             //computerScore_sort[maxX][maxY] = -1000000000;
-            System.out.println("可选坐标为："+(maxX+1)+" "+(maxY+1));//输出跟棋盘同向
-            chessXYList.addLast(new ChessXY(maxX,maxY));
+            System.out.println("可选坐标为：" + (maxX + 1) + " " + (maxY + 1));//输出跟棋盘同向
+            chessXYList.addLast(new ChessXY(maxX, maxY));
             maxList[maxX][maxY] = 1;
         }
         return chessXYList;
 
     }
+
     /**
-     * @Title: getScore
-     * @Description: 一个位置评分（按照启发规则哪个空位最有利）
      * @param
      * @return void
+     * @Title: getScore
+     * @Description: 一个位置评分（按照启发规则哪个空位最有利）
      */
     public void getScore(int i, int j, int role) {
         if (board[i][j] == 0) {//空位置可以下棋
@@ -303,7 +301,7 @@ public class GoBangAI extends Player {
                 computerScore_sort[i][j] = 13;
 
                 return;
-            } else if (isWin(3-role, i, j)) // 电脑不能赢，玩家能赢，要阻止，所以给12分
+            } else if (isWin(3 - role, i, j)) // 电脑不能赢，玩家能赢，要阻止，所以给12分
             {
                 computerScore_sort[i][j] = 12;
             } else if (isHuoOrChong(role, i, j, 4, HUO)) // 电脑玩家都不能赢，电脑能形成活四，给11分
@@ -312,13 +310,13 @@ public class GoBangAI extends Player {
             } else if (isHuoOrChong(role, i, j, 4, CHONG)) // 电脑玩家都不能赢，电脑能形成冲四，给10分
             {
                 computerScore_sort[i][j] = 10;
-            } else if (isHuoOrChong(3-role, i, j, 4, HUO)) // 电脑玩家都不能赢，玩家能形成活四，给9分
+            } else if (isHuoOrChong(3 - role, i, j, 4, HUO)) // 电脑玩家都不能赢，玩家能形成活四，给9分
             {
                 computerScore_sort[i][j] = 9;
             } else if (isHuoOrChong(role, i, j, 3, HUO)) // 电脑玩家都不能赢，电脑能形成活三，给8分
             {
                 computerScore_sort[i][j] = 8;
-            } else if (isHuoOrChong(3-role, i, j, 4, CHONG)) // 电脑玩家都不能赢，玩家能形成冲四，给7分
+            } else if (isHuoOrChong(3 - role, i, j, 4, CHONG)) // 电脑玩家都不能赢，玩家能形成冲四，给7分
             {
                 computerScore_sort[i][j] = 7;
             } else if (isHuoOrChong(role, i, j, 3, CHONG)) // 电脑玩家都不能赢，电脑能形成冲三，给6分
@@ -327,16 +325,16 @@ public class GoBangAI extends Player {
             } else if (isHuoOrChong(role, i, j, 2, HUO)) // 电脑玩家都不能赢，电脑能形成活二，给5分
             {
                 computerScore_sort[i][j] = 5;
-            } else if (isHuoOrChong(3-role, i, j, 3, CHONG)) // 电脑玩家都不能赢，玩家能形成冲三，给4分
+            } else if (isHuoOrChong(3 - role, i, j, 3, CHONG)) // 电脑玩家都不能赢，玩家能形成冲三，给4分
             {
                 computerScore_sort[i][j] = 4;
-            } else if (isHuoOrChong(3-role, i, j, 2, HUO)) // 电脑玩家都不能赢，玩家能形成活二，给3分
+            } else if (isHuoOrChong(3 - role, i, j, 2, HUO)) // 电脑玩家都不能赢，玩家能形成活二，给3分
             {
                 computerScore_sort[i][j] = 3;
             } else if (isHuoOrChong(role, i, j, 2, CHONG)) // 电脑玩家都不能赢，电脑能形成冲二，给2分
             {
                 computerScore_sort[i][j] = 2;
-            } else if (isHuoOrChong(3-role, i, j, 2, CHONG)) // 电脑玩家都不能赢，玩家能形成冲二，给1分
+            } else if (isHuoOrChong(3 - role, i, j, 2, CHONG)) // 电脑玩家都不能赢，玩家能形成冲二，给1分
             {
                 computerScore_sort[i][j] = 1;
             } else {
@@ -344,12 +342,12 @@ public class GoBangAI extends Player {
             }
         }
     }
+
     /**
-     *
-     * @Title: isHuoOrChong
-     * @Description: 判断是否为活
      * @param f,x,y,num,hORc
      * @return boolean
+     * @Title: isHuoOrChong
+     * @Description: 判断是否为活
      */
     private boolean isHuoOrChong(int f, int x, int y, int num, int hORc) // 活
     {
@@ -499,48 +497,49 @@ public class GoBangAI extends Player {
 
         return false;
     }
+
     /**
-     * @Description 极大极小值搜索
      * @param role
      * @param depth
      * @param alpha
      * @param beta
      * @return int
+     * @Description 极大极小值搜索
      */
     public int maxMin(int role, int depth, int alpha, int beta) {
 
         int count = 0;
         for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE;j++){
-                if (board[i][j] == 0){
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                if (board[i][j] == 0) {
                     count++;
                 }
             }
         }
-        boolean winFlag = isWin(3-Role,comx,comy);
-        if(count == 0 || depth == 0  ){//结束递归
-            if (winFlag == true && (role == 3-Role))return -evaluate();
+        boolean winFlag = isWin(3 - Role, comx, comy);
+        if (count == 0 || depth == 0) {//结束递归
+            if (winFlag == true && (role == 3 - Role)) return -evaluate();
             return evaluate();
         }
         for (int i = 0; i < chessXYList.size(); i++) {
-            if (board[chessXYList.get(i).x][chessXYList.get(i).y] == 0){
+            if (board[chessXYList.get(i).x][chessXYList.get(i).y] == 0) {
 
                 board[chessXYList.get(i).x][chessXYList.get(i).y] = role;//模拟下棋
-                ChessXY chess = new ChessXY(chessXYList.get(i).x,chessXYList.get(i).y);
+                ChessXY chess = new ChessXY(chessXYList.get(i).x, chessXYList.get(i).y);
                 comx = chess.x;
                 comy = chess.y;
-                int value = -maxMin((3 - role),depth - 1,-beta, -alpha);
+                int value = -maxMin((3 - role), depth - 1, -beta, -alpha);
 
                 board[chess.x][chess.y] = 0;//撤销下的棋
 
-                if(value > alpha){//剪枝条会失去随机性，=
-                    if(depth == Depth){
+                if (value > alpha) {//剪枝条会失去随机性，=
+                    if (depth == Depth) {
                         computerScore[chessXYList.get(i).x][chessXYList.get(i).y] = value;
                     }
                     /**
                      * alpha + beta剪枝点
                      */
-                    if (value >= beta){
+                    if (value >= beta) {
                         //System.out.println("剪枝");
                         return beta;
                     }
@@ -551,36 +550,39 @@ public class GoBangAI extends Player {
         }
         return alpha;
     }
+
     /**
      * 评估棋盘状态整体函数
+     *
      * @return int
      */
-    public int evaluate(){
+    public int evaluate() {
         int computer = 0;
         int player = 0;
 
         for (int i = 0; i < BOARD_SIZE; ++i) {
             for (int j = 0; j < BOARD_SIZE; ++j) {
-                if(board[i][j] == Role){
-                    computer += getScore_point(i,j,Role);
-                }else if(board[i][j] == 3-Role){
-                    player += getScore_point(i,j,3-Role);
+                if (board[i][j] == Role) {
+                    computer += getScore_point(i, j, Role);
+                } else if (board[i][j] == 3 - Role) {
+                    player += getScore_point(i, j, 3 - Role);
                 }
             }
         }
         return computer - player;
     }
+
     /**
-     * @Decription 求棋盘已有的某个棋子的最大分数
      * @param x
      * @param y
      * @param role
      * @return int
+     * @Decription 求棋盘已有的某个棋子的最大分数
      */
-    public int getScore_point(int x,int y,int role){
+    public int getScore_point(int x, int y, int role) {
         int i, count = 1;
-        int value = 0,bestValue = 0;
-        int XX = -1,YY = -1;//连棋边界坐标
+        int value = 0, bestValue = 0;
+        int XX = -1, YY = -1;//连棋边界坐标
         int boundary = 0;
         boolean up, down, right, left, rup, lup, rdown, ldown;
         up = down = right = left = rup = lup = rdown = ldown = true;
@@ -595,31 +597,31 @@ public class GoBangAI extends Player {
                 if (board[x][y + i] == role && down)
                     count++;
                 else {
-                    if(down == true && board[x][y + i] != 0){
-                        boundary ++;
+                    if (down == true && board[x][y + i] != 0) {
+                        boundary++;
                     }
                     down = false;
                 }
 
-            }else if(y + i == BOARD_SIZE){
-                boundary ++;
+            } else if (y + i == BOARD_SIZE) {
+                boundary++;
             }
             if ((y - i) >= 0) {
                 if (board[x][y - i] == role && up)
                     count++;
                 else {
-                    if(up == true && board[x][y - i] != 0){
-                        boundary ++;
+                    if (up == true && board[x][y - i] != 0) {
+                        boundary++;
                     }
                     up = false;
                 }
-            }else if(y - i < 0){
-                boundary ++;
+            } else if (y - i < 0) {
+                boundary++;
             }
-            if (down == false && up == false)break;//找到了两端
+            if (down == false && up == false) break;//找到了两端
         }
-        value = boundary(count,boundary);
-        if(bestValue < value){
+        value = boundary(count, boundary);
+        if (bestValue < value) {
             bestValue = value;
         }
         count = 1;
@@ -634,31 +636,31 @@ public class GoBangAI extends Player {
                 if (board[x + i][y] == role && right)
                     count++;
                 else {
-                    if(right == true && board[x + i][y] != 0){
-                        boundary ++;
+                    if (right == true && board[x + i][y] != 0) {
+                        boundary++;
                     }
                     right = false;
                 }
 
-            }else if(x + i == BOARD_SIZE){
-                boundary ++;
+            } else if (x + i == BOARD_SIZE) {
+                boundary++;
             }
             if ((x - i) >= 0) {
                 if (board[x - i][y] == role && left)
                     count++;
                 else {
-                    if(left == true && board[x - i][y] != 0){
-                        boundary ++;
+                    if (left == true && board[x - i][y] != 0) {
+                        boundary++;
                     }
                     left = false;
                 }
-            }else if(x - i < 0){
-                boundary ++;
+            } else if (x - i < 0) {
+                boundary++;
             }
-            if (right == false && left == false)break;//找到了两端
+            if (right == false && left == false) break;//找到了两端
         }
-        value = boundary(count,boundary);
-        if(bestValue < value){
+        value = boundary(count, boundary);
+        if (bestValue < value) {
             bestValue = value;
         }
         count = 1;
@@ -673,31 +675,31 @@ public class GoBangAI extends Player {
                 if (board[x + i][y + i] == role && rdown)
                     count++;
                 else {
-                    if(rdown == true && board[x + i][y + i] != 0){
-                        boundary ++;
+                    if (rdown == true && board[x + i][y + i] != 0) {
+                        boundary++;
                     }
                     rdown = false;
                 }
 
-            }else if(x + i == BOARD_SIZE || y + i == BOARD_SIZE){
-                boundary ++;
+            } else if (x + i == BOARD_SIZE || y + i == BOARD_SIZE) {
+                boundary++;
             }
             if ((x - i) >= 0 && (y - i) >= 0) {
                 if (board[x - i][y - i] == role && lup)
                     count++;
                 else {
-                    if(lup == true && board[x - i][y - i] != 0){
-                        boundary ++;
+                    if (lup == true && board[x - i][y - i] != 0) {
+                        boundary++;
                     }
                     lup = false;
                 }
-            }else if(x - i < 0 || y - i < 0){
-                boundary ++;
+            } else if (x - i < 0 || y - i < 0) {
+                boundary++;
             }
-            if (rdown == false && lup == false)break;//找到了两端
+            if (rdown == false && lup == false) break;//找到了两端
         }
-        value = boundary(count,boundary);
-        if(bestValue < value){
+        value = boundary(count, boundary);
+        if (bestValue < value) {
             bestValue = value;
         }
         count = 1;
@@ -712,30 +714,30 @@ public class GoBangAI extends Player {
                 if (board[x + i][y - i] == role && rup)
                     count++;
                 else {
-                    if(rup == true && board[x + i][y - i] != 0){
-                        boundary ++;
+                    if (rup == true && board[x + i][y - i] != 0) {
+                        boundary++;
                     }
                     rup = false;
                 }
-            }else if(x + i == BOARD_SIZE || y - i < 0){
-                boundary ++;
+            } else if (x + i == BOARD_SIZE || y - i < 0) {
+                boundary++;
             }
             if ((x - i) >= 0 && (y + i) < BOARD_SIZE) {
                 if (board[x - i][y + i] == role && ldown)
                     count++;
                 else {
-                    if(ldown == true && board[x - i][y + i] != 0){
-                        boundary ++;
+                    if (ldown == true && board[x - i][y + i] != 0) {
+                        boundary++;
                     }
                     ldown = false;
                 }
-            }else if(x - i < 0 || y + i == BOARD_SIZE){
-                boundary ++;
+            } else if (x - i < 0 || y + i == BOARD_SIZE) {
+                boundary++;
             }
-            if (rup == false && ldown == false)break;//找到了两端
+            if (rup == false && ldown == false) break;//找到了两端
         }
-        value = boundary(count,boundary);
-        if(bestValue < value){
+        value = boundary(count, boundary);
+        if (bestValue < value) {
             bestValue = value;
         }
         //computerScore[x][y] = bestValue;
@@ -743,56 +745,58 @@ public class GoBangAI extends Player {
     }
 
     /**
-     * @Decription 计算棋子边界个数
      * @param count
      * @param boundary
      * @return
+     * @Decription 计算棋子边界个数
      */
     public int boundary(int count, int boundary) {
         int value = 0;
-        if(count >= 5){
-            if(boundary == 0){
+        if (count >= 5) {
+            if (boundary == 0) {
                 value = 10000000;
-            }else if(boundary ==1){
+            } else if (boundary == 1) {
                 value = 100000;
             }
             //value = 10000000;
 
-        }else if(count == 4){
-            if(boundary == 0){
+        } else if (count == 4) {
+            if (boundary == 0) {
                 value = 100000;
-            }else if(boundary ==1){
+            } else if (boundary == 1) {
                 value = 10000;
             }
-        }else if(count == 3){
-            if(boundary == 0){
+        } else if (count == 3) {
+            if (boundary == 0) {
                 value = 1000;
-            }else if(boundary ==1){
+            } else if (boundary == 1) {
                 value = 100;
             }
-        }else if(count == 2){
-            if(boundary == 0){
+        } else if (count == 2) {
+            if (boundary == 0) {
                 value = 100;
-            }else if(boundary ==1){
+            } else if (boundary == 1) {
                 value = 10;
             }
-        }else if(count == 1){
-            if(boundary == 0){
+        } else if (count == 1) {
+            if (boundary == 0) {
                 value = 10;
-            }else if(boundary == 1){
+            } else if (boundary == 1) {
                 value = 1;
             }
         }
         return value;
     }
-    private class ChessXY{
+
+    private class ChessXY {
         int x;
         int y;
-        public ChessXY(int x,int y){
-            this.x=x;
-            this.y=y;
+
+        public ChessXY(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
     }
 
-}
 
+}

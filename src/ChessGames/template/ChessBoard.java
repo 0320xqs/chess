@@ -1,8 +1,7 @@
-package BoardGames.template;
+package ChessGames.template;
 
 import javax.swing.*;
 
 public abstract class ChessBoard extends JPanel{
-    private int [][] availableCoordinate;
 
 }
