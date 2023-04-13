@@ -6,19 +6,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static ChessGames.GoBang.GoBangConfig.*;
 
 public class GoBangController extends Controller {
-    GoBangConfig gameStatus=new GoBangConfig();
-
+    GoBangConfig gameStatus = new GoBangConfig();
 
 
     public GoBangController() {
         this.chessBoard = new GoBangChessBoard();
         this.chessPieces = new GoBangChessPieces();
         this.chessRules = new GoBangRules();
-        GoBangListener listener=new GoBangListener();
+        GoBangListener listener = new GoBangListener();
         chessBoard.addMouseListener((MouseListener) listener);
         chessBoard.addMouseMotionListener((MouseMotionListener) listener);
         GAMEMODE = "人 VS 人";
@@ -27,17 +27,15 @@ public class GoBangController extends Controller {
         player1 = new GoBangMan();
         player2 = new GoBangMan();
         Arrays.fill(chessArray, null);
-        board=chessRules.GetBegin();
+        board = chessRules.GetBegin();
         currentPlayer = true;
-        GameOpen=false;
+        GameOpen = false;
         GameOver = false;
         chessCount = 0;
     }
 
-    /**
-     * 游戏模式选择
-     * **/
-   @Override
+
+    @Override
     public void GameModeSelect() {
         switch (GAMEMODE) {
             case "人 VS 人":
@@ -51,28 +49,16 @@ public class GoBangController extends Controller {
             case "AI VS 人":
                 player1 = new GoBangAI(gameStatus, 1, AIDepth);
                 player2 = new GoBangMan();
-                if (!GameOpen) {
-                    chessRules.Process(player1, player2, null);//AI下第一步棋
-                    GameOpen = true;
-                    chessBoard.repaint();
-                }
                 break;
             case "AI VS AI":
                 player1 = new GoBangAI(gameStatus, 1, AIDepth);
                 player2 = new GoBangAI(gameStatus, 2, AIDepth);
-                if (!GameOpen) {
-                    chessRules.Process(player1, player2, null);//AI下第一步棋
-                    GameOpen = true;
-                    chessBoard.repaint();
-                }
                 break;
         }
     }
 
-    /**
-     * AI模式选择
-     * **/
-   @Override
+
+    @Override
     public void AIModeSelect() {
         if (GAMEMODE.equals("人 VS 人")) {
             return;
@@ -96,11 +82,9 @@ public class GoBangController extends Controller {
 
     }
 
-    /**
-     * 重开
-     * **/
+
     @Override
-    public void RestartGame() {
+    public void StartGame() {
         //设置为初始状态
         Arrays.fill(chessArray, null);
         for (int i = 0; i < ROWS; i++) {
@@ -109,27 +93,49 @@ public class GoBangController extends Controller {
             }
         }
         currentPlayer = true;
-        GameOpen=false;
+        GameOpen = true;
         GameOver = false;
         chessCount = 0;
-        if (GAMEMODE.equals("AI VS 人") || GAMEMODE.equals("AI VS AI")) {
-            chessRules.Process(player1, player2, null);//AI下第一步棋
-        }
 
+        switch (GAMEMODE) {
+            case "AI VS 人":
+                chessRules.Process(player1, player2, null);//AI下第一步棋
+                GameOpen = true;
+                chessBoard.repaint();
+                break;
+            case "AI VS AI":
+                chessRules.Process(player1, player2, null);//AI下第一步棋
+                GameOpen = true;
+                chessBoard.repaint();
+                String finalChessType1 = currentPlayer ? "黑棋" : "白棋";
+                ;
+                new Thread(() -> {
+                    while (!GameOver) {
+                        chessRules.Process(player1, player2, null); // AI2下棋
+                        SwingUtilities.invokeLater(() -> chessBoard.repaint());
+                        if (!GameOver) {
+                            chessRules.Process(player1, player2, null); // AI1下棋
+                            SwingUtilities.invokeLater(() -> chessBoard.repaint());
+                        }
+                        if (GameOver) {
+                            String msg = String.format("恭喜 %s 赢了", finalChessType1);
+                            JOptionPane.showMessageDialog(chessBoard, msg);
+                        }
+                    }
+                }).start();
+                break;
+        }
         chessBoard.repaint();
+
     }
 
-    /**
-     * 鼠标监听
-     **/
-    private class GoBangListener extends Component implements MouseListener,MouseMotionListener {
+    private class GoBangListener extends Component implements MouseListener, MouseMotionListener {
         //鼠标点击事件
         @Override
         public void mousePressed(MouseEvent e) {
-            GameOpen=GameOpen? true:false;
-            String chessType = currentPlayer ? "黑棋" : "白棋";
-            if (GameOver)
+            if (!(!GameOver & GameOpen))
                 return;
+            String chessType = currentPlayer ? "黑棋" : "白棋";
             int position_X = (e.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//得到棋子x坐标
             int position_Y = (e.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//得到棋子y坐标
             GoBangChessPieces chess = new GoBangChessPieces(position_X, position_Y);
@@ -159,24 +165,8 @@ public class GoBangController extends Controller {
                     }
                     break;
                 case "AI VS AI":
-                    String finalChessType1 = chessType;
-                    new Thread(() -> {
-                        while (!GameOver) {
-                            chessRules.Process(player1, player2, null); // AI2下棋
-                            SwingUtilities.invokeLater(() -> chessBoard.repaint());
-                            if (!GameOver) {
-                                chessRules.Process(player1, player2, null); // AI1下棋
-                                SwingUtilities.invokeLater(() -> chessBoard.repaint());
-                            }
-                            if (GameOver) {
-                                String msg = String.format("恭喜 %s 赢了", finalChessType1);
-                                JOptionPane.showMessageDialog(chessBoard, msg);
-                            }
-                        }
-                    }).start();
                     break;
             }
-
             if (GameOver) {
                 String msg = String.format("恭喜 %s 赢了", chessType);
                 JOptionPane.showMessageDialog(chessBoard, msg);

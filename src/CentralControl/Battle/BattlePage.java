@@ -1,6 +1,5 @@
 package CentralControl.Battle;
 
-import ChessGames.GoBang.GoBangController;
 import ChessGames.template.*;
 import Util.GetChess;
 
@@ -23,7 +22,7 @@ public class BattlePage {
     private  JButton ExitButton;//声明退出按钮
     JComboBox<String> gameMode;
     JComboBox<String> AIMode;
-    Dimension dim=new Dimension(70,40);
+    Dimension dim=new Dimension(100,200);
 
 
     public BattlePage(String Chess) {
@@ -90,18 +89,13 @@ public class BattlePage {
         ExitButton.setBackground(new Color(59, 89, 182));
         ExitButton.addActionListener(mb);
 
-
-        panel3.add(Box.createHorizontalGlue()); // 在按钮之前添加占位组件
+        panel3.add(Box.createHorizontalGlue());
         panel3.add(RestartButton);
         panel3.add(Box.createHorizontalGlue());
         panel3.add(WithdrawButton);
         panel3.add(Box.createHorizontalGlue());
         panel3.add(ExitButton);
         panel3.add(Box.createHorizontalGlue()); // 在按钮之后添加占位组件
-
-
-
-
 
 
         frame.getContentPane().add(panel3, BorderLayout.SOUTH);
@@ -119,10 +113,8 @@ public class BattlePage {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (obj == RestartButton) {
-                System.out.println("重新开始");
-                chess.RestartGame();
+                chess.StartGame();
             } else if (obj == WithdrawButton) {
-                System.out.println("悔棋！");
                 chess.chessRules.GoBack();
             } else if (obj == ExitButton) {
                 System.exit(0);

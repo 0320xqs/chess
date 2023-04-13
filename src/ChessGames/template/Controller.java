@@ -13,5 +13,5 @@ public abstract class Controller  {
      *  @Descrition 游戏重开
      *  @Return null
      **/
-    public abstract void RestartGame();
+    public abstract void StartGame();
 }
