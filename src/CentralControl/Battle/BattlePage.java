@@ -28,7 +28,6 @@ public class BattlePage {
     public BattlePage(String Chess) {
         // 创建一个顶层Frame，使用BorderLayout布局
         JFrame frame = new JFrame();
-        frame.setLocation(600, 100);
         frame.setLayout(new BorderLayout());
 
         //棋盘面板

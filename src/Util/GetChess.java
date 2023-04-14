@@ -5,7 +5,7 @@ import ChessGames.template.*;
 
 public class GetChess {
 
-    public static String[] ChessList={"GoBang",   };
+    public static String[] ChessList={"GoBang","Go"};
 
     public static Controller getChess(String chessname){
         switch (chessname){
