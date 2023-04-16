@@ -51,7 +51,6 @@ public class Minimax {
      * @Description 获取下一步棋子位置
      */
     public ChessPieces play(ChessPieces pieces) {
-
         if (Board.chessCount == 0) {
 
             return new GoBangChessPieces(BOARD_SIZE / 2, BOARD_SIZE / 2);

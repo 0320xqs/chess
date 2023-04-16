@@ -15,7 +15,6 @@ import java.awt.event.ItemEvent;
 
 
 public class ExamplePage {
-
     public String[] AI_Rate = {"10", "50", "100", "1000"};
     private Controller chess;
     private JButton StartButton;
@@ -26,7 +25,7 @@ public class ExamplePage {
     Dimension dim = new Dimension(100, 200);
 
     public ExamplePage(String Chess) {
-        num=10;
+        num = 10;
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
 
@@ -103,7 +102,11 @@ public class ExamplePage {
             Object obj = e.getSource();
             if (obj == StartButton) {
                 while (num-- != 0)
-                    chess.StartGame();
+                    new Thread(() -> {
+                     Controller temp=GetChess.getChess("GoBang");
+                     temp.GameModeSelect("AI VS AI");
+                     temp.StartGame();
+                    }).start();
             } else if (obj == SaveButton) {
                 chess.chessRules.GoBack();
             } else if (obj == ExitButton) {

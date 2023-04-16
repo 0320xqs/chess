@@ -12,6 +12,7 @@ import java.util.Objects;
 import static ChessGames.GoBang.GoBangConfig.*;
 
 public class GoBangController extends Controller {
+
     GoBangConfig gameStatus = new GoBangConfig();
     String GAMEMODE;
     String AIMODE;
@@ -23,8 +24,8 @@ public class GoBangController extends Controller {
         this.chessPieces = new GoBangChessPieces();
         this.chessRules = new GoBangRules(gameStatus);
         GoBangListener listener = new GoBangListener();
-        chessBoard.addMouseListener((MouseListener) listener);
-        chessBoard.addMouseMotionListener((MouseMotionListener) listener);
+        chessBoard.addMouseListener(listener);
+        chessBoard.addMouseMotionListener(listener);
         GAMEMODE = "人 VS 人";
         AIMODE = "小白";
         AIDepth = 4;
@@ -112,16 +113,15 @@ public class GoBangController extends Controller {
             case "AI VS AI":
                 chessRules.Process(gameStatus.player1, gameStatus.player2, null);//AI下第一步棋
                 gameStatus.GameOpen = true;
-                chessBoard.repaint();
                 String finalChessType1 = gameStatus.currentPlayer ? "黑棋" : "白棋";
                 ;
                 new Thread(() -> {
                     while (!gameStatus.GameOver) {
                         chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI2下棋
-                        SwingUtilities.invokeLater(() -> chessBoard.repaint());
+                         chessBoard.repaint();
                         if (!gameStatus.GameOver) {
                             chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI1下棋
-                            SwingUtilities.invokeLater(() -> chessBoard.repaint());
+                            chessBoard.repaint();
                         }
                         if (gameStatus.GameOver) {
                             String msg = String.format("恭喜 %s 赢了", finalChessType1);

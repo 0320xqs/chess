@@ -5,11 +5,12 @@ import ChessGames.template.*;
 
 public class GetChess {
 
-    public static String[] ChessList={"GoBang","Go"};
+    public static String[] ChessList = {"GoBang", "Go"};
 
-    public static Controller getChess(String chessname){
-        switch (chessname){
-            case "GoBang": return new GoBangController();
+    public static Controller getChess(String chessname) {
+        switch (chessname) {
+            case "GoBang":
+                return new GoBangController();
         }
 
 
