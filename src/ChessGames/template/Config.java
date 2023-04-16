@@ -2,6 +2,8 @@ package ChessGames.template;
 
 import ChessGames.GoBang.GoBangChessPieces;
 
+import java.util.ArrayList;
+
 public abstract class Config {
 
     /**
@@ -20,10 +22,9 @@ public abstract class Config {
     /**
      * 棋盘
      **/
-    public boolean currentPlayer;// true：黑子 false：白子 开始默认黑子先下
+    public boolean currentPlayer;
     public boolean GameOpen;//定义游戏是否开局
     public boolean GameOver;//定义是否游戏结束
-    public int chessCount;//棋子数目
     public int[][] board;
-    public ChessPieces[] chessArray;//存储下棋顺序
+    public ArrayList<ChessPieces> chessArray;//存储下棋顺序
 }

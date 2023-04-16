@@ -6,11 +6,12 @@ import ChessGames.template.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GoBangConfig extends Config {
     public GoBangConfig() {
         this.board=new int[ROWS][COLS];
-        this.chessArray=new ChessPieces[ROWS*COLS];
+        this.chessArray=new ArrayList<>();
     }
 
     /**

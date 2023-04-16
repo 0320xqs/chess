@@ -33,12 +33,12 @@ public class GoBangRules extends ChessRules {
         x_index = tempChess.getX_coordinate();
         y_index = tempChess.getY_coordinate();
         config.board[x_index][y_index] = Role;
-        config.chessArray[config.chessCount++] = tempChess;
+        config.chessArray.add(tempChess);
         //判赢
         if (win(x_index, y_index, config.currentPlayer)) {//判断是否胜利
             config.GameOver = true;
             return;
-        } else if (config.chessCount == COLS * ROWS) {//判断是否全部下满
+        } else if (config.chessArray.size() == COLS * ROWS) {//判断是否全部下满
             config.GameOver = true;
             return;
         }
@@ -171,17 +171,16 @@ public class GoBangRules extends ChessRules {
 
     @Override
     public void GoBack() {
-        if (config.chessCount == 0) {
+        if (config.chessArray.size() == 0) {
             return;
         }
-        if (config.chessCount > 0) {
-            int x_index = config.chessArray[config.chessCount - 1].getX_coordinate();
-            int y_index = config.chessArray[config.chessCount - 1].getY_coordinate();
+        if (config.chessArray.size() > 0) {
+            int x_index = config.chessArray.get(config.chessArray.size() - 1).getX_coordinate();
+            int y_index = config.chessArray.get(config.chessArray.size() - 1).getY_coordinate();
             config.board[x_index][y_index] = 0;
         }
-        config.chessArray[config.chessCount - 1] = null;
-       config.chessCount--;
-       config.GameOver = false;
-       config.currentPlayer = !config.currentPlayer;
+        config.chessArray.remove(config.chessArray.size() - 1);
+        config.GameOver = false;
+        config.currentPlayer = !config.currentPlayer;
     }
 }

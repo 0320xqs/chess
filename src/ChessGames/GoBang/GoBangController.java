@@ -1,5 +1,6 @@
 package ChessGames.GoBang;
 
+import ChessGames.template.ChessPieces;
 import ChessGames.template.Controller;
 import ChessGames.template.Player;
 
@@ -12,6 +13,11 @@ import java.util.Objects;
 import static ChessGames.GoBang.GoBangConfig.*;
 
 public class GoBangController extends Controller {
+
+    @Override
+    public void run() {
+        StartGame();
+    }
 
     GoBangConfig gameStatus = new GoBangConfig();
     String GAMEMODE;
@@ -31,12 +37,10 @@ public class GoBangController extends Controller {
         AIDepth = 4;
         gameStatus.player1 = new GoBangMan();
         gameStatus.player2 = new GoBangMan();
-        Arrays.fill(gameStatus.chessArray, null);
         gameStatus.board = chessRules.GetBegin();
         gameStatus.currentPlayer = true;
         gameStatus.GameOpen = false;
         gameStatus.GameOver = false;
-        gameStatus.chessCount = 0;
     }
 
 
@@ -92,8 +96,10 @@ public class GoBangController extends Controller {
 
     @Override
     public void StartGame() {
+
+        chessBoard.repaint();
         //设置为初始状态
-        Arrays.fill(gameStatus.chessArray, null);
+        gameStatus.chessArray.clear();
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 gameStatus.board[i][j] = 0;
@@ -102,7 +108,6 @@ public class GoBangController extends Controller {
         gameStatus.currentPlayer = true;
         gameStatus.GameOpen = true;
         gameStatus.GameOver = false;
-        gameStatus.chessCount = 0;
 
         switch (GAMEMODE) {
             case "AI VS 人":
@@ -115,24 +120,36 @@ public class GoBangController extends Controller {
                 gameStatus.GameOpen = true;
                 String finalChessType1 = gameStatus.currentPlayer ? "黑棋" : "白棋";
                 ;
-                new Thread(() -> {
-                    while (!gameStatus.GameOver) {
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI2下棋
-                         chessBoard.repaint();
-                        if (!gameStatus.GameOver) {
-                            chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI1下棋
-                            chessBoard.repaint();
-                        }
-                        if (gameStatus.GameOver) {
-                            String msg = String.format("恭喜 %s 赢了", finalChessType1);
-                            JOptionPane.showMessageDialog(chessBoard, msg);
-                        }
+
+                while (!gameStatus.GameOver) {
+                    chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI2下棋
+                    chessBoard.repaint();
+                    if (!gameStatus.GameOver) {
+                        chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI1下棋
+                        chessBoard.repaint();
                     }
-                }).start();
+                    if (gameStatus.GameOver) {
+
+                        String msg = String.format("恭喜 %s 赢了", finalChessType1);
+                        JOptionPane.showMessageDialog(chessBoard, msg);
+
+                    }
+                }
+
                 break;
         }
-        chessBoard.repaint();
 
+
+    }
+
+     @Override
+    public int[] GameRecord() {
+        int[] temp = new int[gameStatus.chessArray.size() + 1];
+        for (int i = 0; i < gameStatus.chessArray.size(); i++) {
+            temp[i] = gameStatus.chessArray.get(i).getX_coordinate() * gameStatus.ROWS + gameStatus.chessArray.get(i).getY_coordinate();
+        }
+        temp[gameStatus.chessArray.size()] = gameStatus.currentPlayer ? 1 : 2;
+        return temp;
     }
 
     private class GoBangListener extends Component implements MouseListener, MouseMotionListener {

@@ -111,7 +111,7 @@ public class BattlePage {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (obj == RestartButton) {
-                chess.StartGame();
+                chess.start();
             } else if (obj == WithdrawButton) {
                 chess.chessRules.GoBack();
             } else if (obj == ExitButton) {

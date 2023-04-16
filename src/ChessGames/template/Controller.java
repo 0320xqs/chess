@@ -3,7 +3,7 @@ package ChessGames.template;
 import ChessGames.GoBang.GoBangChessPieces;
 
 
-public abstract class Controller {
+public abstract class Controller extends Thread{
     public ChessBoard chessBoard;//棋盘
     public ChessPieces chessPieces;//棋子
     public ChessRules chessRules;//棋规
@@ -19,4 +19,8 @@ public abstract class Controller {
      * @Return null
      **/
     public abstract void StartGame();
+
+    public abstract int[] GameRecord();
+
+
 }
