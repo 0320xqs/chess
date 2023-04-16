@@ -23,7 +23,7 @@ public class Minimax {
     private static int comx, comy; // 电脑下子坐标
     private final int HUO = 1;
     private final int CHONG = 2;
-    
+
     /**
      * 记录找到的分数一样的棋子，随机下这些棋子中的一个，以防步法固定
      */
@@ -52,7 +52,6 @@ public class Minimax {
      */
     public ChessPieces play(ChessPieces pieces) {
 
-
         if (Board.chessCount == 0) {
 
             return new GoBangChessPieces(BOARD_SIZE / 2, BOARD_SIZE / 2);
@@ -73,39 +72,27 @@ public class Minimax {
         comx = 0;
         comy = 0;
         chessXYList = arouse(Role);
-        System.out.println("待选长度为：" + chessXYList.size());
+
         int value1 = maxMin(Role, Depth, -100000000, 100000000);
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(String.format("%12d", computerScore[j][i]));//输出跟棋盘同向
-            }
-            System.out.println("");
-        }
         int judgeKill = 0;
         int judgeX = -1;
         int judgeY = -1;
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(computerScore_sort[i][j] + " ");
                 if (computerScore_sort[i][j] >= judgeKill) {//判杀（还能再加上随机性）
                     judgeKill = computerScore_sort[i][j];
                     judgeX = i;
                     judgeY = j;
                 }
             }
-            System.out.println();
         }
-        System.out.println(judgeX + "我们在这里" + judgeY);
-        System.out.println(judgeKill);
         if (judgeKill == 9 || judgeKill == 12) {//对方有活四以上，优先去堵
             ChessXY chess = new ChessXY(judgeX, judgeY);
             chessList.add(chess);
         } else {
-            System.out.println("最优分数为：" + value1);
             for (int i = 0; i < BOARD_SIZE; ++i) {
                 for (int j = 0; j < BOARD_SIZE; ++j) {
                     if (computerScore[i][j] == value1) {
-                        System.out.println("最优位置为：" + (i + 1) + "   " + (j + 1));//输出跟棋盘同向
                         ChessXY chess = new ChessXY(i, j);
                         chessList.add(chess);
                     }
@@ -245,9 +232,7 @@ public class Minimax {
         int count = 0;
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                System.out.print(String.format("%12d", computerScore_sort[j][i]));//输出跟棋盘同向
             }
-            System.out.println();
         }
         int[][] maxList = new int[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -261,7 +246,6 @@ public class Minimax {
         int maxValue = -1000000000;
         int maxX = -1;
         int maxY = -1;
-        System.out.println("可用空间为：" + count);
         for (int h = 0; h < count; h++) {
             maxValue = -1000000000;
             maxX = -1;
@@ -279,8 +263,6 @@ public class Minimax {
                 }
             }
             if (maxValue < 1) continue;
-            //computerScore_sort[maxX][maxY] = -1000000000;
-            System.out.println("可选坐标为：" + (maxX + 1) + " " + (maxY + 1));//输出跟棋盘同向
             chessXYList.addLast(new ChessXY(maxX, maxY));
             maxList[maxX][maxY] = 1;
         }
@@ -540,7 +522,6 @@ public class Minimax {
                      * alpha + beta剪枝点
                      */
                     if (value >= beta) {
-                        //System.out.println("剪枝");
                         return beta;
                     }
                     alpha = value;

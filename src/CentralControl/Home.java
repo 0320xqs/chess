@@ -1,6 +1,7 @@
 package CentralControl;
 
 import CentralControl.Battle.BattlePage;
+import CentralControl.Example.ExamplePage;
 import Util.GetChess;
 
 import javax.swing.*;
@@ -105,6 +106,7 @@ public class Home {
         @Override
         public void actionPerformed(ActionEvent e) {
             homepage.setVisible(false);
+
             if (e.getSource() == Battle) {
                 String i = (String) JOptionPane.showInputDialog(null, "棋类选择",
                         null, JOptionPane.QUESTION_MESSAGE, null, GetChess.ChessList, null);
@@ -115,6 +117,9 @@ public class Home {
             if (e.getSource() == Play) {
             }
             if (e.getSource() == Example) {
+                String i = (String) JOptionPane.showInputDialog(null, "棋类选择",
+                        null, JOptionPane.QUESTION_MESSAGE, null, GetChess.ChessList, null);
+                new ExamplePage(i);
             }
 
 

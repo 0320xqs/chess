@@ -1,8 +1,10 @@
-package CentralControl.Battle;
+package CentralControl.Example;
 
+import CentralControl.Battle.BattlePage;
 import CentralControl.Home;
-import ChessGames.template.*;
+import ChessGames.template.Controller;
 import Util.GetChess;
+
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
@@ -11,35 +13,42 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
-import static ChessGames.GoBang.GoBangConfig.*;
 
-public class BattlePage {
-    JFrame frame;
-    public String[] GameMode = {"人 VS 人", "人 VS AI", "AI VS 人", "AI VS AI"};
-    public String[] AI_Rate = {"小白", "新手", "普通"};
+public class ExamplePage {
+
+    public String[] AI_Rate = {"10", "50", "100", "1000"};
     private Controller chess;
-    private JButton RestartButton;//声明重新开始按钮
-    private JButton WithdrawButton;//声明悔棋按钮
-    private JButton ExitButton;//声明退出按钮
-    JComboBox<String> gameMode;
+    private JButton StartButton;
+    private JButton SaveButton;
+    private JButton ExitButton;
     JComboBox<String> AIMode;
+    int num;
     Dimension dim = new Dimension(100, 200);
 
-
-    public BattlePage(String Chess) {
-
-        frame = new JFrame();
+    public ExamplePage(String Chess) {
+        num=10;
+        JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
 
 
         chess = GetChess.getChess(Chess);
         assert chess != null;
+        chess.GameModeSelect("AI VS AI");
         chess.chessBoard.setPreferredSize(new Dimension(560, 560));
 
 
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
         panel2.setPreferredSize(new Dimension(200, 560));
+
+        AIMode = new JComboBox<>(AI_Rate);
+        AIMode.setRenderer(new CenteredComboBoxRenderer());
+        AIMode.addItemListener(evt -> {
+            if (evt.getStateChange() == ItemEvent.SELECTED) {
+                num = Integer.parseInt(evt.getItem().toString());
+            }
+        });
+        panel2.add(AIMode);
 
 
         JPanel panel3 = new JPanel();
@@ -48,39 +57,19 @@ public class BattlePage {
         panel3.setPreferredSize(new Dimension(760, 200));
 
 
-        gameMode = new JComboBox<>(GameMode);
-        gameMode.setRenderer(new CenteredComboBoxRenderer());
-        gameMode.addItemListener(evt -> {
-            if (evt.getStateChange() == ItemEvent.SELECTED) {
-                String GAMEMODE = evt.getItem().toString();
-                chess.GameModeSelect(GAMEMODE);
-            }
-        });
-        panel2.add(gameMode);
-
-        AIMode = new JComboBox<>(AI_Rate);
-        AIMode.setRenderer(new CenteredComboBoxRenderer());
-        AIMode.addItemListener(evt -> {
-            if (evt.getStateChange() == ItemEvent.SELECTED) {
-                String AIMODE = evt.getItem().toString();
-                chess.AIModeSelect(AIMODE);
-            }
-        });
-        panel2.add(AIMode);
-
         MyButtonLister mb = new MyButtonLister();
 
-        RestartButton = new JButton("Start");
-        RestartButton.setPreferredSize(dim);
-        RestartButton.setForeground(Color.WHITE);
-        RestartButton.setBackground(new Color(59, 89, 182));
-        RestartButton.addActionListener(mb);
+        StartButton = new JButton("Start");
+        StartButton.setPreferredSize(dim);
+        StartButton.setForeground(Color.WHITE);
+        StartButton.setBackground(new Color(59, 89, 182));
+        StartButton.addActionListener(mb);
 
-        WithdrawButton = new JButton("Withdraw");
-        WithdrawButton.setPreferredSize(dim);
-        WithdrawButton.setForeground(Color.WHITE);
-        WithdrawButton.setBackground(new Color(59, 89, 182));
-        WithdrawButton.addActionListener(mb);
+        SaveButton = new JButton("Withdraw");
+        SaveButton.setPreferredSize(dim);
+        SaveButton.setForeground(Color.WHITE);
+        SaveButton.setBackground(new Color(59, 89, 182));
+        SaveButton.addActionListener(mb);
 
         ExitButton = new JButton("Exit");
         ExitButton.setPreferredSize((dim));
@@ -89,9 +78,9 @@ public class BattlePage {
         ExitButton.addActionListener(mb);
 
         panel3.add(Box.createHorizontalGlue());
-        panel3.add(RestartButton);
+        panel3.add(StartButton);
         panel3.add(Box.createHorizontalGlue());
-        panel3.add(WithdrawButton);
+        panel3.add(SaveButton);
         panel3.add(Box.createHorizontalGlue());
         panel3.add(ExitButton);
         panel3.add(Box.createHorizontalGlue());
@@ -104,18 +93,20 @@ public class BattlePage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
     }
 
     private class MyButtonLister implements ActionListener {
+        //按钮处理事件类
         @Override
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
-            if (obj == RestartButton) {
-                chess.StartGame();
-            } else if (obj == WithdrawButton) {
+            if (obj == StartButton) {
+                while (num-- != 0)
+                    chess.StartGame();
+            } else if (obj == SaveButton) {
                 chess.chessRules.GoBack();
             } else if (obj == ExitButton) {
-                frame.setVisible(false);
                 new Home();
             }
         }
@@ -128,4 +119,7 @@ public class BattlePage {
             return this;
         }
     }
+
+
 }
+

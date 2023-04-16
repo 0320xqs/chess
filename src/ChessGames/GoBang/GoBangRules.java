@@ -4,8 +4,12 @@ import ChessGames.template.*;
 
 import static ChessGames.GoBang.GoBangConfig.*;
 
-public class GoBangRules extends ChessRules{
+public class GoBangRules extends ChessRules {
 
+
+    public GoBangRules(GoBangConfig goBangConfig) {
+        this.config = goBangConfig;
+    }
 
     @Override
     public int[][] GetBegin() {
@@ -18,8 +22,8 @@ public class GoBangRules extends ChessRules{
         GoBangChessPieces tempChess;//临时棋子用于存储下一步棋
         int x_index, y_index;
         int Role;//1代表黑棋。2：代表白棋
-        Role = currentPlayer ? CHESSTYPE1 : CHESSTYPE2;
-        if (currentPlayer) {
+        Role = config.currentPlayer ? CHESSTYPE1 : CHESSTYPE2;
+        if (config.currentPlayer) {
             tempChess = (GoBangChessPieces) player1.play((GoBangChessPieces) chess);
             tempChess.setChessImage(BLACKCHESS);
         } else {
@@ -28,17 +32,17 @@ public class GoBangRules extends ChessRules{
         }
         x_index = tempChess.getX_coordinate();
         y_index = tempChess.getY_coordinate();
-        board[x_index][y_index] = Role;
-        chessArray[chessCount++] = tempChess;
+        config.board[x_index][y_index] = Role;
+        config.chessArray[config.chessCount++] = tempChess;
         //判赢
-        if (win(x_index, y_index, currentPlayer)) {//判断是否胜利
-            GameOver = true;
+        if (win(x_index, y_index, config.currentPlayer)) {//判断是否胜利
+            config.GameOver = true;
             return;
-        } else if (chessCount == COLS * ROWS) {//判断是否全部下满
-            GameOver = true;
+        } else if (config.chessCount == COLS * ROWS) {//判断是否全部下满
+            config.GameOver = true;
             return;
         }
-        currentPlayer = !currentPlayer;//切换当前玩家
+        config.currentPlayer = !config.currentPlayer;//切换当前玩家
     }
 
     public Boolean End() {
@@ -66,13 +70,13 @@ public class GoBangRules extends ChessRules{
          */
         for (i = 1; i < 5; ++i) {
             if ((y + i) < BOARD_SIZE) {
-                if (board[x][y + i] == f && down)
+                if (config.board[x][y + i] == f && down)
                     count++;
                 else
                     down = false;
             }
             if ((y - i) >= 0) {
-                if (board[x][y - i] == f && up)
+                if (config.board[x][y - i] == f && up)
                     count++;
                 else
                     up = false;
@@ -89,13 +93,13 @@ public class GoBangRules extends ChessRules{
          */
         for (i = 1; i < 5; ++i) {
             if ((x + i) < BOARD_SIZE) {
-                if (board[x + i][y] == f && right)
+                if (config.board[x + i][y] == f && right)
                     count++;
                 else
                     right = false;
             }
             if ((x - i) >= 0) {
-                if (board[x - i][y] == f && left)
+                if (config.board[x - i][y] == f && left)
                     count++;
                 else
                     left = false;
@@ -112,13 +116,13 @@ public class GoBangRules extends ChessRules{
          */
         for (i = 1; i < 5; ++i) {
             if ((x + i) < BOARD_SIZE && (y + i) < BOARD_SIZE) {
-                if (board[x + i][y + i] == f && rdown)
+                if (config.board[x + i][y + i] == f && rdown)
                     count++;
                 else
                     rdown = false;
             }
             if ((x - i) >= 0 && (y - i) >= 0) {
-                if (board[x - i][y - i] == f && lup)
+                if (config.board[x - i][y - i] == f && lup)
                     count++;
                 else
                     lup = false;
@@ -135,13 +139,13 @@ public class GoBangRules extends ChessRules{
          */
         for (i = 1; i < 5; ++i) {
             if ((x + i) < BOARD_SIZE && (y - i) >= 0) {
-                if (board[x + i][y - i] == f && rup)
+                if (config.board[x + i][y - i] == f && rup)
                     count++;
                 else
                     rup = false;
             }
             if ((x - i) >= 0 && (y + i) < BOARD_SIZE) {
-                if (board[x - i][y + i] == f && ldown)
+                if (config.board[x - i][y + i] == f && ldown)
                     count++;
                 else
                     ldown = false;
@@ -155,8 +159,8 @@ public class GoBangRules extends ChessRules{
 
 
     @Override
-    public  boolean findChess(int position_X, int position_Y) {
-        for (GoBangChessPieces c : chessArray) {
+    public boolean findChess(int position_X, int position_Y) {
+        for (ChessPieces c : config.chessArray) {
             if (c != null && c.getX_coordinate() == position_X && c.getY_coordinate() == position_Y)
                 return true;
         }
@@ -167,17 +171,17 @@ public class GoBangRules extends ChessRules{
 
     @Override
     public void GoBack() {
-        if (chessCount == 0) {
+        if (config.chessCount == 0) {
             return;
         }
-        if (chessCount > 0) {
-            int x_index = chessArray[chessCount - 1].getX_coordinate();
-            int y_index = chessArray[chessCount - 1].getY_coordinate();
-            board[x_index][y_index] = 0;
+        if (config.chessCount > 0) {
+            int x_index = config.chessArray[config.chessCount - 1].getX_coordinate();
+            int y_index = config.chessArray[config.chessCount - 1].getY_coordinate();
+            config.board[x_index][y_index] = 0;
         }
-        chessArray[chessCount - 1] = null;
-        chessCount--;
-        GameOver = false;
-        currentPlayer = !currentPlayer;
+        config.chessArray[config.chessCount - 1] = null;
+       config.chessCount--;
+       config.GameOver = false;
+       config.currentPlayer = !config.currentPlayer;
     }
 }

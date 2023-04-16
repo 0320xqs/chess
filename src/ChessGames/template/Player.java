@@ -1,6 +1,9 @@
 package ChessGames.template;
 
+import ChessGames.GoBang.GoBangChessPieces;
+
 public abstract class Player {
+
 
     /**
      *  @Date 18:38 2023/4/12
