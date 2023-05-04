@@ -2,11 +2,14 @@ package ChessGames.template;
 
 import ChessGames.GoBang.GoBangChessPieces;
 
+import java.util.concurrent.Callable;
 
-public abstract class Controller extends Thread{
+
+public abstract class Controller implements Callable {
     public ChessBoard chessBoard;//棋盘
     public ChessPieces chessPieces;//棋子
     public ChessRules chessRules;//棋规
+    public Config config;
 
     public abstract void GameModeSelect(String GameMode);
 
@@ -21,6 +24,7 @@ public abstract class Controller extends Thread{
     public abstract void StartGame();
 
     public abstract int[] GameRecord();
+    public void play(int xy,int Role){}
 
 
 }

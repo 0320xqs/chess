@@ -2,6 +2,7 @@ package CentralControl.Example;
 
 import CentralControl.Battle.BattlePage;
 import CentralControl.Home;
+import ChessGames.GoBang.GoBangController;
 import ChessGames.template.Controller;
 import Util.GetChess;
 import Util.Write;
@@ -19,23 +20,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.*;
 
 
 public class ExamplePage {
     public List<int[]> Example;
     public String[] AI_Rate = {"10", "50", "100", "1000"};
-    private Controller chess;
-    private JButton StartButton;
-    private JButton SaveButton;
-    private JButton ExitButton;
+    public Controller chess;
+    public JButton StartButton;
+    public JButton SaveButton;
+    public JButton ExitButton;
     JTextArea textArea;
     JComboBox<String> AIMode;
     int num;
     Dimension dim = new Dimension(100, 200);
 
     public ExamplePage(String Chess) {
-        Example = Collections.synchronizedList(new ArrayList<>());
-        ;
+        Example = new ArrayList<>();
         num = 10;
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -127,25 +128,16 @@ public class ExamplePage {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (obj == StartButton) {
-                while (num-- > 0) {
-                    new Thread(() -> {
-                        Controller temp = GetChess.getChess("GoBang");
-                        temp.GameModeSelect("AI VS AI");
-                        temp.start();
-                        try {
-                            temp.join();
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-                        Example.add(temp.GameRecord());
+                new Thread(() -> {
+                    TaskScheduler scheduler = new TaskScheduler(10);
+                    try {
+                        scheduler.start();
+                    } catch (ExecutionException | InterruptedException | IOException ex) {
+                        ex.printStackTrace();
+                    }
 
-                    }).start();
-                }
-                try {
-                    Write.write(Example);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                }).start();
+
 
             } else if (obj == SaveButton) {
                 chess.chessRules.GoBack();
@@ -164,5 +156,34 @@ public class ExamplePage {
     }
 
 
+    class TaskScheduler {
+        private ExecutorService executor;
+
+
+        public TaskScheduler(int numThreads) {
+            this.executor = Executors.newFixedThreadPool(numThreads);
+
+        }
+
+        public void start() throws ExecutionException, InterruptedException, IOException {
+            List<FutureTask> futures = new ArrayList<>();
+            for (int i = 0; i < num; i++) {
+                Controller temp = new GoBangController();
+                temp.GameModeSelect("AI VS AI");
+                FutureTask future = new FutureTask<>(temp);
+                executor.execute(future);
+                futures.add(future);
+            }
+
+            executor.shutdown();
+            for (FutureTask future : futures) {
+                Example.add((int[]) future.get());
+            }
+            Write.write(Example);
+            System.out.println("Completed");
+        }
+    }
 }
+
+
 

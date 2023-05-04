@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class GoBangConfig extends Config {
     public GoBangConfig() {
-        this.board=new int[ROWS][COLS];
-        this.chessArray=new ArrayList<>();
+        this.board = new int[ROWS][COLS];
+        this.chessArray = new ArrayList<>();
     }
 
     /**

@@ -2,6 +2,7 @@ package CentralControl;
 
 import CentralControl.Battle.BattlePage;
 import CentralControl.Example.ExamplePage;
+import CentralControl.Play.PlayPage;
 import Util.GetChess;
 
 import javax.swing.*;
@@ -115,6 +116,7 @@ public class Home {
             if (e.getSource() == Config) {
             }
             if (e.getSource() == Play) {
+                new PlayPage();
             }
             if (e.getSource() == Example) {
                 String i = (String) JOptionPane.showInputDialog(null, "棋类选择",

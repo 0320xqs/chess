@@ -15,11 +15,12 @@ import static ChessGames.GoBang.GoBangConfig.*;
 public class GoBangController extends Controller {
 
     @Override
-    public void run() {
+    public int[] call() {
         StartGame();
+        return GameRecord();
     }
 
-    GoBangConfig gameStatus = new GoBangConfig();
+    public GoBangConfig gameStatus = new GoBangConfig();
     String GAMEMODE;
     String AIMODE;
     int AIDepth;
@@ -119,8 +120,6 @@ public class GoBangController extends Controller {
                 chessRules.Process(gameStatus.player1, gameStatus.player2, null);//AI下第一步棋
                 gameStatus.GameOpen = true;
                 String finalChessType1 = gameStatus.currentPlayer ? "黑棋" : "白棋";
-                ;
-
                 while (!gameStatus.GameOver) {
                     chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI2下棋
                     chessBoard.repaint();
@@ -129,9 +128,6 @@ public class GoBangController extends Controller {
                         chessBoard.repaint();
                     }
                     if (gameStatus.GameOver) {
-
-                        String msg = String.format("恭喜 %s 赢了", finalChessType1);
-                        JOptionPane.showMessageDialog(chessBoard, msg);
 
                     }
                 }
@@ -142,7 +138,17 @@ public class GoBangController extends Controller {
 
     }
 
-     @Override
+    public void play(int xy, int Role) {
+        int x = xy / ROWS;
+        int y = xy % ROWS;
+        GoBangChessPieces tempChess = new GoBangChessPieces(x, y);
+        tempChess.setChessImage(Role / 2 == 0 ? BLACKCHESS : WHITECHESS);
+        gameStatus.chessArray.add(tempChess);
+        gameStatus.board[x][y] = Role;
+        chessBoard.repaint();
+    }
+
+    @Override
     public int[] GameRecord() {
         int[] temp = new int[gameStatus.chessArray.size() + 1];
         for (int i = 0; i < gameStatus.chessArray.size(); i++) {
@@ -151,6 +157,7 @@ public class GoBangController extends Controller {
         temp[gameStatus.chessArray.size()] = gameStatus.currentPlayer ? 1 : 2;
         return temp;
     }
+
 
     private class GoBangListener extends Component implements MouseListener, MouseMotionListener {
         //鼠标点击事件
@@ -179,8 +186,7 @@ public class GoBangController extends Controller {
                         chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI下棋
                         chessBoard.repaint();
                         if (gameStatus.GameOver) {
-                            String msg = String.format("恭喜 %s 赢了", finalChessType);
-                            JOptionPane.showMessageDialog(chessBoard, msg);
+
                         }
 
                     }
@@ -189,8 +195,7 @@ public class GoBangController extends Controller {
                     break;
             }
             if (gameStatus.GameOver) {
-                String msg = String.format("恭喜 %s 赢了", chessType);
-                JOptionPane.showMessageDialog(chessBoard, msg);
+
             }
 
         }
