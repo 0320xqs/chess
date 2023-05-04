@@ -21,6 +21,7 @@ public class BattlePage {
     private JButton RestartButton;
     private JButton WithdrawButton;
     private JButton ExitButton;
+    JTextArea textArea;
     JButton ChangeButton;
     JTextField rows;
     JTextField cols;
@@ -36,9 +37,11 @@ public class BattlePage {
 
 
         chess = GetChess.getChess(Chess);
-        assert chess != null;
-        chess.chessBoard.setPreferredSize(new Dimension(560, 560));
 
+
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+        panel1.setPreferredSize(new Dimension(560, 760));
 
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
@@ -71,6 +74,12 @@ public class BattlePage {
         });
         panel2.add(AIMode);
 
+        textArea = new JTextArea("Battle:\n", 17, 30);
+
+        textArea.setLineWrap(true);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        panel2.add(scrollPane);
+
         MyButtonLister mb = new MyButtonLister();
 
         RestartButton = new JButton("Start");
@@ -100,9 +109,12 @@ public class BattlePage {
         panel3.add(Box.createHorizontalGlue());
 
 
-        frame.getContentPane().add(panel3, BorderLayout.SOUTH);
+        panel1.add(chess.chessBoard);
+        panel1.add(panel3);
+
+
         frame.getContentPane().add(panel2, BorderLayout.EAST);
-        frame.getContentPane().add(chess.chessBoard, BorderLayout.CENTER);
+        frame.getContentPane().add(panel1, BorderLayout.CENTER);
         frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);

@@ -40,8 +40,7 @@ public class GoBangController extends Controller {
         gameStatus.player2 = new GoBangMan();
         gameStatus.board = chessRules.GetBegin();
         gameStatus.currentPlayer = true;
-        gameStatus.GameOpen = false;
-        gameStatus.GameOver = false;
+        gameStatus.GameOver = 0;
     }
 
 
@@ -99,7 +98,6 @@ public class GoBangController extends Controller {
     public void StartGame() {
 
         chessBoard.repaint();
-        //设置为初始状态
         gameStatus.chessArray.clear();
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
@@ -107,28 +105,22 @@ public class GoBangController extends Controller {
             }
         }
         gameStatus.currentPlayer = true;
-        gameStatus.GameOpen = true;
-        gameStatus.GameOver = false;
+        gameStatus.GameOver = 0;
 
         switch (GAMEMODE) {
             case "AI VS 人":
                 chessRules.Process(gameStatus.player1, gameStatus.player2, null);//AI下第一步棋
-                gameStatus.GameOpen = true;
                 chessBoard.repaint();
                 break;
             case "AI VS AI":
                 chessRules.Process(gameStatus.player1, gameStatus.player2, null);//AI下第一步棋
-                gameStatus.GameOpen = true;
                 String finalChessType1 = gameStatus.currentPlayer ? "黑棋" : "白棋";
-                while (!gameStatus.GameOver) {
+                while (gameStatus.GameOver == 0) {
                     chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI2下棋
                     chessBoard.repaint();
-                    if (!gameStatus.GameOver) {
+                    if (gameStatus.GameOver == 0) {
                         chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI1下棋
                         chessBoard.repaint();
-                    }
-                    if (gameStatus.GameOver) {
-
                     }
                 }
 
@@ -163,7 +155,7 @@ public class GoBangController extends Controller {
         //鼠标点击事件
         @Override
         public void mousePressed(MouseEvent e) {
-            if (!(!gameStatus.GameOver & gameStatus.GameOpen))
+            if (gameStatus.GameOver != 0)
                 return;
             String chessType = gameStatus.currentPlayer ? "黑棋" : "白棋";
             int position_X = (e.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//得到棋子x坐标
@@ -185,17 +177,10 @@ public class GoBangController extends Controller {
                         String finalChessType = chessType;
                         chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI下棋
                         chessBoard.repaint();
-                        if (gameStatus.GameOver) {
-
-                        }
-
                     }
                     break;
                 case "AI VS AI":
                     break;
-            }
-            if (gameStatus.GameOver) {
-
             }
 
         }
@@ -231,7 +216,7 @@ public class GoBangController extends Controller {
         public void mouseMoved(MouseEvent e) {
             int x1 = (e.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//对鼠标光标的x坐标进行转换
             int y1 = (e.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//对鼠标光标的y坐标进行转换
-            if (x1 < 0 || x1 > ROWS || y1 < 0 || y1 > COLS || gameStatus.GameOver || chessRules.findChess(x1, y1)) {
+            if (x1 < 0 || x1 > ROWS || y1 < 0 || y1 > COLS || gameStatus.GameOver != 0 || chessRules.findChess(x1, y1)) {
                 chessBoard.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//设置鼠标光标为默认形状
             } else {
                 chessBoard.setCursor(new Cursor(Cursor.HAND_CURSOR));//设置鼠标光标为手型

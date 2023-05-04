@@ -19,9 +19,15 @@ public class GoBangConfig extends Config {
      **/
     public static int DIAMETER = 30;
     public static int MARGIN = 35;
-    public static int GRID_SPAN = 35;//一格长度
-    public static int ROWS = 15;//行数
-    public static int COLS = 15;//列数
+    public static int GRID_SPAN = 35;
+    public static int ROWS = 15;
+    public static int COLS = 15;
+
+    /**
+     * 玩家
+     **/
+    public Player player1;//先手玩家1
+    public Player player2;//后手玩家2
 
     /**
      * 棋子

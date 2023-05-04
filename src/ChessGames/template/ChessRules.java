@@ -8,6 +8,7 @@ import static ChessGames.GoBang.GoBangConfig.ROWS;
 public abstract class ChessRules {
 
     public Config config;
+
     /**
      * @Date 18:41 2023/4/12
      * @Param null
@@ -33,10 +34,7 @@ public abstract class ChessRules {
      * @Return boolean
      **/
 
-    public Boolean End() {
-
-        return true;
-    }
+    public abstract Boolean End(ChessPieces chessPieces);
 
     /**
      * @Date 18:45 2023/4/12
@@ -51,7 +49,7 @@ public abstract class ChessRules {
     /**
      * @Date 18:47 2023/4/12
      * @Param 坐标x，y
-     * @Descrition 判断位置是否由棋子
+     * @Descrition 判断位置是否有棋子
      * @Return
      **/
 
@@ -65,5 +63,21 @@ public abstract class ChessRules {
      **/
 
     public abstract void GoBack();
+
+    public String GetResult() {
+        switch (config.GameOver) {
+            case 0:
+                return "对局未结束";
+            case 1:
+                return "游戏结束，平局";
+            case 2:
+                return "游戏结束，先手赢";
+            case 3:
+                return "游戏结束，后手赢";
+
+
+        }
+        return  null;
+    }
 
 }

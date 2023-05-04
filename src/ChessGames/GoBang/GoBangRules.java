@@ -19,35 +19,38 @@ public class GoBangRules extends ChessRules {
 
     @Override
     public void Process(Player player1, Player player2, ChessPieces chess) {
-        GoBangChessPieces tempChess;//临时棋子用于存储下一步棋
+        GoBangChessPieces tempChess;
         int x_index, y_index;
-        int Role;//1代表黑棋。2：代表白棋
+        int Role;
         Role = config.currentPlayer ? CHESSTYPE1 : CHESSTYPE2;
         if (config.currentPlayer) {
-            tempChess = (GoBangChessPieces) player1.play((GoBangChessPieces) chess);
+            tempChess = (GoBangChessPieces) player1.play(chess);
             tempChess.setChessImage(BLACKCHESS);
         } else {
-            tempChess = (GoBangChessPieces) player2.play((GoBangChessPieces) chess);
+            tempChess = (GoBangChessPieces) player2.play(chess);
             tempChess.setChessImage(WHITECHESS);
         }
         x_index = tempChess.getX_coordinate();
         y_index = tempChess.getY_coordinate();
         config.board[x_index][y_index] = Role;
         config.chessArray.add(tempChess);
-        //判赢
-        if (win(x_index, y_index, config.currentPlayer)) {//判断是否胜利
-            config.GameOver = true;
-            return;
-        } else if (config.chessArray.size() == COLS * ROWS) {//判断是否全部下满
-            config.GameOver = true;
-            return;
+        if (!End(tempChess)) {
+            config.currentPlayer = !config.currentPlayer;
+        } else {
+            System.out.println(GetResult());
         }
-        config.currentPlayer = !config.currentPlayer;//切换当前玩家
     }
 
-    public Boolean End() {
-
-        return true;
+    @Override
+    public Boolean End(ChessPieces chessPieces) {
+        if (win(chessPieces.getX_coordinate(), chessPieces.getY_coordinate(), config.currentPlayer)) {
+            config.GameOver = config.currentPlayer ? 2 : 3;
+            return true;
+        } else if (config.chessArray.size() == COLS * ROWS) {
+            config.GameOver = 1;
+            return true;
+        }
+        return false;
     }
 
 
@@ -154,7 +157,7 @@ public class GoBangRules extends ChessRules {
         if (count >= 5) {
             return true;
         }
-        return false;//默认没有赢局
+        return false;
     }
 
 
@@ -180,7 +183,6 @@ public class GoBangRules extends ChessRules {
             config.board[x_index][y_index] = 0;
         }
         config.chessArray.remove(config.chessArray.size() - 1);
-        config.GameOver = false;
         config.currentPlayer = !config.currentPlayer;
     }
 }

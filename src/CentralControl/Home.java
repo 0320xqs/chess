@@ -12,7 +12,6 @@ import java.awt.event.*;
 public class Home {
     JFrame homepage;
     private JButton Battle;
-    private JButton Config;
     private JButton Play;
     private JButton Example;
 
@@ -58,20 +57,9 @@ public class Home {
         Battle.setFont(new Font("Serif", Font.BOLD, 20));
 
 
-        Config = new JButton("选项设置");
-        Config.setForeground(new Color(155, 152, 152, 255));
-        Config.setBounds(650, 100, 100, 50);
-        Config.setBackground(new Color(59, 89, 182));
-        Config.addActionListener(listener);
-        Config.setOpaque(false);
-        Config.setBorder(null);
-        Config.setFocusPainted(false);
-        Config.setFont(new Font("Serif", Font.BOLD, 20));
-
-
         Play = new JButton("对局回放");
         Play.setForeground(new Color(155, 152, 152, 255));
-        Play.setBounds(650, 160, 100, 50);
+        Play.setBounds(650, 100, 100, 50);
         Play.setBackground(new Color(59, 89, 182));
         Play.addActionListener(listener);
         Play.setOpaque(false);
@@ -82,7 +70,7 @@ public class Home {
 
         Example = new JButton("用例生成");
         Example.setForeground(new Color(155, 152, 152, 255));
-        Example.setBounds(650, 220, 100, 50);
+        Example.setBounds(650, 160, 100, 50);
         Example.setBackground(new Color(59, 89, 182));
         Example.addActionListener(listener);
         Example.setOpaque(false);
@@ -92,7 +80,6 @@ public class Home {
 
 
         option.add(Battle);
-        option.add(Config);
         option.add(Play);
         option.add(Example);
 
@@ -112,8 +99,6 @@ public class Home {
                 String i = (String) JOptionPane.showInputDialog(null, "棋类选择",
                         null, JOptionPane.QUESTION_MESSAGE, null, GetChess.ChessList, null);
                 new BattlePage(i);
-            }
-            if (e.getSource() == Config) {
             }
             if (e.getSource() == Play) {
                 new PlayPage();
