@@ -116,6 +116,7 @@ public class BattlePage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        chess.ChangeList();
 
 
     }
@@ -138,8 +139,6 @@ public class BattlePage {
                     textArea.append(chess.GetResult()+"\n");
 
                 }).start();
-
-
             } else if (obj == WithdrawButton) {
                 chess.chessRules.GoBack();
             } else if (obj == ExitButton) {

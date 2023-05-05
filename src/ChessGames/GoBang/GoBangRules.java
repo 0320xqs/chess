@@ -5,11 +5,7 @@ import ChessGames.template.*;
 import static ChessGames.GoBang.GoBangConfig.*;
 
 public class GoBangRules extends ChessRules {
-
-
-    public GoBangRules(GoBangConfig goBangConfig) {
-        this.config = goBangConfig;
-    }
+    GoBangConfig config = new GoBangConfig();
 
     @Override
     public int[][] GetBegin() {

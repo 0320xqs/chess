@@ -7,9 +7,7 @@ import ChessGames.template.*;
 import static ChessGames.GoBang.GoBangConfig.*;
 
 public class GoBangChessBoard extends ChessBoard {
-    public GoBangChessBoard(Config config) {
-        this.config = config;
-    }
+    GoBangConfig config = new GoBangConfig();
 
     @Override
     protected void paintComponent(Graphics g) {

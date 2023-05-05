@@ -2,6 +2,7 @@ package ChessGames.template;
 
 import ChessGames.GoBang.GoBangChessPieces;
 
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 
@@ -10,7 +11,6 @@ public abstract class Controller implements Callable {
     public ChessPieces chessPieces;//棋子
     public ChessRules chessRules;//棋规
 
-    public Config config;
 
     public abstract void GameModeSelect(String GameMode);
 
@@ -33,4 +33,6 @@ public abstract class Controller implements Callable {
     public String GetResult() {
         return null;
     }
+
+    public abstract void ChangeList();
 }

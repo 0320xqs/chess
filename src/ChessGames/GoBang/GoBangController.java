@@ -3,6 +3,7 @@ package ChessGames.GoBang;
 import ChessGames.template.ChessPieces;
 import ChessGames.template.Controller;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -16,7 +17,7 @@ public class GoBangController extends Controller {
         return GameRecord();
     }
 
-    public GoBangConfig gameStatus = new GoBangConfig();
+    GoBangConfig config = new GoBangConfig();
     GoBangListener listener;
     String GAMEMODE;
     String AIMODE;
@@ -24,24 +25,24 @@ public class GoBangController extends Controller {
 
 
     public GoBangController() {
-        this.chessBoard = new GoBangChessBoard(gameStatus);
+        this.chessBoard = new GoBangChessBoard();
         this.chessPieces = new GoBangChessPieces();
-        this.chessRules = new GoBangRules(gameStatus);
+        this.chessRules = new GoBangRules();
         listener = new GoBangListener();
         chessBoard.addMouseListener(listener);
         chessBoard.addMouseMotionListener(listener);
         GAMEMODE = "人 VS 人";
         AIMODE = "小白";
         AIDepth = 4;
-        gameStatus.player1 = new GoBangMan();
-        gameStatus.player2 = new GoBangMan();
-        gameStatus.board = chessRules.GetBegin();
-        gameStatus.currentPlayer = true;
-        gameStatus.GameOver = 0;
+        config.player1 = new GoBangMan();
+        config.player2 = new GoBangMan();
+        config.board = chessRules.GetBegin();
+        config.currentPlayer = true;
+        config.GameOver = 0;
     }
 
     public String GetResult() {
-        switch (gameStatus.GameOver) {
+        switch (config.GameOver) {
             case 0:
                 return "对局未结束";
             case 1:
@@ -50,8 +51,6 @@ public class GoBangController extends Controller {
                 return "游戏结束，先手赢";
             case 3:
                 return "游戏结束，后手赢";
-
-
         }
         return null;
     }
@@ -62,20 +61,20 @@ public class GoBangController extends Controller {
         this.GAMEMODE = GameMode;
         switch (GAMEMODE) {
             case "人 VS 人":
-                gameStatus.player1 = new GoBangMan();
-                gameStatus.player2 = new GoBangMan();
+                config.player1 = new GoBangMan();
+                config.player2 = new GoBangMan();
                 break;
             case "人 VS AI":
-                gameStatus.player1 = new GoBangMan();
-                gameStatus.player2 = new GoBangAI(gameStatus, 2, AIDepth);
+                config.player1 = new GoBangMan();
+                config.player2 = new GoBangAI(config, 2, AIDepth);
                 break;
             case "AI VS 人":
-                gameStatus.player1 = new GoBangAI(gameStatus, 1, AIDepth);
-                gameStatus.player2 = new GoBangMan();
+                config.player1 = new GoBangAI(config, 1, AIDepth);
+                config.player2 = new GoBangMan();
                 break;
             case "AI VS AI":
-                gameStatus.player1 = new GoBangAI(gameStatus, 1, AIDepth);
-                gameStatus.player2 = new GoBangAI(gameStatus, 2, AIDepth);
+                config.player1 = new GoBangAI(config, 1, AIDepth);
+                config.player2 = new GoBangAI(config, 2, AIDepth);
                 break;
         }
     }
@@ -110,66 +109,65 @@ public class GoBangController extends Controller {
     @Override
     public void StartGame() {
         int X, Y;
-        Point point = new Point();
-        ChessPieces chessPieces = new ChessPieces();
+        Point point;
         chessBoard.repaint();
-        gameStatus.chessArray.clear();
+        config.chessArray.clear();
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                gameStatus.board[i][j] = 0;
+                config.board[i][j] = 0;
             }
         }
-        gameStatus.currentPlayer = true;
-        gameStatus.GameOver = 0;
+        config.currentPlayer = true;
+        config.GameOver = 0;
 
         switch (GAMEMODE) {
             case "人 VS 人":
-                while (gameStatus.GameOver == 0) {
-                point = listener.waitForClick();
-                X = (int) ((point.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
-                Y = (int) ((point.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
+                while (config.GameOver == 0) {
+                    point = listener.waitForClick();
+                    X = (int) ((point.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
+                    Y = (int) ((point.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
 
                     if (!chessRules.findChess(X, Y)) {
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, new ChessPieces(X, Y));
+                        chessRules.Process(config.player1, config.player2, new ChessPieces(X, Y));
                         chessBoard.repaint();
                     }
                 }
                 break;
             case "人 VS AI":
-                while (gameStatus.GameOver == 0) {
+                while (config.GameOver == 0) {
                     point = listener.waitForClick();
                     X = (int) ((point.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
                     Y = (int) ((point.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
                     if (!chessRules.findChess(X, Y)) {
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, new ChessPieces(X, Y)); // 人下棋
+                        chessRules.Process(config.player1, config.player2, new ChessPieces(X, Y)); // 人下棋
                         chessBoard.repaint();
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI下棋
+                        chessRules.Process(config.player1, config.player2, null); // AI下棋
                         chessBoard.repaint();
                     }
                 }
                 break;
             case "AI VS 人":
-                chessRules.Process(gameStatus.player1, gameStatus.player2, null);//AI下第一步棋
+                chessRules.Process(config.player1, config.player2, null);//AI下第一步棋
                 chessBoard.repaint();
-                while (gameStatus.GameOver == 0) {
+                while (config.GameOver == 0) {
                     point = listener.waitForClick();
                     X = (int) ((point.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
                     Y = (int) ((point.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
                     if (!chessRules.findChess(X, Y)) {
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, new ChessPieces(X, Y)); // 人下棋
+                        chessRules.Process(config.player1, config.player2, new ChessPieces(X, Y)); // 人下棋
                         chessBoard.repaint();
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI下棋
+                        chessRules.Process(config.player1, config.player2, null); // AI下棋
                         chessBoard.repaint();
                     }
                 }
                 break;
             case "AI VS AI":
-                chessRules.Process(gameStatus.player1, gameStatus.player2, null);//AI下第一步棋
-                while (gameStatus.GameOver == 0) {
-                    chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI2下棋
+                chessRules.Process(config.player1, config.player2, null);//AI下第一步棋
+                while (config.GameOver == 0) {
+                    chessRules.Process(config.player1, config.player2, null); // AI2下棋
                     chessBoard.repaint();
-                    if (gameStatus.GameOver == 0) {
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI1下棋
+                    if (config.GameOver == 0) {
+                        chessRules.Process(config.player1, config.player2, null); // AI1下棋
                         chessBoard.repaint();
                     }
                 }
@@ -185,21 +183,41 @@ public class GoBangController extends Controller {
         int y = xy % ROWS;
         GoBangChessPieces tempChess = new GoBangChessPieces(x, y);
         tempChess.setChessImage(Role / 2 == 0 ? BLACKCHESS : WHITECHESS);
-        gameStatus.chessArray.add(tempChess);
-        gameStatus.board[x][y] = Role;
+        config.chessArray.add(tempChess);
+        config.board[x][y] = Role;
         chessBoard.repaint();
     }
 
     @Override
     public int[] GameRecord() {
-        int[] temp = new int[gameStatus.chessArray.size() + 1];
-        for (int i = 0; i < gameStatus.chessArray.size(); i++) {
-            temp[i] = gameStatus.chessArray.get(i).getX_coordinate() * gameStatus.ROWS + gameStatus.chessArray.get(i).getY_coordinate();
+        int[] temp = new int[config.chessArray.size() + 1];
+        for (int i = 0; i < config.chessArray.size(); i++) {
+            temp[i] = config.chessArray.get(i).getX_coordinate() * config.ROWS + config.chessArray.get(i).getY_coordinate();
         }
-        temp[gameStatus.chessArray.size()] = gameStatus.currentPlayer ? 1 : 2;
+        temp[config.chessArray.size()] = config.currentPlayer ? 1 : 2;
         return temp;
     }
 
+    @Override
+    public void ChangeList() {
+        JFrame frame1 = new JFrame("修改列表");
+        frame1.setVisible(true);
+        frame1.setLocationRelativeTo(chessBoard);
+        frame1.setLocation(chessBoard.getX() + chessBoard.getWidth(), (int) (chessBoard.getY() * 1.5));
+        frame1.setLayout(new GridLayout(0, 2));
+
+        JButton ChangeButton = new JButton("OK");
+        JTextField  rows = new JTextField(String.valueOf(config.ROWS));
+        JTextField  cols = new JTextField(String.valueOf(config.COLS));
+        frame1.add(new Label("ROWS:"));
+        frame1.add(rows);
+        frame1.add(new Label("COLS:"));
+        frame1.add(cols);
+        frame1.add(ChangeButton);
+
+        frame1.pack();
+
+    }
 
     private class GoBangListener extends Component implements MouseListener, MouseMotionListener {
 
@@ -246,7 +264,7 @@ public class GoBangController extends Controller {
         public void mouseMoved(MouseEvent e) {
             int x1 = (e.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//对鼠标光标的x坐标进行转换
             int y1 = (e.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//对鼠标光标的y坐标进行转换
-            if (x1 < 0 || x1 > ROWS || y1 < 0 || y1 > COLS || gameStatus.GameOver != 0 || chessRules.findChess(x1, y1)) {
+            if (x1 < 0 || x1 > ROWS || y1 < 0 || y1 > COLS || config.GameOver != 0 || chessRules.findChess(x1, y1)) {
                 chessBoard.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//设置鼠标光标为默认形状
             } else {
                 chessBoard.setCursor(new Cursor(Cursor.HAND_CURSOR));//设置鼠标光标为手型

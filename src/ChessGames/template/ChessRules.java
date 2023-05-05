@@ -7,7 +7,7 @@ import static ChessGames.GoBang.GoBangConfig.ROWS;
 
 public abstract class ChessRules {
 
-    public Config config;
+
 
     /**
      * @Date 18:41 2023/4/12
