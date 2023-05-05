@@ -64,20 +64,6 @@ public abstract class ChessRules {
 
     public abstract void GoBack();
 
-    public String GetResult() {
-        switch (config.GameOver) {
-            case 0:
-                return "对局未结束";
-            case 1:
-                return "游戏结束，平局";
-            case 2:
-                return "游戏结束，先手赢";
-            case 3:
-                return "游戏结束，后手赢";
 
-
-        }
-        return  null;
-    }
 
 }

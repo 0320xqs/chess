@@ -14,6 +14,9 @@ public abstract class Config {
     public int ROWS;//行数
     public int COLS;//列数
 
+    public Player player1;//先手玩家1
+    public Player player2;//后手玩家2
+
     /**
      * 棋盘
      **/

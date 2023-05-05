@@ -2,13 +2,9 @@ package ChessGames.GoBang;
 
 import ChessGames.template.ChessPieces;
 import ChessGames.template.Controller;
-import ChessGames.template.Player;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
-import java.util.Objects;
 
 import static ChessGames.GoBang.GoBangConfig.*;
 
@@ -21,6 +17,7 @@ public class GoBangController extends Controller {
     }
 
     public GoBangConfig gameStatus = new GoBangConfig();
+    GoBangListener listener;
     String GAMEMODE;
     String AIMODE;
     int AIDepth;
@@ -30,7 +27,7 @@ public class GoBangController extends Controller {
         this.chessBoard = new GoBangChessBoard(gameStatus);
         this.chessPieces = new GoBangChessPieces();
         this.chessRules = new GoBangRules(gameStatus);
-        GoBangListener listener = new GoBangListener();
+        listener = new GoBangListener();
         chessBoard.addMouseListener(listener);
         chessBoard.addMouseMotionListener(listener);
         GAMEMODE = "人 VS 人";
@@ -41,6 +38,22 @@ public class GoBangController extends Controller {
         gameStatus.board = chessRules.GetBegin();
         gameStatus.currentPlayer = true;
         gameStatus.GameOver = 0;
+    }
+
+    public String GetResult() {
+        switch (gameStatus.GameOver) {
+            case 0:
+                return "对局未结束";
+            case 1:
+                return "游戏结束，平局";
+            case 2:
+                return "游戏结束，先手赢";
+            case 3:
+                return "游戏结束，后手赢";
+
+
+        }
+        return null;
     }
 
 
@@ -96,7 +109,9 @@ public class GoBangController extends Controller {
 
     @Override
     public void StartGame() {
-
+        int X, Y;
+        Point point = new Point();
+        ChessPieces chessPieces = new ChessPieces();
         chessBoard.repaint();
         gameStatus.chessArray.clear();
         for (int i = 0; i < ROWS; i++) {
@@ -108,13 +123,48 @@ public class GoBangController extends Controller {
         gameStatus.GameOver = 0;
 
         switch (GAMEMODE) {
+            case "人 VS 人":
+                while (gameStatus.GameOver == 0) {
+                point = listener.waitForClick();
+                X = (int) ((point.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
+                Y = (int) ((point.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
+
+                    if (!chessRules.findChess(X, Y)) {
+                        chessRules.Process(gameStatus.player1, gameStatus.player2, new ChessPieces(X, Y));
+                        chessBoard.repaint();
+                    }
+                }
+                break;
+            case "人 VS AI":
+                while (gameStatus.GameOver == 0) {
+                    point = listener.waitForClick();
+                    X = (int) ((point.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
+                    Y = (int) ((point.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
+                    if (!chessRules.findChess(X, Y)) {
+                        chessRules.Process(gameStatus.player1, gameStatus.player2, new ChessPieces(X, Y)); // 人下棋
+                        chessBoard.repaint();
+                        chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI下棋
+                        chessBoard.repaint();
+                    }
+                }
+                break;
             case "AI VS 人":
                 chessRules.Process(gameStatus.player1, gameStatus.player2, null);//AI下第一步棋
                 chessBoard.repaint();
+                while (gameStatus.GameOver == 0) {
+                    point = listener.waitForClick();
+                    X = (int) ((point.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
+                    Y = (int) ((point.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN);
+                    if (!chessRules.findChess(X, Y)) {
+                        chessRules.Process(gameStatus.player1, gameStatus.player2, new ChessPieces(X, Y)); // 人下棋
+                        chessBoard.repaint();
+                        chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI下棋
+                        chessBoard.repaint();
+                    }
+                }
                 break;
             case "AI VS AI":
                 chessRules.Process(gameStatus.player1, gameStatus.player2, null);//AI下第一步棋
-                String finalChessType1 = gameStatus.currentPlayer ? "黑棋" : "白棋";
                 while (gameStatus.GameOver == 0) {
                     chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI2下棋
                     chessBoard.repaint();
@@ -152,45 +202,25 @@ public class GoBangController extends Controller {
 
 
     private class GoBangListener extends Component implements MouseListener, MouseMotionListener {
-        //鼠标点击事件
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if (gameStatus.GameOver != 0)
-                return;
-            String chessType = gameStatus.currentPlayer ? "黑棋" : "白棋";
-            int position_X = (e.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//得到棋子x坐标
-            int position_Y = (e.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;//得到棋子y坐标
-            GoBangChessPieces chess = new GoBangChessPieces(position_X, position_Y);
-            switch (GAMEMODE) {
-                case "人 VS 人":
-                    if (!chessRules.findChess(position_X, position_Y)) {
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, chess);
-                        chessBoard.repaint();
-                    }
-                    break;
-                case "人 VS AI":
-                case "AI VS 人":
-                    if (!chessRules.findChess(position_X, position_Y)) {
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, chess); // 人下棋
-                        chessBoard.repaint();
-                        chessType = gameStatus.currentPlayer ? "黑棋" : "白棋";
-                        String finalChessType = chessType;
-                        chessRules.Process(gameStatus.player1, gameStatus.player2, null); // AI下棋
-                        chessBoard.repaint();
-                    }
-                    break;
-                case "AI VS AI":
-                    break;
-            }
 
-        }
-
+        private Object lock = new Object();
+        private Point clickPoint;
 
         @Override
         public void mouseClicked(MouseEvent e) {
 
+
+            synchronized (lock) {
+                clickPoint = e.getPoint();
+                lock.notify();
+            }
+
         }
 
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
 
         @Override
         public void mouseReleased(MouseEvent e) {
@@ -222,6 +252,18 @@ public class GoBangController extends Controller {
                 chessBoard.setCursor(new Cursor(Cursor.HAND_CURSOR));//设置鼠标光标为手型
             }
 
+        }
+
+        public Point waitForClick() {
+            // 等待事件发生
+            synchronized (lock) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException c) {
+                    c.printStackTrace();
+                }
+            }
+            return clickPoint;
         }
     }
 

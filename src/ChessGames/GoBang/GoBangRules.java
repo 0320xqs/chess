@@ -36,8 +36,6 @@ public class GoBangRules extends ChessRules {
         config.chessArray.add(tempChess);
         if (!End(tempChess)) {
             config.currentPlayer = !config.currentPlayer;
-        } else {
-            System.out.println(GetResult());
         }
     }
 

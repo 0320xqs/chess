@@ -26,8 +26,7 @@ public class GoBangConfig extends Config {
     /**
      * 玩家
      **/
-    public Player player1;//先手玩家1
-    public Player player2;//后手玩家2
+
 
     /**
      * 棋子

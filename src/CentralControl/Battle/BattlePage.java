@@ -22,9 +22,6 @@ public class BattlePage {
     private JButton WithdrawButton;
     private JButton ExitButton;
     JTextArea textArea;
-    JButton ChangeButton;
-    JTextField rows;
-    JTextField cols;
     JComboBox<String> gameMode;
     JComboBox<String> AIMode;
     Dimension dim = new Dimension(100, 200);
@@ -120,22 +117,7 @@ public class BattlePage {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        JFrame frame1 = new JFrame("修改列表");
-        frame1.setVisible(true);
-        frame1.setLocationRelativeTo(frame);
-        frame1.setLocation(frame.getX() + frame.getWidth(), (int) (frame.getY() * 1.5));
-        frame1.setLayout(new GridLayout(0, 2));
 
-        ChangeButton = new JButton("OK");
-        rows=new JTextField(String.valueOf(chess.config.ROWS));
-        cols=new JTextField(String.valueOf(chess.config.COLS));
-        frame1.add(new Label("ROWS:"));
-        frame1.add(rows);
-        frame1.add(new Label("COLS:"));
-        frame1.add(cols);
-        frame1.add(ChangeButton);
-
-        frame1.pack();
     }
 
     private class MyButtonLister implements ActionListener {
@@ -143,16 +125,26 @@ public class BattlePage {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (obj == RestartButton) {
-                new Thread(() -> {
+                Thread thread = new Thread(() -> {
                     chess.StartGame();
+                });
+                thread.start();
+                new Thread(() -> {
+                    try {
+                        thread.join();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    textArea.append(chess.GetResult()+"\n");
+
                 }).start();
+
+
             } else if (obj == WithdrawButton) {
                 chess.chessRules.GoBack();
             } else if (obj == ExitButton) {
                 frame.setVisible(false);
                 new Home();
-            } else if (obj == ChangeButton) {
-
             }
         }
     }
