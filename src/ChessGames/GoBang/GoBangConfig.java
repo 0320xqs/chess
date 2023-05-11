@@ -13,9 +13,9 @@ public class GoBangConfig {
     /**
      * UI
      **/
-    public static int DIAMETER = 30;
-    public static int MARGIN = 35;
-    public static int GRID_SPAN = 35;
+    public static int DIAMETER = 30;//棋子大小
+    public static int MARGIN = 20;//棋盘左上角坐标
+    public static int GRID_SPAN = 35;//一格长度
     public static int ROWS = 15;
     public static int COLS = 15;
 
@@ -37,12 +37,11 @@ public class GoBangConfig {
     /**
      * 棋子
      **/
-    public static int CHESSTYPENUM = 2;
     public static int CHESSTYPE1 = 1;
     public static int CHESSTYPE2 = 2;
     public static Image BLACKCHESS = new ImageIcon("pic\\GoBang\\black.png").getImage();
     public static Image WHITECHESS = new ImageIcon("pic\\GoBang\\white.png").getImage();
-    public static Image CHESSBOARD = new ImageIcon("pic\\GoBang\\ChessBoard.jpg").getImage();
+    public static Image CHESSBOARD = new ImageIcon("pic\\ChessBoard.jpg").getImage();
 
 
 }

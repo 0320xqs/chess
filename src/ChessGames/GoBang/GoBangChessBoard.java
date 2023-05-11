@@ -9,12 +9,11 @@ import static ChessGames.GoBang.GoBangConfig.*;
 public class GoBangChessBoard extends ChessBoard {
     GoBangConfig config = new GoBangConfig();
 
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //添加背景图片
-        g.drawImage(CHESSBOARD, 0, 0, this.getWidth(), this.getHeight(), this);
-
+        getParent().repaint();
         //重绘出棋盘
         g.setColor(Color.black);//线条颜色：黑
         for (int i = 0; i < ROWS; i++) {
@@ -23,13 +22,7 @@ public class GoBangChessBoard extends ChessBoard {
         for (int j = 0; j < COLS; j++) {
             g.drawLine(MARGIN + GRID_SPAN * j, MARGIN, MARGIN + GRID_SPAN * j, MARGIN + GRID_SPAN * (ROWS - 1));//纵向画线
         }
-        //画天元等
-        g.setColor(Color.black);
-        g.fillOval(MARGIN + 7 * GRID_SPAN - 5, MARGIN + 7 * GRID_SPAN - 5, 10, 10);
-        g.fillOval(MARGIN + 3 * GRID_SPAN - 5, MARGIN + 3 * GRID_SPAN - 5, 10, 10);
-        g.fillOval(MARGIN + 11 * GRID_SPAN - 5, MARGIN + 3 * GRID_SPAN - 5, 10, 10);
-        g.fillOval(MARGIN + 3 * GRID_SPAN - 5, MARGIN + 11 * GRID_SPAN - 5, 10, 10);
-        g.fillOval(MARGIN + 11 * GRID_SPAN - 5, MARGIN + 11 * GRID_SPAN - 5, 10, 10);
+
         //重绘出棋子
         for (int i = 0; i < config.chessArray.size(); i++) {
             int countx = config.chessArray.get(i).getX_coordinate() * GRID_SPAN + MARGIN;//得到棋子x坐标
@@ -37,5 +30,12 @@ public class GoBangChessBoard extends ChessBoard {
             Image img = config.chessArray.get(i).getChessImage();//得到棋子图片
             g.drawImage(img, countx - DIAMETER / 2, county - DIAMETER / 2, DIAMETER, DIAMETER, null);
         }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        int width = (COLS - 1) * GRID_SPAN;
+        int height = (ROWS - 1) * GRID_SPAN;
+        return new Dimension(width, height);
     }
 }

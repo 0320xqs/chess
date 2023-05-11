@@ -2,6 +2,7 @@ package ChessGames.template;
 
 import ChessGames.GoBang.GoBangChessPieces;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
@@ -34,5 +35,11 @@ public abstract class Controller implements Callable {
         return null;
     }
 
-    public abstract void ChangeList();
+    public JFrame ChangeList() {
+        return null;
+    }
+
+    ;
+
+    public abstract JPanel GetBoard();
 }

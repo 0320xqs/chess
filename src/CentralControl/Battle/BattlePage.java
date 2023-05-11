@@ -106,7 +106,7 @@ public class BattlePage {
         panel3.add(Box.createHorizontalGlue());
 
 
-        panel1.add(chess.chessBoard);
+        panel1.add(chess.GetBoard());
         panel1.add(panel3);
 
 
@@ -116,7 +116,12 @@ public class BattlePage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        chess.ChangeList();
+
+
+        JFrame frame1 = chess.ChangeList();
+        frame1.setVisible(true);
+        frame1.setLocationRelativeTo(frame);
+        frame1.setLocation(frame.getX() + frame.getWidth(), (int) (frame.getY() * 1.5));
 
 
     }
@@ -136,7 +141,7 @@ public class BattlePage {
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
-                    textArea.append(chess.GetResult()+"\n");
+                    textArea.append(chess.GetResult() + "\n");
 
                 }).start();
             } else if (obj == WithdrawButton) {
