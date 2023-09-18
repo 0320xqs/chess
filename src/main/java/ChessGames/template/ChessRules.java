@@ -1,7 +1,7 @@
 package ChessGames.template;
 
-import ChessGames.GoBang.GoBangChessPieces;
-
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 
 
 public abstract class ChessRules {
@@ -24,7 +24,7 @@ public abstract class ChessRules {
      * @Return null
      **/
 
-    public abstract void Process(Player player1, Player player2, ChessPieces chess);
+    public abstract void Process(Player player1, Player player2, Point from, Point to) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
     /**
      * @Date 18:44 2023/4/12
@@ -33,7 +33,7 @@ public abstract class ChessRules {
      * @Return boolean
      **/
 
-    public abstract Boolean End(ChessPieces chessPieces);
+    public abstract Boolean End(Point from, Point to);
 
     /**
      * @Date 18:45 2023/4/12
@@ -42,17 +42,17 @@ public abstract class ChessRules {
      * @Return
      **/
 
-    public abstract boolean win(int x, int y, boolean start);
+    public abstract boolean win(Point from, Point to);
 
 
     /**
      * @Date 18:47 2023/4/12
-     * @Param 坐标x，y
+     * @Param 选择棋子坐标from，落子坐标to
      * @Descrition 判断一步是否合理
      * @Return
      **/
 
-    public abstract boolean check(int position_X, int position_Y);
+    public abstract boolean check(Point from, Point to);
 
     /**
      * @Date 18:48 2023/4/12

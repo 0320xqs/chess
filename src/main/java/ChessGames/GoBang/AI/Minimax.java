@@ -1,9 +1,9 @@
 package ChessGames.GoBang.AI;
 
-import ChessGames.GoBang.GoBangChessPieces;
 import ChessGames.GoBang.GoBangConfig;
-import ChessGames.template.ChessPieces;
+import ChessGames.template.Model.Part;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -12,7 +12,7 @@ public class Minimax {
 
     public GoBangConfig Board;
     public int Role;
-    public int Depth;
+    public int Depth = 4;
 
     /**
      * AI分数
@@ -32,16 +32,21 @@ public class Minimax {
     int BOARD_SIZE;
     private int[][] board = new int[50][50];
 
-    public Minimax(GoBangConfig board, int role, int depth) {
+    public Minimax(GoBangConfig board, int role) {
         Board = board;
         Role = role;
-        Depth = depth;
         this.BOARD_SIZE = board.ROWS;
         this.computerScore = new int[BOARD_SIZE][BOARD_SIZE];
         computerScore_sort = new int[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = Board.board[i][j];
+                try {
+                    if (board.board[i][j].getChessRole().getPart() == Part.SECOND)
+                        this.board[i][j] = 1;
+                    if (board.board[i][j].getChessRole().getPart() == Part.FIRST)
+                        this.board[i][j] = 2;
+                } catch (NullPointerException ignored) {
+                }
             }
         }
     }
@@ -50,14 +55,21 @@ public class Minimax {
      * @return
      * @Description 获取下一步棋子位置
      */
-    public ChessPieces play() {
+    public Point play() {
         if (Board.chessArray.size() == 0) {
 
-            return new GoBangChessPieces(BOARD_SIZE / 2, BOARD_SIZE / 2);
+            return new Point(BOARD_SIZE / 2, BOARD_SIZE / 2);
         }
-        for (int i = 0; i < BOARD_SIZE; i++) {//使用自己的board做思考，避免闪烁
+        for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                this.board[i][j] = Board.board[i][j];
+                try {
+                    if (Board.board[i][j].getChessRole().getPart() == Part.SECOND)
+                        this.board[i][j] = 1;
+                    if (Board.board[i][j].getChessRole().getPart() == Part.FIRST)
+                        this.board[i][j] = 2;
+                } catch (NullPointerException ignored) {
+
+                }
             }
         }
 
@@ -103,7 +115,7 @@ public class Minimax {
         comy = chessList.get(n).y;
         chessList.clear();
         chessXYList.clear();
-        return new GoBangChessPieces(comx, comy);
+        return new Point(comx, comy);
     }
 
     /**

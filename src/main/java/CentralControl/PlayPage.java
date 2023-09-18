@@ -1,4 +1,4 @@
-package CentralControl.Play;
+package CentralControl;
 
 import CentralControl.Home;
 import ChessGames.template.Controller;

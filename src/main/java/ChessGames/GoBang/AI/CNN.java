@@ -1,8 +1,7 @@
 package ChessGames.GoBang.AI;
 
-import ChessGames.GoBang.GoBangChessPieces;
 import ChessGames.GoBang.GoBangConfig;
-import ChessGames.template.ChessPieces;
+import ChessGames.template.Model.Part;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -24,6 +23,7 @@ import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Nesterovs;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,12 +40,10 @@ public class CNN {
     int batchSize = 64; // batch size
     double learningRate = 0.001;
     GoBangConfig board;
-    int role, depth;
+    int role, depth=4;
 
-    public CNN(GoBangConfig board, int role, int depth) {
+    public CNN(GoBangConfig board) {
         this.board = board;
-        this.role = role;
-        this.depth = depth;
     }
 
     public void train() throws IOException {
@@ -165,7 +163,7 @@ public class CNN {
                         .nOut(outputNum)
                         .activation(Activation.SOFTMAX)
                         .build())
-                .setInputType(InputType.convolutionalFlat(ROWS,COLS, channels)) //See note below
+                .setInputType(InputType.convolutionalFlat(ROWS, COLS, channels)) //See note below
                 .build();
 //                .backprop(true).pretrain(false).build();
 
@@ -267,7 +265,7 @@ public class CNN {
             }
         }
         //按输入形状创建一个输入数组
-        INDArray input = Nd4j.zeros(count, channels, ROWS,COLS);
+        INDArray input = Nd4j.zeros(count, channels, ROWS, COLS);
         //按输入形状i创建一个输出数组
         INDArray labels = Nd4j.zeros(count, outputNum);
         //处理数据
@@ -325,7 +323,7 @@ public class CNN {
 //        String modelFilePath = "model/board1_中+左上+左下+右上+右下的4000局_86.zip";
 //        String modelFilePath = "ChessGames\\GoBang\\AI\\weightMyCnnModel_中3600_单纯shuffle_52.zip";
 //        String modelFilePath = "model/weightMyCnnModel_全局平均共6000局_43.zip";
-      String modelFilePath = "model/weightMyCnnModel_中3600_调整LR为0.0001_1.zip";
+        String modelFilePath = "model/weightMyCnnModel_中3600_调整LR为0.0001_1.zip";
 //        String modelFilePath = "model/weightMyCnnModel_中9600_调整LR为0.0001_7.zip";
         MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(modelFilePath);
 
@@ -371,17 +369,10 @@ public class CNN {
         return JSONObject.parseObject(jsonString);
     }
 
-    public ChessPieces play() {
-
-        GoBangChessPieces tempChess;
-
+    public Point play() {
 
         if (board.chessArray.size() == 0) {//先手
-            board.board[COLS / 2][ROWS / 2] = role;
-            tempChess = new GoBangChessPieces(COLS / 2, ROWS / 2);
-            tempChess.setChessImage(role == 1 ? BLACKCHESS : WHITECHESS);
-            board.chessArray.add(tempChess);
-            return tempChess;
+            return new Point(batchSize / 2, batchSize / 2);
         }
         //转换格式
         //处理数据
@@ -389,12 +380,12 @@ public class CNN {
         INDArray features = Nd4j.zeros(new int[]{1, 1, 15, 15});
         for (int i = 0; i < COLS; i++) {
             for (int j = 0; j < ROWS; j++) {
-                if (board.board[i][j] == 1) {
+                if (board.board[i][j].getChessRole().getPart() == Part.SECOND) {
                     features.putScalar(0, 0, i, j, 1);
-                } else if (board.board[i][j] == 2) {
+                } else if (board.board[i][j].getChessRole().getPart() == Part.FIRST) {
                     features.putScalar(0, 0, i, j, -1);
                 }
-                if (board.board[i][j] != 0) boardState.add((i * ROWS) + j);//棋盘不为空的位置
+                if (board.board[i][j] != null) boardState.add((i * ROWS) + j);//棋盘不为空的位置
             }
         }
         //预测
@@ -406,11 +397,7 @@ public class CNN {
         }
         int xPos = index / COLS;
         int yPos = index % ROWS;
-        tempChess = new GoBangChessPieces(xPos, yPos);
-        tempChess.setChessImage(role == 1 ? BLACKCHESS : WHITECHESS);
-        board.board[xPos][yPos] = this.role;
-        board.chessArray.add(tempChess);
         ;
-        return tempChess;
+        return new Point(xPos, yPos);
     }
 }

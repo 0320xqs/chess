@@ -1,25 +1,17 @@
 package ChessGames.ChineseChess;
 
+import ChessGames.ChineseChess.Model.ChessRole;
 import ChessGames.template.ChessPieces;
+import lombok.Data;
 
 import java.awt.*;
-
+@Data
 public class CCChessPieces extends ChessPieces {
-    public boolean getPart() {
-        return part;
-    }
 
-    public void setPart(boolean part) {
-        this.part = part;
-    }
+    public ChessRole chessRole;
 
-    private boolean part;//true代表红方，false代表黑方
-
-    public CCChessPieces(boolean part, Image image, int x_coordinate, int y_coordinate) {
+    public CCChessPieces(ChessRole chessRole, int x_coordinate, int y_coordinate) {
         super(x_coordinate, y_coordinate);
-        super.setChessImage(image);
-        this.part = part;
+        this.chessRole = chessRole;
     }
-
-
 }

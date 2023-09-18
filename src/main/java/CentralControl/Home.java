@@ -1,9 +1,5 @@
 package CentralControl;
 
-import CentralControl.Battle.BattleControl;
-import CentralControl.Battle.BattlePage;
-import CentralControl.Example.ExamplePage;
-import CentralControl.Play.PlayPage;
 import Util.GetChess;
 
 import javax.swing.*;
@@ -95,8 +91,6 @@ public class Home {
         @Override
         public void actionPerformed(ActionEvent e) {
             homepage.dispose();
-
-
             String i = (String) JOptionPane.showInputDialog(null, "棋类选择",
                     null, JOptionPane.QUESTION_MESSAGE, null, GetChess.ChessList, "");
             if (i == null) {
@@ -105,7 +99,7 @@ public class Home {
             }
 
             if (e.getSource() == Battle) {
-                new BattleControl().BattleStart(i);
+                new BattlePage(i,GetChess.getChess(i));
 
             }
             if (e.getSource() == Play) {

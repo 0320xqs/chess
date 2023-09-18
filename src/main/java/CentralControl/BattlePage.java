@@ -1,9 +1,6 @@
-package CentralControl.Battle;
+package CentralControl;
 
-import CentralControl.Home;
-import ChessGames.GoBang.GoBangController;
 import ChessGames.template.*;
-import Util.GetChess;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
@@ -11,17 +8,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-
-import static ChessGames.GoBang.GoBangConfig.*;
+import java.lang.reflect.InvocationTargetException;
 
 public class BattlePage {
     JFrame frame;
+    JFrame changeList;
     String[] GameMode = {"人 VS 人", "人 VS AI", "AI VS 人", "AI VS AI"};
-    String[] AI_Rate = {"小白", "新手", "普通"};
+    String Chessname;
     Controller chess;
     JButton RestartButton;
     JButton WithdrawButton;
-    public JButton ExitButton;
+    JButton ExitButton;
+    JButton ChangeButton;
     JTextArea textArea;
     JComboBox<String> gameMode;
     JComboBox<String> AIMode;
@@ -29,11 +27,17 @@ public class BattlePage {
     Dimension dim = new Dimension(100, 200);
 
 
-    public JFrame GetBattlePage(Controller Chess) {
+    public BattlePage(String Chessname, Controller chess) {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        chess = Chess;
+        changeList = new JFrame("修改列表");
+        changeList.setLayout(new GridLayout(0, 1));
+        changeList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.Chessname = Chessname;
+        this.chess = chess;
+
 
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -41,6 +45,7 @@ public class BattlePage {
 
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+
         panel2.setPreferredSize(new Dimension(200, 560));
 
 
@@ -60,19 +65,20 @@ public class BattlePage {
         });
         panel2.add(gameMode);
 
-        AIMode = new JComboBox<>(AI_Rate);
+        AIMode = new JComboBox<>();
         AIMode.setRenderer(new CenteredComboBoxRenderer());
         AIMode.addItemListener(evt -> {
             if (evt.getStateChange() == ItemEvent.SELECTED) {
                 String AIMODE = evt.getItem().toString();
-                chess.AIModeSelect(AIMODE);
+
             }
         });
         panel2.add(AIMode);
 
         textArea = new JTextArea("Battle:\n", 17, 30);
 
-        textArea.setLineWrap(true);
+        textArea.setLineWrap(true);//设置自动换行
+//        textArea.setEnabled(false);//设置禁止手动输入
         JScrollPane scrollPane = new JScrollPane(textArea);
         panel2.add(scrollPane);
 
@@ -96,6 +102,8 @@ public class BattlePage {
         ExitButton.setBackground(new Color(59, 89, 182));
         ExitButton.addActionListener(mb);
 
+        ChangeButton = new JButton("应用");
+        ChangeButton.addActionListener(mb);
 
         panel3.add(Box.createHorizontalGlue());
         panel3.add(RestartButton);
@@ -107,7 +115,12 @@ public class BattlePage {
 
 
         panel1.add(chess.GetBoard());
+        System.out.println("成功！");
         panel1.add(panel3);
+
+        changeList.add(chess.ChangeList());
+        changeList.add(ChangeButton);
+        changeList.pack();
 
 
         frame.getContentPane().add(panel2, BorderLayout.EAST);
@@ -115,7 +128,19 @@ public class BattlePage {
         frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        return frame;
+        changeList.setLocationRelativeTo(frame);
+        changeList.setLocation(frame.getX() + frame.getWidth(), (int) (frame.getY() * 1.5));
+
+        frame.setVisible(true);
+        changeList.setVisible(true);
+    }
+
+    public void ChessChange() {
+        frame.dispose();
+        changeList.dispose();
+        chess = chess.changeGame();
+        new BattlePage(Chessname, chess);
+
     }
 
     private class MyButtonLister implements ActionListener {
@@ -124,7 +149,11 @@ public class BattlePage {
             Object obj = e.getSource();
             if (obj == RestartButton) {
                 Thread thread = new Thread(() -> {
-                    chess.StartGame();
+                    try {
+                        chess.StartGame();
+                    } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException ex) {
+                        ex.printStackTrace();
+                    }
                 });
                 thread.start();
                 new Thread(() -> {
@@ -136,12 +165,17 @@ public class BattlePage {
                     textArea.append(chess.GetResult() + "\n");
 
                 }).start();
-            } else if (obj == WithdrawButton) {
+            }
+            if (obj == WithdrawButton) {
                 chess.chessRules.GoBack();
-            } else if (obj == ExitButton) {
+            }
+            if (obj == ExitButton) {
                 frame.dispose();
                 chess.init();
                 new Home();
+            }
+            if (obj == ChangeButton) {
+                ChessChange();
             }
         }
     }

@@ -1,17 +1,22 @@
 package ChessGames.template;
 
-import ChessGames.GoBang.GoBangChessPieces;
+
+import ChessGames.template.Model.PlayerType;
 
 import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 
 public abstract class Controller implements Callable {
     public ChessBoard chessBoard;//棋盘
-    public ChessPieces chessPieces;//棋子
-    public ChessRules chessRules;//棋规
-    public Config config;//所需数据
+    public ChessRules chessRules;
+    public Config config;
+    //游戏模式
+    public String GAMEMODE = "人 VS 人";
+    protected Player player1, player2;
 
 
     /**
@@ -20,7 +25,37 @@ public abstract class Controller implements Callable {
      * @Descrition 对局开始
      * @Return null
      **/
-    public abstract void StartGame();
+    public abstract void StartGame() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+
+    /**
+     * @Date 18:39 2023/4/12
+     * @Param null
+     * @Descrition 游戏模式选择
+     * @Return null
+     **/
+    public void GameModeSelect(String GameMode){
+        this.GAMEMODE=GameMode;
+        switch (GameMode) {
+            case "人 VS 人":
+                config.firstPlayer = PlayerType.Man;
+                config.secondPlayer = PlayerType.Man;
+                break;
+            case "人 VS AI":
+                config.firstPlayer = PlayerType.Man;
+                config.secondPlayer = PlayerType.AI;
+                break;
+            case "AI VS 人":
+                config.firstPlayer = PlayerType.AI;
+                config.secondPlayer = PlayerType.Man;
+                break;
+            case "AI VS AI":
+                config.firstPlayer = PlayerType.AI;
+                config.secondPlayer = PlayerType.AI;
+                break;
+        }
+        player1 = new Player(config);
+        player2 = new Player(config);
+    }
 
     /**
      * @Date 18:39 2023/6/7
@@ -56,18 +91,10 @@ public abstract class Controller implements Callable {
      **/
     public abstract JPanel GetBoard();
 
+    public abstract JPanel ChangeList();
+
+    public abstract Controller changeGame();
+
     public void init() {
     }
-
-    ;
-
-    public void GameModeSelect(String GameMode) {
-    }
-
-    ;
-
-    public void AIModeSelect(String AIMode) {
-    }
-
-    ;
 }

@@ -1,6 +1,11 @@
 package ChessGames.GoBang;
 
 import ChessGames.template.*;
+import ChessGames.template.Model.GameResult;
+import ChessGames.template.Model.Part;
+
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 
 import static ChessGames.GoBang.GoBangConfig.*;
 
@@ -14,146 +19,181 @@ public class GoBangRules extends ChessRules {
 
     @Override
     public void GetBegin() {
-        config.board = new int[COLS][ROWS];
+        config.pieceArray = new GoBangChessPieces[COLS][ROWS];
     }
 
 
     @Override
-    public void Process(Player player1, Player player2, ChessPieces chess) {
-        GoBangChessPieces tempChess;
-        int x_index, y_index;
-        int Role;
-        Role = config.currentPlayer ? CHESSTYPE1 : CHESSTYPE2;
-        if (config.currentPlayer) {
-            tempChess = (GoBangChessPieces) player1.play(chess);
-            tempChess.setChessImage(BLACKCHESS);
-        } else {
-            tempChess = (GoBangChessPieces) player2.play(chess);
-            tempChess.setChessImage(WHITECHESS);
+    public void Process(Player player1, Player player2, Point from, Point to) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        try {
+            if (!check(null, new Point(to.x, to.y)))
+                return;
+        } catch (NullPointerException ignored) {
         }
-        x_index = tempChess.getX_coordinate();
-        y_index = tempChess.getY_coordinate();
-        config.board[x_index][y_index] = Role;
-        config.chessArray.add(tempChess);
-        if (!End(tempChess)) {
-            config.currentPlayer = !config.currentPlayer;
-        } else {
+        switch (config.currentPlayer) {
+            case SECOND:
+                player1.play(null, to);
+                break;
+            case FIRST:
+                player2.play(null, to);
+                break;
         }
-    }
+        GoBangChessPieces temp= (GoBangChessPieces) config.pieceList.get(config.pieceList.size()-1);
+        if (!End(null, new Point(temp.getX_coordinate(),temp.getY_coordinate())) )
+            config.currentPlayer = config.currentPlayer.Exchange(config.currentPlayer);
+        }
+
 
     @Override
-    public Boolean End(ChessPieces chessPieces) {
-        if (win(chessPieces.getX_coordinate(), chessPieces.getY_coordinate(), config.currentPlayer)) {
-            config.GameOver = config.currentPlayer ? 2 : 3;
+    public Boolean End(Point from, Point to) {
+        if (win(null, to)) {
+            config.gameResult = config.currentPlayer == Part.SECOND ? GameResult.SECONDWIN : GameResult.FIRSTWIN;
             return true;
-        } else if (config.chessArray.size() == COLS * ROWS) {
-            config.GameOver = 1;
+        } else if (config.pieceList.size() == COLS * ROWS) {
+            config.gameResult = GameResult.DRAW;
             return true;
         }
         return false;
     }
 
-
     @Override
-    public boolean win(int x, int y, boolean start) {
+    public boolean win(Point from, Point to) {
         int i, count = 1;
         int BOARD_SIZE = ROWS;
-        int f = 0;
-        if (start) {
-            f = 1;
-        } else {
-            f = 2;
-        }
         boolean up, down, right, left, rup, lup, rdown, ldown;
         up = down = right = left = rup = lup = rdown = ldown = true;
         /**
-         *
          * 上下
-         *
          */
         for (i = 1; i < 5; ++i) {
-            if ((y + i) < BOARD_SIZE) {
-                if (config.board[x][y + i] == f && down)
-                    count++;
-                else
+            if ((to.y + i) < BOARD_SIZE) {
+                try {
+                    if (config.pieceArray[to.x][to.y + i].getChessRole().getPart() == config.currentPlayer && down) {
+                        count++;
+                    } else {
+                        down = false;
+                    }
+                } catch (NullPointerException e) {
+                    // 处理空指针异常，可以打印日志或执行其他操作
                     down = false;
+                }
             }
-            if ((y - i) >= 0) {
-                if (config.board[x][y - i] == f && up)
-                    count++;
-                else
+            if ((to.y - i) >= 0) {
+                try {
+                    if (config.pieceArray[to.x][to.y - i].getChessRole().getPart() == config.currentPlayer && up) {
+                        count++;
+                    } else {
+                        up = false;
+                    }
+                } catch (NullPointerException e) {
+                    // 处理空指针异常，可以打印日志或执行其他操作
                     up = false;
+                }
             }
         }
         if (count >= 5) {
             return true;
         }
         count = 1;
-        /**
-         *
-         * 左右
-         *
-         */
+
+/**
+ * 左右
+ */
         for (i = 1; i < 5; ++i) {
-            if ((x + i) < BOARD_SIZE) {
-                if (config.board[x + i][y] == f && right)
-                    count++;
-                else
+            if ((to.x + i) < BOARD_SIZE) {
+                try {
+                    if (config.pieceArray[to.x + i][to.y].getChessRole().getPart() == config.currentPlayer && right) {
+                        count++;
+                    } else {
+                        right = false;
+                    }
+                } catch (NullPointerException e) {
+                    // 处理空指针异常，可以打印日志或执行其他操作
                     right = false;
+                }
             }
-            if ((x - i) >= 0) {
-                if (config.board[x - i][y] == f && left)
-                    count++;
-                else
+            if ((to.x - i) >= 0) {
+                try {
+                    if (config.pieceArray[to.x - i][to.y].getChessRole().getPart() == config.currentPlayer && left) {
+                        count++;
+                    } else {
+                        left = false;
+                    }
+                } catch (NullPointerException e) {
+                    // 处理空指针异常，可以打印日志或执行其他操作
                     left = false;
+                }
             }
         }
         if (count >= 5) {
             return true;
         }
         count = 1;
-        /**
-         *
-         * 左上右下
-         *
-         */
+
+/**
+ * 左上右下
+ */
         for (i = 1; i < 5; ++i) {
-            if ((x + i) < BOARD_SIZE && (y + i) < BOARD_SIZE) {
-                if (config.board[x + i][y + i] == f && rdown)
-                    count++;
-                else
+            if ((to.x + i) < BOARD_SIZE && (to.y + i) < BOARD_SIZE) {
+                try {
+                    if (config.pieceArray[to.x + i][to.y + i].getChessRole().getPart() == config.currentPlayer && rdown) {
+                        count++;
+                    } else {
+                        rdown = false;
+                    }
+                } catch (NullPointerException e) {
+                    // 处理空指针异常，可以打印日志或执行其他操作
                     rdown = false;
+                }
             }
-            if ((x - i) >= 0 && (y - i) >= 0) {
-                if (config.board[x - i][y - i] == f && lup)
-                    count++;
-                else
+            if ((to.x - i) >= 0 && (to.y - i) >= 0) {
+                try {
+                    if (config.pieceArray[to.x - i][to.y - i].getChessRole().getPart() == config.currentPlayer && lup) {
+                        count++;
+                    } else {
+                        lup = false;
+                    }
+                } catch (NullPointerException e) {
+                    // 处理空指针异常，可以打印日志或执行其他操作
                     lup = false;
+                }
             }
         }
         if (count >= 5) {
             return true;
         }
         count = 1;
-        /**
-         *
-         * 右上左下
-         *
-         */
+
+/**
+ * 右上左下
+ */
         for (i = 1; i < 5; ++i) {
-            if ((x + i) < BOARD_SIZE && (y - i) >= 0) {
-                if (config.board[x + i][y - i] == f && rup)
-                    count++;
-                else
+            if ((to.x + i) < BOARD_SIZE && (to.y - i) >= 0) {
+                try {
+                    if (config.pieceArray[to.x + i][to.y - i].getChessRole().getPart() == config.currentPlayer && rup) {
+                        count++;
+                    } else {
+                        rup = false;
+                    }
+                } catch (NullPointerException e) {
+                    // 处理空指针异常，可以打印日志或执行其他操作
                     rup = false;
+                }
             }
-            if ((x - i) >= 0 && (y + i) < BOARD_SIZE) {
-                if (config.board[x - i][y + i] == f && ldown)
-                    count++;
-                else
+            if ((to.x - i) >= 0 && (to.y + i) < BOARD_SIZE) {
+                try {
+                    if (config.pieceArray[to.x - i][to.y + i].getChessRole().getPart() == config.currentPlayer && ldown) {
+                        count++;
+                    } else {
+                        ldown = false;
+                    }
+                } catch (NullPointerException e) {
+                    // 处理空指针异常，可以打印日志或执行其他操作
                     ldown = false;
+                }
             }
         }
+
         if (count >= 5) {
             return true;
         }
@@ -162,27 +202,23 @@ public class GoBangRules extends ChessRules {
 
 
     @Override
-    public boolean check(int position_X, int position_Y) {
-        for (ChessPieces c : config.chessArray) {
-            if (c != null && c.getX_coordinate() == position_X && c.getY_coordinate() == position_Y)
-                return true;
-        }
+    public boolean check(Point from, Point to) {
+        if (config.pieceArray[to.x][to.y] == null)
+            return true;
         return false;
-
     }
-
 
     @Override
     public void GoBack() {
-        if (config.chessArray.size() == 0) {
+        if (config.pieceList.size() == 0) {
             return;
         }
-        if (config.chessArray.size() > 0) {
-            int x_index = config.chessArray.get(config.chessArray.size() - 1).getX_coordinate();
-            int y_index = config.chessArray.get(config.chessArray.size() - 1).getY_coordinate();
-            config.board[x_index][y_index] = 0;
+        if (config.pieceList.size() > 0) {
+            int x_index = config.pieceList.get(config.pieceList.size() - 1).getX_coordinate();
+            int y_index = config.pieceList.get(config.pieceList.size() - 1).getY_coordinate();
+            config.pieceArray[x_index][y_index] = null;
         }
-        config.chessArray.remove(config.chessArray.size() - 1);
-        config.currentPlayer = !config.currentPlayer;
+        config.pieceList.remove(config.pieceList.size() - 1);
+        config.currentPlayer = config.currentPlayer.Exchange(config.currentPlayer);
     }
 }
