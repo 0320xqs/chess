@@ -1,5 +1,6 @@
 package ChessGames.ChineseChess;
 
+
 import ChessGames.ChineseChess.AI.GetAI;
 import ChessGames.ChineseChess.AI.StepBean;
 import ChessGames.template.SecondPlayer;
@@ -8,31 +9,31 @@ import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
-public class FirstPLayer extends SecondPlayer {
+public class CCSecondPlayer extends SecondPlayer {
     private CCConfig config;
     private GetAI getAI;
 
-    public FirstPLayer(CCConfig config) {
+    public CCSecondPlayer(CCConfig config) {
         super(config);
         this.config = config;
     }
 
     @Override
     public void play(Point from, Point to) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        switch (config.firstPlayer) {
+        switch (config.secondPlayer) {
             case Man:
-                System.out.println("我是红棋进来了！");
+                System.out.println("我是后手进来了！");
                 break;
             case AI:
                 getAI = new GetAI(config, 1);
                 System.out.println("我获取到了AI");
-                StepBean stepBean = getAI.play(config.blackAI);
+                StepBean stepBean = getAI.play(config.secondAI);
                 from = stepBean.from;
                 to = stepBean.to;
                 break;
         }
-        final CCChessPieces fromPiece = config.pieceArray[from.x][from.y];
-        CCRules.eatenPiece = config.pieceArray[to.x][to.y];
+        final CCChessPieces fromPiece = (CCChessPieces) config.pieceArray[from.x][from.y];
+        CCRules.eatenPiece = (CCChessPieces) config.pieceArray[to.x][to.y];
         Objects.requireNonNull(fromPiece, "找不到移动的棋子");
         // 判断是否是吃子, 如果棋子被吃掉, 则将棋子移动列表
         if (CCRules.eatenPiece != null) {

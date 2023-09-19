@@ -18,7 +18,7 @@ public class Minimax {
         CCChessPieces[][]  pieceArray = new CCChessPieces[9][10];//避免模拟走棋不断刷新，此处建立副本进行AI走棋思考
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 10; j++) {
-                pieceArray[i][j] = ccConfig.pieceArray[i][j];
+                pieceArray[i][j] = (CCChessPieces) ccConfig.pieceArray[i][j];
              }
         }
         ArrayList<StepBean> list = new ArrayList(AlphaBeta.getEvaluatedPlace(pieceArray,ccConfig.currentPlayer,2,null));

@@ -1,5 +1,6 @@
 package ChessGames.GoBang.AI;
 
+import ChessGames.GoBang.GoBangChessPieces;
 import ChessGames.GoBang.GoBangConfig;
 import ChessGames.template.Model.Part;
 import com.alibaba.fastjson.JSON;
@@ -328,7 +329,7 @@ public class CNN {
         MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(modelFilePath);
 
         INDArray predicted = model.output(features, false);
-
+        System.out.println(boardState);
         for (int i = 0; i < boardState.size(); i++) {
             predicted.putScalar(0, boardState.get(i), 0);
         }
@@ -371,7 +372,7 @@ public class CNN {
 
     public Point play() {
 
-        if (board.chessArray.size() == 0) {//先手
+        if (board.pieceList.size() == 0) {//先手
             return new Point(batchSize / 2, batchSize / 2);
         }
         //转换格式
@@ -380,12 +381,12 @@ public class CNN {
         INDArray features = Nd4j.zeros(new int[]{1, 1, 15, 15});
         for (int i = 0; i < COLS; i++) {
             for (int j = 0; j < ROWS; j++) {
-                if (board.board[i][j].getChessRole().getPart() == Part.SECOND) {
+                if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.SECOND) {
                     features.putScalar(0, 0, i, j, 1);
-                } else if (board.board[i][j].getChessRole().getPart() == Part.FIRST) {
+                } else if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.FIRST) {
                     features.putScalar(0, 0, i, j, -1);
                 }
-                if (board.board[i][j] != null) boardState.add((i * ROWS) + j);//棋盘不为空的位置
+                if (board.pieceArray[i][j] != null) boardState.add((i * ROWS) + j);//棋盘不为空的位置
             }
         }
         //预测

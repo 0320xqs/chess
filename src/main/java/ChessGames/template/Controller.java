@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
 public abstract class Controller implements Callable {
     public ChessBoard chessBoard;//棋盘
     public ChessRules chessRules;
-    public Config config;
+    public Config config = new Config();
     //游戏模式
     public String GAMEMODE = "人 VS 人";
     protected Player player1, player2;
@@ -53,8 +53,6 @@ public abstract class Controller implements Callable {
                 config.secondPlayer = PlayerType.AI;
                 break;
         }
-        player1 = new Player(config);
-        player2 = new Player(config);
     }
 
     /**
@@ -72,7 +70,7 @@ public abstract class Controller implements Callable {
      * @Descrition 播放记录
      * @Return null
      **/
-    public abstract void play(int xy, int Role);
+    public abstract void playRecond(int xy, int Role);
 
     /**
      * @Date 18:39 2023/6/7
@@ -90,6 +88,12 @@ public abstract class Controller implements Callable {
      * @Return JPanel
      **/
     public abstract JPanel GetBoard();
+
+    @Override
+    public int[] call() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, Exception {
+        StartGame();
+        return GameRecord();
+    }
 
     public abstract JPanel ChangeList();
 

@@ -4,7 +4,6 @@ package ChessGames.ChineseChess;
 import ChessGames.template.Controller;
 import ChessGames.template.Model.GameResult;
 import ChessGames.template.Model.Part;
-import ChessGames.template.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,37 +15,32 @@ import java.lang.reflect.InvocationTargetException;
 
 
 public class CCController extends Controller {
-//    private CCRules rules;//弃用
-//    private CCChessBoard board;//弃用
-    private CCConfig config;
-    private Player player1, player2;
+
+    private CCConfig config = new CCConfig();
+    private CCFirstPlayer player1;
+    private CCSecondPlayer player2;
 
     private CCChessPieces curFromPiece;
     listener listener = new listener();
-
 
     //改变
     int SelecetRows, SelectCols;
     static int RowsIndex = 14, ColsIndex = 14;
 
     public CCController() {
+        //赋值之前接受的数据
+        this.config.firstPlayer = super.config.firstPlayer;
+        this.config.secondPlayer = super.config.secondPlayer;
+
         curFromPiece = null;
-        config = new CCConfig();
         this.chessBoard = new CCChessBoard(config);
         this.chessRules = new CCRules(config);
         chessBoard.addMouseListener(listener);
         chessBoard.addMouseMotionListener(listener);
-        player1 = new SecondPLayer(config);
-        player2 = new FirstPLayer(config);
 
+        player1 = new CCFirstPlayer(config);
+        player2 = new CCSecondPlayer(config);
         chessRules.GetBegin();
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 9; j++) {
-                System.out.println(config.pieceArray[i][j]);
-            }
-
-        }
     }
 
 
@@ -59,7 +53,7 @@ public class CCController extends Controller {
         switch (GAMEMODE) {
             case "人 VS 人":
                 while (config.gameResult == GameResult.UNFINISHED) {
-                    System.out.println("人-人");
+                    System.out.println("人1-人");
                     point = listener.waitForClick();
                     System.out.println("准备落子！ From:"+curFromPiece.getX_coordinate()+" "+curFromPiece.getY_coordinate()+" to:"+point.getX()+" "+point.getY());
                     chessRules.Process(player1, player2, new Point(curFromPiece.getX_coordinate(), curFromPiece.getY_coordinate()), point);
@@ -70,15 +64,11 @@ public class CCController extends Controller {
             case "人 VS AI":
                 while (config.gameResult == GameResult.UNFINISHED) {
                     config.gameResult = GameResult.UNFINISHED;
-                    System.out.println("人-AI");
                     point = listener.waitForClick();
                     chessRules.Process(player1, player2, new Point(curFromPiece.getX_coordinate(), curFromPiece.getY_coordinate()), point); // 人下棋
                     chessBoard.repaint();
                     curFromPiece = null;
-                    System.out.println("我进来判断了");
                     if (config.checkFlag){//man选手的操作检测通过才能进行AI下棋
-//                        config.checkFlag =false;
-                        System.out.println("我判断过了");
                         chessRules.Process(player1, player2, null, null); // AI下棋
                         chessBoard.repaint();
                     }
@@ -87,8 +77,6 @@ public class CCController extends Controller {
             case "AI VS 人":
                 while (config.gameResult == GameResult.UNFINISHED) {
                     if (config.checkFlag) {//man选手的操作检测通过才能进行AI下棋
-                    System.out.println("我AI先下过了");
-//                    config.checkFlag = false;
                     chessRules.Process(player1, player2, null, null);//AI下第一步棋
                     chessBoard.repaint();
                     }
@@ -108,40 +96,19 @@ public class CCController extends Controller {
 
     }
 
-//    @Override
-//    public void GameModeSelect(String GameMode) {
-//        this.GAMEMODE=GameMode;
-//        switch (GAMEMODE) {
-//            case "人 VS 人":
-//                config.blackplayer = PlayerType.Man;
-//                config.redplayer = PlayerType.Man;
-//                break;
-//            case "人 VS AI":
-//                config.blackplayer = PlayerType.AI;
-//                config.redplayer = PlayerType.Man;
-//                break;
-//            case "AI VS 人":
-//                config.blackplayer = PlayerType.Man;
-//                config.redplayer = PlayerType.AI;
-//                break;
-//            case "AI VS AI":
-//                config.blackplayer = PlayerType.AI;
-//                config.redplayer = PlayerType.AI;
-//                break;
-//        }
-//        player2 = new SecondPLayer(config);
-//        player1 = new FirstPLayer(config);
-//    }
-
     public void init() {
+        //赋值之前接受的数据
+        this.config.firstPlayer = super.config.firstPlayer;
+        this.config.secondPlayer = super.config.secondPlayer;
         chessBoard.repaint();
         config.pieceList.clear();
-        config.checkFlag = true;
+        config.checkFlag = true;//阻断man与AI
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 10; j++) {
                 config.pieceArray[i][j] = null;
             }
         }
+        System.out.println(GAMEMODE);
         chessRules.GetBegin();
         config.currentPlayer = Part.FIRST;
         config.gameResult = GameResult.NOTSTARTED;
@@ -154,7 +121,7 @@ public class CCController extends Controller {
     }
 
     @Override
-    public void play(int xy, int Role) {
+    public void playRecond(int xy, int Role) {
 
     }
 
@@ -214,7 +181,7 @@ public class CCController extends Controller {
     }
 
     @Override
-    public Object call() throws Exception {
+    public int[] call() throws Exception {
         return null;
     }
 
@@ -225,7 +192,6 @@ public class CCController extends Controller {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
 
         }
 
@@ -243,7 +209,7 @@ public class CCController extends Controller {
                 // 当前走棋方
 //                *@NonNull Part pointerPart = situation.getNextPart();
                 // 当前焦点棋子
-                CCChessPieces pointerPiece = config.pieceArray[clickPoint.x][clickPoint.y];
+                CCChessPieces pointerPiece = (CCChessPieces) config.pieceArray[clickPoint.x][clickPoint.y];
                 if (pointerPiece != null){
                     System.out.println("当前焦点棋子："+pointerPiece.getChessRole());
                     System.out.println("当前焦点坐标："+pointerPiece.getX_coordinate()+" "+pointerPiece.getY_coordinate());
@@ -251,6 +217,7 @@ public class CCController extends Controller {
                 // 通过当前方和当前位置判断是否可以走棋
                 // step: form
                 //之前还未选中棋子
+                System.out.println("上一棋子："+curFromPiece);
                 if (curFromPiece == null) {
                     System.out.println("首次点击！");
                     if (pointerPiece != null && pointerPiece.getChessRole().getPart() == config.currentPlayer){

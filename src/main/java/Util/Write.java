@@ -14,7 +14,7 @@ import java.util.List;
 public class Write {
 
 
-    public static void write(List<int[]> boards, String chess) throws IOException {
+    public static void write(List<int[]> boards, String chessName) throws IOException {
 
         JsonObject jsonObject = new JsonObject();
         JsonArray jsonArray = new JsonArray();
@@ -36,7 +36,7 @@ public class Write {
         String s = now.format(formatter) + ".json";
 
         // write the JSON data to a file
-        try (FileWriter writer = new FileWriter("example/" + chess + "/" + s)) {
+        try (FileWriter writer = new FileWriter("example/" + chessName + "/" + s)) {
             gson.toJson(jsonObject, writer);
         }
 

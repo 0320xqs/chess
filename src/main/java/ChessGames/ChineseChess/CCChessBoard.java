@@ -48,7 +48,7 @@ public class CCChessBoard extends ChessBoard {
                 if (ccConfig.pieceArray[i][j] == null)
                     continue;
                 Point count = convertPlaceToLocation(i,j);//而非ccConfig.pieceArray[i][j].getX_coordinate(), ccConfig.pieceArray[i][j].getY_coordinate()
-                Image img = ccConfig.pieceArray[i][j].getChessRole().getImage();
+                Image img = ((CCChessPieces)ccConfig.pieceArray[i][j]).getChessRole().getImage();
 
                 g2d.setComposite(AlphaComposite.SrcOver); // 取消透明效果
                 g2d.drawImage(img, count.x - X_INIT / 2, count.y - Y_INIT, 56, 56, null);

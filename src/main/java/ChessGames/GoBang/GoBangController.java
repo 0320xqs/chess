@@ -1,29 +1,25 @@
 package ChessGames.GoBang;
 
 import ChessGames.template.Controller;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.InvocationTargetException;
-
 import static ChessGames.GoBang.GoBangConfig.*;
-
 import ChessGames.GoBang.Model.*;
 import ChessGames.template.Model.GameResult;
 import ChessGames.template.Model.Part;
 
 public class GoBangController extends Controller {
 
-    @Override
-    public int[] call() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        StartGame();
-        return GameRecord();
-    }
-    GoBangChessBoard chessBoard;
+//    @Override
+//    public int[] call() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+//        StartGame();
+//        return GameRecord();
+//    }
+//    public GoBangChessBoard chessBoard;
     GoBangListener listener = new GoBangListener();
     GoBangConfig config = new GoBangConfig();
-//    String GAMEMODE = "人 VS 人";
     String AIMODE = "小白";
     int AIDepth = 4;
     int SelecetRows, SelectCols;
@@ -31,28 +27,32 @@ public class GoBangController extends Controller {
 
 
     public GoBangController() {
-//        this.config.
+        //赋值之前接受的数据
+        this.config.firstPlayer = super.config.firstPlayer;
+        this.config.secondPlayer = super.config.secondPlayer;
         this.chessRules = new GoBangRules(config);
         chessBoard = new GoBangChessBoard(config);
         chessBoard.addMouseListener(listener);
-        System.out.println("我得到了");
         chessBoard.addMouseMotionListener(listener);
-        player1 = new FirstPLayer(config);
-        player2 = new SecondPlayer(config);
+        player1 = new GoBangFirstPlayer(config);
+        player2 = new GoBangSecondPlayer(config);
 
     }
 
     public GoBangController(int rows, int cols) {
         ROWS = rows;
         COLS = cols;
-        this.config = new GoBangConfig();
+        //赋值之前接受的数据
+        this.config.firstPlayer = super.config.firstPlayer;
+        this.config.secondPlayer = super.config.secondPlayer;
+
         this.chessBoard = new GoBangChessBoard(config);
         this.chessRules = new GoBangRules(config);
         listener = new GoBangListener();
         chessBoard.addMouseListener(listener);
         chessBoard.addMouseMotionListener(listener);
-        player1 = new FirstPLayer(config);
-        player2 = new SecondPlayer(config);
+        player1 = new GoBangFirstPlayer(config);
+        player2 = new GoBangSecondPlayer(config);
     }
 
     public String GetResult() {
@@ -60,14 +60,17 @@ public class GoBangController extends Controller {
     }
 
     public void init() {
+        //赋值之前接受的数据
+        this.config.firstPlayer = super.config.firstPlayer;
+        this.config.secondPlayer = super.config.secondPlayer;
         chessBoard.repaint();
-        config.chessArray.clear();
+        config.pieceList.clear();
         for (int i = 0; i < COLS; i++) {
             for (int j = 0; j < ROWS; j++) {
-                config.board[i][j] = null;
+                config.pieceArray[i][j] = null;
             }
         }
-        config.currentPlayer = Part.SECOND;
+        config.currentPlayer = Part.FIRST;
         config.gameResult = GameResult.NOTSTARTED;
     }
 
@@ -113,53 +116,28 @@ public class GoBangController extends Controller {
                     chessRules.Process(player1, player2, null, null);
                     chessBoard.repaint();
                 }
-
                 break;
         }
 
-
     }
 
-//    @Override
-//    public void GameModeSelect(String GameMode) {
-//        this.GAMEMODE=GameMode;
-//        switch (GameMode) {
-//            case "人 VS 人":
-//                config.blackplayer = PlayerType.Man;
-//                config.whiteplayer = PlayerType.Man;
-//                break;
-//            case "人 VS AI":
-//                config.blackplayer = PlayerType.Man;
-//                config.whiteplayer = PlayerType.AI;
-//                break;
-//            case "AI VS 人":
-//                config.blackplayer = PlayerType.AI;
-//                config.whiteplayer = PlayerType.Man;
-//                break;
-//            case "AI VS AI":
-//                config.blackplayer = PlayerType.AI;
-//                config.whiteplayer = PlayerType.AI;
-//                break;
-//        }
-//        player1 = new BlackPLayer(config);
-//        player2 = new WhitePlayer(config);
-//    }
-
-    public void play(int xy, int Role) {
+    @Override
+    public void playRecond(int xy, int Role) {
         int x = xy / ROWS;
         int y = xy % ROWS;
-        ChessRole chessRole = config.currentPlayer == Part.SECOND ? ChessRole.BLACKCHESS : ChessRole.WHITECHESS;
+//        ChessRole chessRole = config.currentPlayer == Part.SECOND ? ChessRole.BLACKCHESS : ChessRole.WHITECHESS;
+        ChessRole chessRole = Role == 1 ? ChessRole.WHITECHESS : ChessRole.BLACKCHESS;
         GoBangChessPieces tempChess = new GoBangChessPieces(x, y, chessRole);
-        config.chessArray.add(tempChess);
-        config.board[x][y] = tempChess;
+        config.pieceList.add(tempChess);
+        config.pieceArray[x][y] = tempChess;
         chessBoard.repaint();
     }
 
     @Override
     public int[] GameRecord() {
-        int[] temp = new int[config.chessArray.size()];
-        for (int i = 0; i < config.chessArray.size(); i++) {
-            temp[i] = config.chessArray.get(i).getX_coordinate() * ROWS + config.chessArray.get(i).getY_coordinate();
+        int[] temp = new int[config.pieceList.size()];
+        for (int i = 0; i < config.pieceList.size(); i++) {
+            temp[i] = config.pieceList.get(i).getX_coordinate() * ROWS + config.pieceList.get(i).getY_coordinate();
         }
         return temp;
     }

@@ -1,6 +1,5 @@
 package ChessGames.template;
 
-import ChessGames.GoBang.GoBangConfig;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;

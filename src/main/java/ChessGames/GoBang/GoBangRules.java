@@ -3,10 +3,8 @@ package ChessGames.GoBang;
 import ChessGames.template.*;
 import ChessGames.template.Model.GameResult;
 import ChessGames.template.Model.Part;
-
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
-
 import static ChessGames.GoBang.GoBangConfig.*;
 
 public class GoBangRules extends ChessRules {
@@ -31,10 +29,10 @@ public class GoBangRules extends ChessRules {
         } catch (NullPointerException ignored) {
         }
         switch (config.currentPlayer) {
-            case SECOND:
+            case FIRST:
                 player1.play(null, to);
                 break;
-            case FIRST:
+            case SECOND:
                 player2.play(null, to);
                 break;
         }
@@ -42,7 +40,6 @@ public class GoBangRules extends ChessRules {
         if (!End(null, new Point(temp.getX_coordinate(),temp.getY_coordinate())) )
             config.currentPlayer = config.currentPlayer.Exchange(config.currentPlayer);
         }
-
 
     @Override
     public Boolean End(Point from, Point to) {
@@ -68,7 +65,7 @@ public class GoBangRules extends ChessRules {
         for (i = 1; i < 5; ++i) {
             if ((to.y + i) < BOARD_SIZE) {
                 try {
-                    if (config.pieceArray[to.x][to.y + i].getChessRole().getPart() == config.currentPlayer && down) {
+                    if (((GoBangChessPieces)config.pieceArray[to.x][to.y + i]).getChessRole().getPart() == config.currentPlayer && down) {
                         count++;
                     } else {
                         down = false;
@@ -80,7 +77,7 @@ public class GoBangRules extends ChessRules {
             }
             if ((to.y - i) >= 0) {
                 try {
-                    if (config.pieceArray[to.x][to.y - i].getChessRole().getPart() == config.currentPlayer && up) {
+                    if (((GoBangChessPieces)config.pieceArray[to.x][to.y - i]).getChessRole().getPart() == config.currentPlayer && up) {
                         count++;
                     } else {
                         up = false;
@@ -102,7 +99,7 @@ public class GoBangRules extends ChessRules {
         for (i = 1; i < 5; ++i) {
             if ((to.x + i) < BOARD_SIZE) {
                 try {
-                    if (config.pieceArray[to.x + i][to.y].getChessRole().getPart() == config.currentPlayer && right) {
+                    if (((GoBangChessPieces)config.pieceArray[to.x + i][to.y]).getChessRole().getPart() == config.currentPlayer && right) {
                         count++;
                     } else {
                         right = false;
@@ -114,7 +111,7 @@ public class GoBangRules extends ChessRules {
             }
             if ((to.x - i) >= 0) {
                 try {
-                    if (config.pieceArray[to.x - i][to.y].getChessRole().getPart() == config.currentPlayer && left) {
+                    if (((GoBangChessPieces)config.pieceArray[to.x - i][to.y]).getChessRole().getPart() == config.currentPlayer && left) {
                         count++;
                     } else {
                         left = false;
@@ -136,7 +133,7 @@ public class GoBangRules extends ChessRules {
         for (i = 1; i < 5; ++i) {
             if ((to.x + i) < BOARD_SIZE && (to.y + i) < BOARD_SIZE) {
                 try {
-                    if (config.pieceArray[to.x + i][to.y + i].getChessRole().getPart() == config.currentPlayer && rdown) {
+                    if (((GoBangChessPieces)config.pieceArray[to.x + i][to.y + i]).getChessRole().getPart() == config.currentPlayer && rdown) {
                         count++;
                     } else {
                         rdown = false;
@@ -148,7 +145,7 @@ public class GoBangRules extends ChessRules {
             }
             if ((to.x - i) >= 0 && (to.y - i) >= 0) {
                 try {
-                    if (config.pieceArray[to.x - i][to.y - i].getChessRole().getPart() == config.currentPlayer && lup) {
+                    if (((GoBangChessPieces)config.pieceArray[to.x - i][to.y - i]).getChessRole().getPart() == config.currentPlayer && lup) {
                         count++;
                     } else {
                         lup = false;
@@ -170,7 +167,7 @@ public class GoBangRules extends ChessRules {
         for (i = 1; i < 5; ++i) {
             if ((to.x + i) < BOARD_SIZE && (to.y - i) >= 0) {
                 try {
-                    if (config.pieceArray[to.x + i][to.y - i].getChessRole().getPart() == config.currentPlayer && rup) {
+                    if (((GoBangChessPieces)config.pieceArray[to.x + i][to.y - i]).getChessRole().getPart() == config.currentPlayer && rup) {
                         count++;
                     } else {
                         rup = false;
@@ -182,7 +179,7 @@ public class GoBangRules extends ChessRules {
             }
             if ((to.x - i) >= 0 && (to.y + i) < BOARD_SIZE) {
                 try {
-                    if (config.pieceArray[to.x - i][to.y + i].getChessRole().getPart() == config.currentPlayer && ldown) {
+                    if (((GoBangChessPieces)config.pieceArray[to.x - i][to.y + i]).getChessRole().getPart() == config.currentPlayer && ldown) {
                         count++;
                     } else {
                         ldown = false;

@@ -1,5 +1,6 @@
 package ChessGames.GoBang.AI;
 
+import ChessGames.GoBang.GoBangChessPieces;
 import ChessGames.GoBang.GoBangConfig;
 import ChessGames.template.Model.Part;
 
@@ -38,14 +39,20 @@ public class Minimax {
         this.BOARD_SIZE = board.ROWS;
         this.computerScore = new int[BOARD_SIZE][BOARD_SIZE];
         computerScore_sort = new int[BOARD_SIZE][BOARD_SIZE];
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 50; j++) {
+                this.board[i][j] = 0;
+            }
+        }
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                try {
-                    if (board.board[i][j].getChessRole().getPart() == Part.SECOND)
+                if (((GoBangChessPieces) board.pieceArray[i][j]) != null){
+                    if (((GoBangChessPieces) board.pieceArray[i][j]).getChessRole().getPart() == Part.FIRST)
                         this.board[i][j] = 1;
-                    if (board.board[i][j].getChessRole().getPart() == Part.FIRST)
+                    if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.SECOND)
                         this.board[i][j] = 2;
-                } catch (NullPointerException ignored) {
+                }else {
+                    this.board[i][j] = 0;
                 }
             }
         }
@@ -56,22 +63,22 @@ public class Minimax {
      * @Description 获取下一步棋子位置
      */
     public Point play() {
-        if (Board.chessArray.size() == 0) {
 
+        if (Board.pieceList.size() == 0) {
             return new Point(BOARD_SIZE / 2, BOARD_SIZE / 2);
         }
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                try {
-                    if (Board.board[i][j].getChessRole().getPart() == Part.SECOND)
-                        this.board[i][j] = 1;
-                    if (Board.board[i][j].getChessRole().getPart() == Part.FIRST)
-                        this.board[i][j] = 2;
-                } catch (NullPointerException ignored) {
-
-                }
-            }
-        }
+//        for (int i = 0; i < BOARD_SIZE; i++) {
+//            for (int j = 0; j < BOARD_SIZE; j++) {
+//                if (((GoBangChessPieces) Board.pieceArray[i][j]) != null){
+//                    if (((GoBangChessPieces) Board.pieceArray[i][j]).getChessRole().getPart() == Part.FIRST)
+//                        this.board[i][j] = 1;
+//                    if (((GoBangChessPieces)Board.pieceArray[i][j]).getChessRole().getPart() == Part.SECOND)
+//                        this.board[i][j] = 2;
+//                }else {
+//                    this.board[i][j] = 0;
+//                }
+//            }
+//        }
 
         //初始化参数
         for (int i = 0; i < BOARD_SIZE; ++i) {

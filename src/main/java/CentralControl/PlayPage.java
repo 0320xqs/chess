@@ -1,6 +1,7 @@
 package CentralControl;
 
 import CentralControl.Home;
+import ChessGames.GoBang.GoBangController;
 import ChessGames.template.Controller;
 import Util.GetChess;
 import com.google.gson.Gson;
@@ -33,25 +34,25 @@ public class PlayPage {
     public JButton SaveButton;
     public JButton ExitButton;
     JTextArea textArea;
-    JComboBox<String> Chess;
-    JComboBox<String> Record;
-    JComboBox<String> OneRecord;
+    JComboBox<String> Chess;//棋类选择按钮
+    JComboBox<String> Record;//记录文件选择按钮
+    JComboBox<String> OneRecord;//第几局选择按钮
     HashMap<String, Path> RecordMap;
-    List<int[]> OneRecordList;
+    List<int[]> OneRecordList;//存储文件记录
     MyButtonLister mb;
-    int[] Play;
+    int[] Play;//棋子位置
     JFrame frame;
 
 
     public PlayPage() {
         mb = new MyButtonLister();
         chess = GetChess.getChess("GoBang");
+        System.out.println(chess);
         chess.chessBoard.setPreferredSize(new Dimension(560, 560));
         Chess = new JComboBox<>(GetChess.ChessList);
         Record = new JComboBox<>();
         OneRecord = new JComboBox<>();
         OneRecordList = new ArrayList<>();
-
 
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -200,7 +201,7 @@ public class PlayPage {
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
-                        chess.play(Play[i], i % 2 == 0 ? 1 : 2);
+                        chess.playRecond(Play[i], i % 2 == 0 ? 1 : 2);
                         String s = i % 2 == 0 ? "第" + i + "步，先手落子" : "第" + i + "步，后手落子";
                         textArea.append(s + "\n");
                     }
@@ -228,7 +229,7 @@ public class PlayPage {
                 OneRecord.removeAllItems();
                 OneRecord.addActionListener(mb);
                 Record.addActionListener(mb);
-            } else if (obj == Record) {
+            } else if (obj == Record) {//选择记录文件
                 try {
                     OneRecordList = FindRecord(RecordMap.get(Record.getSelectedItem().toString()));
                 } catch (IOException ex) {
@@ -240,7 +241,7 @@ public class PlayPage {
                     OneRecord.addItem("第" + (i + 1) + "局");
                 OneRecord.repaint();
                 OneRecord.addActionListener(mb);
-            } else if (obj == OneRecord) {
+            } else if (obj == OneRecord) {//选择第几局
                 if (Record.getSelectedIndex() == -1) {
                     return;
                 }

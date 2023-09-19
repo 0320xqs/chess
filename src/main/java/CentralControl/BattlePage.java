@@ -60,6 +60,7 @@ public class BattlePage {
         gameMode.addItemListener(evt -> {
             if (evt.getStateChange() == ItemEvent.SELECTED) {
                 String GAMEMODE = evt.getItem().toString();
+                System.out.println("切换到"+GAMEMODE+"模式");
                 chess.GameModeSelect(GAMEMODE);
             }
         });

@@ -75,13 +75,14 @@ public class CCRules extends ChessRules {
             }
             System.out.println("检测通过!"+ccConfig.currentPlayer+from.getX()+" "+from.getY()+" "+to.getX()+" "+to.getY());
             ccConfig.checkFlag = true;
-            eatenPiece = ccConfig.pieceArray[to.x][to.y];
+            eatenPiece = (CCChessPieces) ccConfig.pieceArray[to.x][to.y];
         }
         switch (ccConfig.currentPlayer) {
             case SECOND:
                 player2.play(from, to);
                 break;
             case FIRST:
+                System.out.println(player1.getClass());
                 player1.play(from, to);
                 break;
         }
@@ -107,7 +108,7 @@ public class CCRules extends ChessRules {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 10; j++) {
                 {
-                    CCChessPieces piece = ccConfig.pieceArray[i][j];
+                    CCChessPieces piece = (CCChessPieces) ccConfig.pieceArray[i][j];
                     if (piece != null && (piece.getChessRole().equals(ChessRole.RED_ROOK) || piece.getChessRole().equals(ChessRole.RED_HORSE) || piece.getChessRole().equals(ChessRole.RED_CANNON) || piece.getChessRole().equals(ChessRole.RED_SOLDIER)
                             || piece.getChessRole().equals(ChessRole.BLACK_ROOK) || piece.getChessRole().equals(ChessRole.BLACK_HORSE) || piece.getChessRole().equals(ChessRole.BLACK_CANNON) || piece.getChessRole().equals(ChessRole.BLACK_SOLDIER))) {
                         isDraw = false;
@@ -157,7 +158,7 @@ public class CCRules extends ChessRules {
         Boolean result = false;
         System.out.println("检测from："+from.getX()+" "+from.getY());
         System.out.println("检测to："+to.getX()+" "+to.getY());
-        CCChessPieces a = ccConfig.pieceArray[from.x][from.y];
+        CCChessPieces a = (CCChessPieces) ccConfig.pieceArray[from.x][from.y];
         switch (a.getChessRole()) {
             case BLACK_KING:
             case RED_KING:
@@ -315,11 +316,11 @@ public class CCRules extends ChessRules {
         for (int i = 0; i < 9; i++) {
             ok:
             for (int j = 0; j < 10; j++) {
-                if (ccConfig.pieceArray[i][j] != null && ccConfig.pieceArray[i][j].getChessRole().equals(ChessRole.BLACK_KING) ){
+                if (ccConfig.pieceArray[i][j] != null && ((CCChessPieces)ccConfig.pieceArray[i][j]).getChessRole().equals(ChessRole.BLACK_KING) ){
                     blackKing = new Point(i, j);
                     flag ++;
                 }
-                if (ccConfig.pieceArray[i][j] != null && ccConfig.pieceArray[i][j].getChessRole().equals(ChessRole.RED_KING)){
+                if (ccConfig.pieceArray[i][j] != null && ((CCChessPieces)ccConfig.pieceArray[i][j]).getChessRole().equals(ChessRole.RED_KING)){
                     redKing = new Point(i, j);
                     flag ++;
                 }

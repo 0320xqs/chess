@@ -5,8 +5,8 @@ import lombok.Data;
 import java.awt.*;
 
 public enum ChessRole {
-    BLACKCHESS(Part.SECOND, ChessImage.BLACKCHESS.image),
-    WHITECHESS(Part.FIRST, ChessImage.WHITECHESS.image);
+    WHITECHESS(Part.FIRST, ChessImage.WHITECHESS.image),
+    BLACKCHESS(Part.SECOND, ChessImage.BLACKCHESS.image);
 
     Part part;
     Image image;

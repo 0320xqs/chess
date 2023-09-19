@@ -1,27 +1,24 @@
 package ChessGames.GoBang;
 
-
-
 import ChessGames.GoBang.AI.GetAI;
 import ChessGames.GoBang.Model.ChessRole;
-import ChessGames.template.Config;
-import ChessGames.template.FirstPlayer;
-
+import ChessGames.template.SecondPlayer;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
-public class SecondPlayer extends FirstPlayer {
+public class GoBangFirstPlayer extends SecondPlayer {
     private GoBangConfig config;
     private GetAI getAI;
 
-    public SecondPlayer(Config config) {
+    public GoBangFirstPlayer(GoBangConfig config) {
         super(config);
         this.config = (GoBangConfig) config;
     }
 
     @Override
-    public void play(Point from,Point to) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        switch (config.secondPlayer) {
+    public void play(Point from, Point to) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        switch (config.firstPlayer) {
             case Man:
                 GoBangChessPieces temp = new GoBangChessPieces(to.x, to.y, ChessRole.WHITECHESS);
                 config.pieceArray[to.x][to.y] = temp;

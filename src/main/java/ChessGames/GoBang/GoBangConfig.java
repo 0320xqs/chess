@@ -11,6 +11,10 @@ public class GoBangConfig extends Config {
 
     public int AIDepth = 4;
 
+    public GoBangConfig() {
+
+    }
+
     public GoBangConfig(int ROWS, int COLS) {
         super(ROWS, COLS);
     }

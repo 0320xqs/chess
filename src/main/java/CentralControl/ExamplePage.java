@@ -23,25 +23,25 @@ public class ExamplePage {
     public List<int[]> Example;
     public String[] AI_Rate = {"10", "50", "100", "1000"};
     public Controller chess;
-    public JButton StartButton;
+    public JButton StartButton;//开始按钮
     public JButton SaveButton;
-    public JButton ExitButton;
-    JTextArea textArea;
+    public JButton ExitButton;//退出按钮
+    JTextArea textArea;//对战信息文本区域
     JComboBox<String> AIMode;
-    int num;
+    int num;//生成数量
     Dimension dim = new Dimension(100, 200);
-    String Chess;
+    String chessName;
     JFrame frame;
 
-    public ExamplePage(String Chess) {
-        this.Chess = Chess;
+    public ExamplePage(String chessName) {
+        this.chessName = chessName;
         Example = new ArrayList<>();
         num = 10;
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
 
 
-        chess = GetChess.getChess(this.Chess);
+        chess = GetChess.getChess(this.chessName);
         assert chess != null;
         chess.GameModeSelect("AI VS AI");
         chess.chessBoard.setPreferredSize(new Dimension(560, 560));
@@ -137,7 +137,6 @@ public class ExamplePage {
 
                 }).start();
 
-
             } else if (obj == SaveButton) {
                 chess.chessRules.GoBack();
             } else if (obj == ExitButton) {
@@ -167,20 +166,25 @@ public class ExamplePage {
         public void start() throws ExecutionException, InterruptedException, IOException {
             List<FutureTask> futures = new ArrayList<>();
             for (int i = 0; i < num; i++) {
-                Controller temp = new GoBangController();
-                temp.GameModeSelect("AI VS AI");
-                FutureTask future = new FutureTask<>(temp);
+                Controller controller = new GoBangController();
+                controller.GameModeSelect("AI VS AI");
+                // 创建 FutureTask 对象，并将控制器作为任务传入
+                FutureTask future = new FutureTask<>(controller);
+                // 使用线程池 executor 执行任务
                 executor.execute(future);
                 futures.add(future);
             }
 
+            // 关闭线程池
             executor.shutdown();
             for (int i = 0; i < futures.size(); i++) {
+                // 获取 FutureTask 的结果，并将结果添加到 Example 列表中(get方法调用的是控制器中的call)
                 Example.add((int[]) futures.get(i).get());
                 textArea.append("完成一局，目前进度" + (i + 1) + "/" + num + "\n");
             }
             textArea.append("结束");
-            Write.write(Example, Chess);
+            // 将 Example 列表写入文件
+            Write.write(Example, chessName);
         }
     }
 }

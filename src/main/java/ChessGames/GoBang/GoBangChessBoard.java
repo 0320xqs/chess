@@ -32,10 +32,10 @@ public class GoBangChessBoard extends ChessBoard {
             g.drawLine(MARGIN + GRID_SPAN * j, MARGIN, MARGIN + GRID_SPAN * j, MARGIN + GRID_SPAN * (ROWS - 1));//纵向画线
         }
 
-        for (int i = 0; i < config.chessArray.size(); i++) {
-            int countx = config.chessArray.get(i).getX_coordinate() * GRID_SPAN + MARGIN;//得到棋子x坐标
-            int county = config.chessArray.get(i).getY_coordinate() * GRID_SPAN + MARGIN;//得到棋子y坐标
-            Image img = config.chessArray.get(i).getChessRole().getImage();//得到棋子图片
+        for (int i = 0; i < config.pieceList.size(); i++) {
+            int countx = config.pieceList.get(i).getX_coordinate() * GRID_SPAN + MARGIN;//得到棋子x坐标
+            int county = config.pieceList.get(i).getY_coordinate() * GRID_SPAN + MARGIN;//得到棋子y坐标
+            Image img = ((GoBangChessPieces)config.pieceList.get(i)).getChessRole().getImage();//得到棋子图片
             g.drawImage(img, countx - DIAMETER / 2, county - DIAMETER / 2, DIAMETER, DIAMETER, null);
         }
     }

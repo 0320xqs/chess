@@ -21,8 +21,13 @@ public class CCConfig extends Config{
 
     public Boolean checkFlag = true;//阻断man与AI
 
+    public CCConfig() {
+
+    }
     public CCConfig(int ROWS, int COLS) {
         super(ROWS, COLS);
+        this.ROWS = ROWS;
+        this.COLS = COLS;
     }
 
     public static Point convertPlaceToLocation(int x, int y) {
