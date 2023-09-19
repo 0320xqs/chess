@@ -324,7 +324,8 @@ public class CNN {
 //        String modelFilePath = "model/board1_中+左上+左下+右上+右下的4000局_86.zip";
 //        String modelFilePath = "ChessGames\\GoBang\\AI\\weightMyCnnModel_中3600_单纯shuffle_52.zip";
 //        String modelFilePath = "model/weightMyCnnModel_全局平均共6000局_43.zip";
-        String modelFilePath = "model/weightMyCnnModel_中3600_调整LR为0.0001_1.zip";
+//        String modelFilePath = "model/weightMyCnnModel_中3600_调整LR为0.0001_1.zip";
+        String modelFilePath = "model/weightMyCnnModel_中3600_去池化+dropout=0.5_141.zip";
 //        String modelFilePath = "model/weightMyCnnModel_中9600_调整LR为0.0001_7.zip";
         MultiLayerNetwork model = ModelSerializer.restoreMultiLayerNetwork(modelFilePath);
 
@@ -373,7 +374,7 @@ public class CNN {
     public Point play() {
 
         if (board.pieceList.size() == 0) {//先手
-            return new Point(batchSize / 2, batchSize / 2);
+            return new Point(board.COLS / 2, board.ROWS / 2);
         }
         //转换格式
         //处理数据
@@ -381,12 +382,16 @@ public class CNN {
         INDArray features = Nd4j.zeros(new int[]{1, 1, 15, 15});
         for (int i = 0; i < COLS; i++) {
             for (int j = 0; j < ROWS; j++) {
-                if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.SECOND) {
-                    features.putScalar(0, 0, i, j, 1);
-                } else if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.FIRST) {
-                    features.putScalar(0, 0, i, j, -1);
+                if (board.pieceArray[i][j] != null){
+                    if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.SECOND) {
+                        features.putScalar(0, 0, i, j, 1);
+                    } else if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.FIRST) {
+                        features.putScalar(0, 0, i, j, -1);
+                    }
+                    boardState.add((i * ROWS) + j);//棋盘不为空的位置
+                }else {
+                    features.putScalar(0, 0, i, j, 0);
                 }
-                if (board.pieceArray[i][j] != null) boardState.add((i * ROWS) + j);//棋盘不为空的位置
             }
         }
         //预测

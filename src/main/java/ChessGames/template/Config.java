@@ -1,12 +1,10 @@
 package ChessGames.template;
 
-import ChessGames.ChineseChess.AI.GetAI;
-import ChessGames.GoBang.GoBangChessPieces;
+import ChessGames.ChineseChess.AI.CCGetAI;
 import ChessGames.template.Model.GameResult;
 import ChessGames.template.Model.Part;
 import ChessGames.template.Model.PlayerType;
 import lombok.Data;
-import org.bytedeco.tesseract.ROW;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,8 +15,8 @@ public class Config {
     public PlayerType secondPlayer = PlayerType.Man;//后手
 
     //设置AI类型
-    public String secondAI = GetAI.AIList[0];
-    public String firstAI = GetAI.AIList[0];
+    public String secondAI = CCGetAI.AIList[0];
+    public String firstAI = CCGetAI.AIList[0];
 
     public static int ROWS = 100;//行数
     public static int COLS = 100;//列数

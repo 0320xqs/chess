@@ -1,6 +1,6 @@
 package ChessGames.GoBang;
 
-import ChessGames.GoBang.AI.GetAI;
+import ChessGames.GoBang.AI.GoBangGetAI;
 import ChessGames.GoBang.Model.ChessRole;
 import ChessGames.template.Config;
 import ChessGames.template.FirstPlayer;
@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class GoBangSecondPlayer extends FirstPlayer {
     private GoBangConfig config;
-    private GetAI getAI;
+    private GoBangGetAI getAI;
 
     public GoBangSecondPlayer(Config config) {
         super(config);
@@ -25,7 +25,7 @@ public class GoBangSecondPlayer extends FirstPlayer {
                 config.pieceList.add(temp);
                 break;
             case AI:
-                getAI = new GetAI(config, 1);
+                getAI = new GoBangGetAI(config, 1);
                 Point point = getAI.play(config.secondAI);
                 temp = new GoBangChessPieces(point.x, point.y, ChessRole.BLACKCHESS);
                 config.pieceArray[point.x][point.y] = temp;

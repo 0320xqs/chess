@@ -306,7 +306,32 @@ public class CCRules extends ChessRules {
 
     @Override
     public void GoBack() {
-
+        if (ccConfig.pieceList.size() == 0) {
+            return;
+        }
+        if (ccConfig.pieceList.size() > 0) {
+            //获取坐标
+            int x_from_index = ccConfig.pieceList.get(ccConfig.pieceList.size() - 2).getX_coordinate();
+            int y_from_index = ccConfig.pieceList.get(ccConfig.pieceList.size() - 2).getY_coordinate();
+            int x_to_index = ccConfig.pieceList.get(ccConfig.pieceList.size() - 1).getX_coordinate();
+            int y_to_index = ccConfig.pieceList.get(ccConfig.pieceList.size() - 1).getY_coordinate();
+            //恢复
+            ccConfig.pieceArray[x_from_index][y_from_index] = ccConfig.pieceArray[x_to_index][y_to_index];
+            ccConfig.pieceArray[x_to_index][y_to_index] = ccConfig.eatenList.get(ccConfig.eatenList.size()-1);
+            //改变棋子内部坐标
+            ccConfig.pieceArray[x_from_index][y_from_index].setX_coordinate(x_from_index);
+            ccConfig.pieceArray[x_from_index][y_from_index].setY_coordinate(y_from_index);
+            System.out.println(ccConfig.pieceArray[x_from_index][y_from_index].getX_coordinate());
+            System.out.println(ccConfig.pieceArray[x_from_index][y_from_index].getY_coordinate());
+        }
+        //移除相关棋子记录
+        ccConfig.pieceList.remove(ccConfig.pieceList.size() - 1);
+        ccConfig.pieceList.remove(ccConfig.pieceList.size() - 1);
+        ccConfig.eatenList.remove(ccConfig.eatenList.size() - 1);
+        //交换角色
+        ccConfig.currentPlayer = ccConfig.currentPlayer.Exchange(ccConfig.currentPlayer);
+        //
+        ccConfig.checkFlag = true;
     }
 
     Boolean isKingF2F(CCChessPieces curFromPiece, Point from, Point to) {

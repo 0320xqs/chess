@@ -1,8 +1,9 @@
 package ChessGames.ChineseChess;
 
 
-import ChessGames.ChineseChess.AI.GetAI;
+import ChessGames.ChineseChess.AI.CCGetAI;
 import ChessGames.ChineseChess.AI.StepBean;
+import ChessGames.template.ChessPieces;
 import ChessGames.template.SecondPlayer;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.util.Objects;
 
 public class CCSecondPlayer extends SecondPlayer {
     private CCConfig config;
-    private GetAI getAI;
+    private CCGetAI getAI;
 
     public CCSecondPlayer(CCConfig config) {
         super(config);
@@ -25,7 +26,7 @@ public class CCSecondPlayer extends SecondPlayer {
                 System.out.println("我是后手进来了！");
                 break;
             case AI:
-                getAI = new GetAI(config, 1);
+                getAI = new CCGetAI(config, 1);
                 System.out.println("我获取到了AI");
                 StepBean stepBean = getAI.play(config.secondAI);
                 from = stepBean.from;
@@ -35,10 +36,17 @@ public class CCSecondPlayer extends SecondPlayer {
         final CCChessPieces fromPiece = (CCChessPieces) config.pieceArray[from.x][from.y];
         CCRules.eatenPiece = (CCChessPieces) config.pieceArray[to.x][to.y];
         Objects.requireNonNull(fromPiece, "找不到移动的棋子");
+        //存入走棋记录list
+        config.pieceList.add(new ChessPieces(from.x,from.y));
+        config.pieceList.add(new ChessPieces(to.x,to.y));
+        System.out.println(config.pieceList);
         // 判断是否是吃子, 如果棋子被吃掉, 则将棋子移动列表
         if (CCRules.eatenPiece != null) {
+            config.eatenList.add(CCRules.eatenPiece);
             System.out.println("我吃了"+CCRules.eatenPiece.getChessRole());
             config.pieceArray[to.x][to.y] = null;
+        }else {
+            config.eatenList.add(null);
         }
         // 更改棋盘数组
         config.pieceArray[from.x][from.y] = null;

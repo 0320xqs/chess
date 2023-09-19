@@ -1,16 +1,11 @@
 package ChessGames.ChineseChess;
 
-import ChessGames.ChineseChess.AI.GetAI;
-import ChessGames.ChineseChess.Model.*;
-import ChessGames.GoBang.GoBangChessPieces;
+import ChessGames.template.ChessPieces;
 import ChessGames.template.Config;
-import ChessGames.template.Model.GameResult;
-import ChessGames.template.Model.Part;
 
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import static ChessGames.ChineseChess.CCChessBoard.*;
 
@@ -18,6 +13,8 @@ public class CCConfig extends Config{
 
     public static int ROWS = 10;//行数
     public static int COLS = 9;//列数
+
+    public ArrayList<ChessPieces> eatenList = new ArrayList<>();//存储下棋顺序
 
     public Boolean checkFlag = true;//阻断man与AI
 

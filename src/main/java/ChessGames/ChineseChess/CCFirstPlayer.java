@@ -1,7 +1,8 @@
 package ChessGames.ChineseChess;
 
-import ChessGames.ChineseChess.AI.GetAI;
+import ChessGames.ChineseChess.AI.CCGetAI;
 import ChessGames.ChineseChess.AI.StepBean;
+import ChessGames.template.ChessPieces;
 import ChessGames.template.FirstPlayer;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.util.Objects;
 
 public class CCFirstPlayer extends FirstPlayer {
     private CCConfig config;
-    private GetAI getAI;
+    private CCGetAI getAI;
 
     public CCFirstPlayer(CCConfig config) {
         super(config);
@@ -24,7 +25,7 @@ public class CCFirstPlayer extends FirstPlayer {
                 System.out.println("我是先手进来了！");
                 break;
             case AI:
-                getAI = new GetAI(config, 1);
+                getAI = new CCGetAI(config, 1);
                 System.out.println("我获取到了AI");
                 StepBean stepBean = getAI.play(config.secondAI);
                 from = stepBean.from;
@@ -36,10 +37,17 @@ public class CCFirstPlayer extends FirstPlayer {
         final CCChessPieces fromPiece = (CCChessPieces) config.pieceArray[from.x][from.y];
         CCRules.eatenPiece = (CCChessPieces) config.pieceArray[to.x][to.y];
         Objects.requireNonNull(fromPiece, "找不到移动的棋子");
+        //存入走棋记录list
+        config.pieceList.add(new ChessPieces(from.x,from.y));
+        config.pieceList.add(new ChessPieces(to.x,to.y));
+        System.out.println(config.pieceList);
         // 判断是否是吃子, 如果棋子被吃掉, 则将棋子移动列表
         if (CCRules.eatenPiece != null) {
+            config.eatenList.add(CCRules.eatenPiece);
             System.out.println("我吃了"+CCRules.eatenPiece.getChessRole());
             config.pieceArray[to.x][to.y] = null;
+        }else {
+            config.eatenList.add(null);
         }
         // 更改棋盘数组
         config.pieceArray[from.x][from.y] = null;
@@ -47,6 +55,7 @@ public class CCFirstPlayer extends FirstPlayer {
         //更改棋子内部坐标
         config.pieceArray[to.x][to.y].setX_coordinate(to.x);
         config.pieceArray[to.x][to.y].setY_coordinate(to.y);
+
         System.out.println("改变完数组了！From:"+from.x+" "+from.y+" to:"+to.getX()+" "+to.getY());
     }
 }

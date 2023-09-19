@@ -37,7 +37,6 @@ public class CCController extends Controller {
         this.chessRules = new CCRules(config);
         chessBoard.addMouseListener(listener);
         chessBoard.addMouseMotionListener(listener);
-
         player1 = new CCFirstPlayer(config);
         player2 = new CCSecondPlayer(config);
         chessRules.GetBegin();
@@ -53,7 +52,7 @@ public class CCController extends Controller {
         switch (GAMEMODE) {
             case "人 VS 人":
                 while (config.gameResult == GameResult.UNFINISHED) {
-                    System.out.println("人1-人");
+                    System.out.println("人-人");
                     point = listener.waitForClick();
                     System.out.println("准备落子！ From:"+curFromPiece.getX_coordinate()+" "+curFromPiece.getY_coordinate()+" to:"+point.getX()+" "+point.getY());
                     chessRules.Process(player1, player2, new Point(curFromPiece.getX_coordinate(), curFromPiece.getY_coordinate()), point);
@@ -63,7 +62,6 @@ public class CCController extends Controller {
                 break;
             case "人 VS AI":
                 while (config.gameResult == GameResult.UNFINISHED) {
-                    config.gameResult = GameResult.UNFINISHED;
                     point = listener.waitForClick();
                     chessRules.Process(player1, player2, new Point(curFromPiece.getX_coordinate(), curFromPiece.getY_coordinate()), point); // 人下棋
                     chessBoard.repaint();
@@ -93,27 +91,8 @@ public class CCController extends Controller {
                 }
                 break;
         }
-
     }
 
-    public void init() {
-        //赋值之前接受的数据
-        this.config.firstPlayer = super.config.firstPlayer;
-        this.config.secondPlayer = super.config.secondPlayer;
-        chessBoard.repaint();
-        config.pieceList.clear();
-        config.checkFlag = true;//阻断man与AI
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 10; j++) {
-                config.pieceArray[i][j] = null;
-            }
-        }
-        System.out.println(GAMEMODE);
-        chessRules.GetBegin();
-        config.currentPlayer = Part.FIRST;
-        config.gameResult = GameResult.NOTSTARTED;
-        System.out.println("初始化完成！");
-    }
 
     @Override
     public int[] GameRecord() {
@@ -170,6 +149,26 @@ public class CCController extends Controller {
     @Override
     public Controller changeGame() {
         return null;
+    }
+
+    @Override
+    public void init() {
+        //赋值之前接受的数据
+        this.config.firstPlayer = super.config.firstPlayer;
+        this.config.secondPlayer = super.config.secondPlayer;
+        chessBoard.repaint();
+        config.pieceList.clear();
+        config.checkFlag = true;//阻断man与AI
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 10; j++) {
+                config.pieceArray[i][j] = null;
+            }
+        }
+        System.out.println("模式为："+GAMEMODE);
+        chessRules.GetBegin();
+        config.currentPlayer = Part.FIRST;
+        config.gameResult = GameResult.NOTSTARTED;
+        System.out.println("初始化完成！");
     }
 
     private class BackGround extends JPanel {

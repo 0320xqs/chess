@@ -99,6 +99,5 @@ public abstract class Controller implements Callable {
 
     public abstract Controller changeGame();
 
-    public void init() {
-    }
+    public abstract void init();
 }

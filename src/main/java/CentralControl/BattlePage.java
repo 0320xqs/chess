@@ -1,6 +1,8 @@
 package CentralControl;
 
 import ChessGames.template.*;
+import ChessGames.template.Model.GameResult;
+import Util.GetChess;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
@@ -13,21 +15,23 @@ import java.lang.reflect.InvocationTargetException;
 public class BattlePage {
     JFrame frame;
     JFrame changeList;
-    String[] GameMode = {"人 VS 人", "人 VS AI", "AI VS 人", "AI VS AI"};
-    String Chessname;
-    Controller chess;
-    JButton RestartButton;
-    JButton WithdrawButton;
-    JButton ExitButton;
+    String[] GameMode = {"人 VS 人", "人 VS AI", "AI VS 人", "AI VS AI"};//游戏模式
+    String[] AiMode = {"MinMax", "CNN"};
+    String chessName;//游戏名称
+    Controller chess;//游戏逻辑控制器
+    JButton RestartButton;//开始按钮
+    JButton WithdrawButton;//悔棋按钮
+    JButton ExitButton;//退出按钮
     JButton ChangeButton;
-    JTextArea textArea;
-    JComboBox<String> gameMode;
-    JComboBox<String> AIMode;
-    MyButtonLister mb;
+    JTextArea textArea;//对战信息文本框
+    JComboBox<String> gameMode;//游戏模式下拉框
+    JComboBox<String> AIMode;//AI模式下拉框
+    MyButtonLister mb;//监听器
     Dimension dim = new Dimension(100, 200);
+    Thread gameThread;//游戏进程
 
 
-    public BattlePage(String Chessname, Controller chess) {
+    public BattlePage(String chessName, Controller chess) {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -35,7 +39,7 @@ public class BattlePage {
         changeList.setLayout(new GridLayout(0, 1));
         changeList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.Chessname = Chessname;
+        this.chessName = chessName;
         this.chess = chess;
 
 
@@ -62,16 +66,22 @@ public class BattlePage {
                 String GAMEMODE = evt.getItem().toString();
                 System.out.println("切换到"+GAMEMODE+"模式");
                 chess.GameModeSelect(GAMEMODE);
+                if (gameThread != null){
+                    gameThread.stop();//杀掉先前进程，点击start按钮重新建立新进程
+                }
             }
         });
         panel2.add(gameMode);
-
-        AIMode = new JComboBox<>();
+        //获取指定棋类的AI
+        AiMode = GetChess.getAIList(chessName);
+        AIMode = new JComboBox<>(AiMode);
         AIMode.setRenderer(new CenteredComboBoxRenderer());
         AIMode.addItemListener(evt -> {
             if (evt.getStateChange() == ItemEvent.SELECTED) {
                 String AIMODE = evt.getItem().toString();
-
+                System.out.println("AI切换到："+AIMODE);
+                chess.config.firstAI = AIMODE;
+                chess.config.secondAI = AIMODE;
             }
         });
         panel2.add(AIMode);
@@ -116,7 +126,7 @@ public class BattlePage {
 
 
         panel1.add(chess.GetBoard());
-        System.out.println("成功！");
+        System.out.println("加载棋盘成功！");
         panel1.add(panel3);
 
         changeList.add(chess.ChangeList());
@@ -140,7 +150,7 @@ public class BattlePage {
         frame.dispose();
         changeList.dispose();
         chess = chess.changeGame();
-        new BattlePage(Chessname, chess);
+        new BattlePage(chessName, chess);
 
     }
 
@@ -149,17 +159,17 @@ public class BattlePage {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (obj == RestartButton) {
-                Thread thread = new Thread(() -> {
+                gameThread = new Thread(() -> {
                     try {
                         chess.StartGame();
                     } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException ex) {
                         ex.printStackTrace();
                     }
                 });
-                thread.start();
+                gameThread.start();
                 new Thread(() -> {
                     try {
-                        thread.join();
+                        gameThread.join();
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -169,6 +179,7 @@ public class BattlePage {
             }
             if (obj == WithdrawButton) {
                 chess.chessRules.GoBack();
+                chess.chessBoard.repaint();
             }
             if (obj == ExitButton) {
                 frame.dispose();

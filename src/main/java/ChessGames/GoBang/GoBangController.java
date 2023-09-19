@@ -28,8 +28,12 @@ public class GoBangController extends Controller {
 
     public GoBangController() {
         //赋值之前接受的数据
-        this.config.firstPlayer = super.config.firstPlayer;
-        this.config.secondPlayer = super.config.secondPlayer;
+//        this.config.firstPlayer = super.config.firstPlayer;
+//        this.config.secondPlayer = super.config.secondPlayer;
+//        this.config.firstAI = super.config.firstAI;
+//        this.config.secondAI = super.config.secondAI;
+        System.out.println(this.config.firstAI);
+
         this.chessRules = new GoBangRules(config);
         chessBoard = new GoBangChessBoard(config);
         chessBoard.addMouseListener(listener);
@@ -43,9 +47,10 @@ public class GoBangController extends Controller {
         ROWS = rows;
         COLS = cols;
         //赋值之前接受的数据
-        this.config.firstPlayer = super.config.firstPlayer;
-        this.config.secondPlayer = super.config.secondPlayer;
-
+//        this.config.firstPlayer = super.config.firstPlayer;
+//        this.config.secondPlayer = super.config.secondPlayer;
+//        this.config.firstAI = super.config.firstAI;
+//        this.config.secondAI = super.config.secondAI;
         this.chessBoard = new GoBangChessBoard(config);
         this.chessRules = new GoBangRules(config);
         listener = new GoBangListener();
@@ -55,24 +60,12 @@ public class GoBangController extends Controller {
         player2 = new GoBangSecondPlayer(config);
     }
 
+    @Override
     public String GetResult() {
         return config.gameResult.getResult();
     }
 
-    public void init() {
-        //赋值之前接受的数据
-        this.config.firstPlayer = super.config.firstPlayer;
-        this.config.secondPlayer = super.config.secondPlayer;
-        chessBoard.repaint();
-        config.pieceList.clear();
-        for (int i = 0; i < COLS; i++) {
-            for (int j = 0; j < ROWS; j++) {
-                config.pieceArray[i][j] = null;
-            }
-        }
-        config.currentPlayer = Part.FIRST;
-        config.gameResult = GameResult.NOTSTARTED;
-    }
+
 
     @Override
     public void StartGame() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -83,7 +76,6 @@ public class GoBangController extends Controller {
             case "人 VS 人":
                 while (config.gameResult == GameResult.UNFINISHED) {
                     point = listener.waitForClick();
-                    point = GoBangChessBoard.convertLocationToPlace(point);
                     chessRules.Process(player1, player2, null, point);
                     chessBoard.repaint();
                 }
@@ -91,7 +83,7 @@ public class GoBangController extends Controller {
             case "人 VS AI":
                 while (config.gameResult == GameResult.UNFINISHED) {
                     point = listener.waitForClick();
-                    point = GoBangChessBoard.convertLocationToPlace(point);
+//                    point = GoBangChessBoard.convertLocationToPlace(point);
                     chessRules.Process(player1, player2, null, point); // 人下棋
                     chessBoard.repaint();
                     chessRules.Process(player1, player2, null, null); // AI下棋
@@ -103,7 +95,7 @@ public class GoBangController extends Controller {
                 chessBoard.repaint();
                 while (config.gameResult == GameResult.UNFINISHED) {
                     point = listener.waitForClick();
-                    point = GoBangChessBoard.convertLocationToPlace(point);
+//                    point = GoBangChessBoard.convertLocationToPlace(point);
                     chessRules.Process(player1, player2, null, point); // 人下棋
                     chessBoard.repaint();
                     chessRules.Process(player1, player2, null, null); // AI下棋
@@ -184,6 +176,25 @@ public class GoBangController extends Controller {
         return new GoBangController(SelecetRows, SelectCols);
     }
 
+    @Override
+    public void init() {
+        //赋值之前接受的数据
+        this.config.firstPlayer = super.config.firstPlayer;
+        this.config.secondPlayer = super.config.secondPlayer;
+        this.config.firstAI = super.config.firstAI;
+        this.config.secondAI = super.config.secondAI;
+        System.out.println(this.config.firstAI);
+        System.out.println("此时AI模式为："+config.firstAI);
+        chessBoard.repaint();
+        config.pieceList.clear();
+        for (int i = 0; i < COLS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                config.pieceArray[i][j] = null;
+            }
+        }
+        config.currentPlayer = Part.FIRST;
+    }
+
     private class BackGround extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
@@ -201,9 +212,11 @@ public class GoBangController extends Controller {
         public void mouseClicked(MouseEvent e) {
             synchronized (lock) {
                 clickPoint = e.getPoint();
-
-                lock.notify();
+                if (chessRules.check(null,GoBangChessBoard.convertLocationToPlace(new Point(clickPoint.x,clickPoint.y)))){
+                    lock.notify();
+                }
             }
+
 
         }
 
@@ -253,6 +266,7 @@ public class GoBangController extends Controller {
                     c.printStackTrace();
                 }
             }
+            clickPoint = GoBangChessBoard.convertLocationToPlace(clickPoint);
             return clickPoint;
         }
     }
