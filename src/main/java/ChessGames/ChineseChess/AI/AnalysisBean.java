@@ -3,7 +3,7 @@ package ChessGames.ChineseChess.AI;
 import ChessGames.ChineseChess.CCChessPieces;
 import ChessGames.ChineseChess.Model.ChessRole;
 import ChessGames.template.Model.Part;
-import Util.ArrayUtils;
+import ChessGames.ChineseChess.CCUtil.ArrayUtils;
 
 
 import java.awt.*;

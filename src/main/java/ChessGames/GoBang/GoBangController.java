@@ -12,12 +12,6 @@ import ChessGames.template.Model.Part;
 
 public class GoBangController extends Controller {
 
-//    @Override
-//    public int[] call() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-//        StartGame();
-//        return GameRecord();
-//    }
-//    public GoBangChessBoard chessBoard;
     GoBangListener listener = new GoBangListener();
     GoBangConfig config = new GoBangConfig();
     String AIMODE = "小白";
@@ -27,11 +21,6 @@ public class GoBangController extends Controller {
 
 
     public GoBangController() {
-        //赋值之前接受的数据
-//        this.config.firstPlayer = super.config.firstPlayer;
-//        this.config.secondPlayer = super.config.secondPlayer;
-//        this.config.firstAI = super.config.firstAI;
-//        this.config.secondAI = super.config.secondAI;
         System.out.println(this.config.firstAI);
 
         this.chessRules = new GoBangRules(config);
@@ -46,11 +35,7 @@ public class GoBangController extends Controller {
     public GoBangController(int rows, int cols) {
         ROWS = rows;
         COLS = cols;
-        //赋值之前接受的数据
-//        this.config.firstPlayer = super.config.firstPlayer;
-//        this.config.secondPlayer = super.config.secondPlayer;
-//        this.config.firstAI = super.config.firstAI;
-//        this.config.secondAI = super.config.secondAI;
+
         this.chessBoard = new GoBangChessBoard(config);
         this.chessRules = new GoBangRules(config);
         listener = new GoBangListener();
@@ -183,8 +168,9 @@ public class GoBangController extends Controller {
         this.config.secondPlayer = super.config.secondPlayer;
         this.config.firstAI = super.config.firstAI;
         this.config.secondAI = super.config.secondAI;
-        System.out.println(this.config.firstAI);
+        this.config.minMinDepth = super.config.minMinDepth;
         System.out.println("此时AI模式为："+config.firstAI);
+        System.out.println("此时minMax思考深度为："+config.minMinDepth);
         chessBoard.repaint();
         config.pieceList.clear();
         for (int i = 0; i < COLS; i++) {

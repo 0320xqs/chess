@@ -1,4 +1,4 @@
-package Util;
+package ChessGames.ChineseChess.CCUtil;
 
 import ChessGames.ChineseChess.AI.DebugInfo;
 import ChessGames.ChineseChess.AI.MyList;

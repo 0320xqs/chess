@@ -9,7 +9,7 @@ public class GoBangConfig extends Config {
     public static int ROWS = 15;//棋盘行数
     public static int COLS = 15;//棋盘列数
 
-    public int AIDepth = 4;
+//    public int minMaxDepth = 4;
 
     public GoBangConfig() {
 

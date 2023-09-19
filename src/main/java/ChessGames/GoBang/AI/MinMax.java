@@ -3,7 +3,6 @@ package ChessGames.GoBang.AI;
 import ChessGames.GoBang.GoBangChessPieces;
 import ChessGames.GoBang.GoBangConfig;
 import ChessGames.template.Model.Part;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -36,6 +35,7 @@ public class MinMax {
     public MinMax(GoBangConfig board, int role) {
         Board = board;
         Role = role;
+        Depth = Integer.parseInt(board.minMinDepth);
         this.BOARD_SIZE = board.ROWS;
         this.computerScore = new int[BOARD_SIZE][BOARD_SIZE];
         computerScore_sort = new int[BOARD_SIZE][BOARD_SIZE];

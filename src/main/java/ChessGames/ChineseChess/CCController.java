@@ -156,6 +156,13 @@ public class CCController extends Controller {
         //赋值之前接受的数据
         this.config.firstPlayer = super.config.firstPlayer;
         this.config.secondPlayer = super.config.secondPlayer;
+        this.config.firstAI = super.config.firstAI;
+        this.config.secondAI = super.config.secondAI;
+        this.config.minMinDepth = super.config.minMinDepth;
+
+        System.out.println("此时AI模式为："+config.firstAI);
+        System.out.println("此时minMax思考深度为："+config.minMinDepth);
+
         chessBoard.repaint();
         config.pieceList.clear();
         config.checkFlag = true;//阻断man与AI

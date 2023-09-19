@@ -17,6 +17,7 @@ public class BattlePage {
     JFrame changeList;
     String[] GameMode = {"人 VS 人", "人 VS AI", "AI VS 人", "AI VS AI"};//游戏模式
     String[] AiMode = {"MinMax", "CNN"};
+    String[] minMaxDepth = {"2", "4", "6", "8"};
     String chessName;//游戏名称
     Controller chess;//游戏逻辑控制器
     JButton RestartButton;//开始按钮
@@ -26,6 +27,7 @@ public class BattlePage {
     JTextArea textArea;//对战信息文本框
     JComboBox<String> gameMode;//游戏模式下拉框
     JComboBox<String> AIMode;//AI模式下拉框
+    JComboBox<String> MinMaxDepth;//MinMax思考深度下拉框
     MyButtonLister mb;//监听器
     Dimension dim = new Dimension(100, 200);
     Thread gameThread;//游戏进程
@@ -35,7 +37,7 @@ public class BattlePage {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        changeList = new JFrame("修改列表");
+        changeList = new JFrame("修改列表");//动态修改参数模块
         changeList.setLayout(new GridLayout(0, 1));
         changeList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -47,18 +49,18 @@ public class BattlePage {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
         panel1.setPreferredSize(new Dimension(560, 760));
 
-        JPanel panel2 = new JPanel();
+        JPanel panel2 = new JPanel();//模式选模块
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
         panel2.setPreferredSize(new Dimension(200, 560));
 
 
-        JPanel panel3 = new JPanel();
+        JPanel panel3 = new JPanel();//操作按钮模块（开始、悔棋、退出）
         panel3.setBackground(Color.GRAY);
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
         panel3.setPreferredSize(new Dimension(760, 200));
 
-
+        //获取游戏模式
         gameMode = new JComboBox<>(GameMode);
         gameMode.setRenderer(new CenteredComboBoxRenderer());
         gameMode.addItemListener(evt -> {
@@ -72,6 +74,7 @@ public class BattlePage {
             }
         });
         panel2.add(gameMode);
+
         //获取指定棋类的AI
         AiMode = GetChess.getAIList(chessName);
         AIMode = new JComboBox<>(AiMode);
@@ -82,12 +85,29 @@ public class BattlePage {
                 System.out.println("AI切换到："+AIMODE);
                 chess.config.firstAI = AIMODE;
                 chess.config.secondAI = AIMODE;
+                if (gameThread != null){
+                    gameThread.stop();//杀掉先前进程，点击start按钮重新建立新进程
+                }
             }
         });
         panel2.add(AIMode);
 
-        textArea = new JTextArea("Battle:\n", 17, 30);
+        //获取 MinMax思考深度
+        MinMaxDepth = new JComboBox<>(minMaxDepth);
+        MinMaxDepth.setRenderer(new CenteredComboBoxRenderer());
+        MinMaxDepth.addItemListener(evt -> {
+            if (evt.getStateChange() == ItemEvent.SELECTED) {
+                String depth = evt.getItem().toString();
+                System.out.println("MinMax思考深度切换到："+depth);
+                chess.config.minMinDepth = depth;
+                if (gameThread != null){
+                    gameThread.stop();//杀掉先前进程，点击start按钮重新建立新进程
+                }
+            }
+        });
+        panel2.add(MinMaxDepth);
 
+        textArea = new JTextArea("Battle:\n", 17, 30);//对战信息文本框
         textArea.setLineWrap(true);//设置自动换行
 //        textArea.setEnabled(false);//设置禁止手动输入
         JScrollPane scrollPane = new JScrollPane(textArea);

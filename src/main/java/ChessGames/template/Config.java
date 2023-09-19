@@ -29,6 +29,8 @@ public class Config {
 
     public ArrayList<ChessPieces> pieceList = new ArrayList<>();//存储下棋顺序
 
+    public String minMinDepth = "2";//思考深度
+
     public Config() {
 
     }

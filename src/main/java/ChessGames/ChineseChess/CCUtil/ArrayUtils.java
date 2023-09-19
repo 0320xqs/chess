@@ -1,4 +1,4 @@
-package Util;
+package ChessGames.ChineseChess.CCUtil;
 
 /**
  * <b>Description : </b> 工具类, 减少安全检查, 提升速度

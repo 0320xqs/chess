@@ -5,7 +5,7 @@ import ChessGames.ChineseChess.CCConfig;
 import ChessGames.ChineseChess.CCRules;
 import ChessGames.ChineseChess.Model.ChessRole;
 import ChessGames.template.Model.Part;
-import Util.ListPool;
+import ChessGames.ChineseChess.CCUtil.ListPool;
 import com.github.cosycode.common.ext.bean.DoubleBean;
 
 import java.awt.*;

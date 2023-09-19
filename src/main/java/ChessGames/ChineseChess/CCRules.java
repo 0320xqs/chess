@@ -3,14 +3,13 @@ package ChessGames.ChineseChess;
 import ChessGames.ChineseChess.AI.AnalysisBean;
 import ChessGames.ChineseChess.AI.MyList;
 import ChessGames.ChineseChess.Model.ChessRole;
-import ChessGames.ChineseChess.Model.*;
 
 import ChessGames.template.Model.GameResult;
 import ChessGames.template.Model.Part;
 import ChessGames.template.Player;
-import Util.ArrayUtils;
+import ChessGames.ChineseChess.CCUtil.ArrayUtils;
 import ChessGames.template.ChessRules;
-import Util.ListPool;
+import ChessGames.ChineseChess.CCUtil.ListPool;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
