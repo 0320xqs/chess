@@ -1,6 +1,8 @@
 package ChessGames.ChineseChess;
 
 
+import ChessGames.GoBang.GoBangChessPieces;
+import ChessGames.GoBang.Model.ChessRole;
 import ChessGames.template.Controller;
 import ChessGames.template.Model.GameResult;
 import ChessGames.template.Model.Part;
@@ -13,6 +15,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.lang.reflect.InvocationTargetException;
 
+import static ChessGames.GoBang.GoBangConfig.ROWS;
+
 
 public class CCController extends Controller {
 
@@ -22,7 +26,7 @@ public class CCController extends Controller {
 
     private CCChessPieces curFromPiece;
     listener listener = new listener();
-
+    public Point recordFrom = new Point(-1,-1);
     //改变
     int SelecetRows, SelectCols;
     static int RowsIndex = 14, ColsIndex = 14;
@@ -46,6 +50,7 @@ public class CCController extends Controller {
     @Override
     public void StartGame() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         init();
+        System.out.println("此时minMax思考深度为："+config.minMinDepth);
         Point point;
 
         config.gameResult = GameResult.UNFINISHED;
@@ -93,16 +98,39 @@ public class CCController extends Controller {
         }
     }
 
-
     @Override
     public int[] GameRecord() {
-        return new int[0];
+        System.out.println("gameRecond++++++++++++++++++++++++++++++++++++++++++++++++");
+        int[] temp = new int[config.pieceList.size()];
+        for (int i = 0; i < config.pieceList.size(); i++) {
+            temp[i] = config.pieceList.get(i).getX_coordinate() * ROWS + config.pieceList.get(i).getY_coordinate();
+        }
+        for (int i = 0; i < config.pieceList.size(); i++) {
+            System.out.println(temp+" ");
+        }
+        return temp;
     }
 
     @Override
-    public void playRecond(int xy, int Role) {
+    public String playRecond(int xy, int Role) {
+        if (Role % 2 == 0){//偶数次进入
+            int x = xy % config.COLS;
+            int y = xy / config.ROWS;
 
+//            ChessRole chessRole = Role == 1 ? ChessRole.WHITECHESS : ChessRole.BLACKCHESS;
+//            GoBangChessPieces tempChess = new GoBangChessPieces(x, y, chessRole);
+//            config.pieceList.add(tempChess);
+//            config.pieceArray[x][y] = tempChess;
+//            chessBoard.repaint();
+            String str = Role/2 % 2 == 0 ? "第" + (Role/2+1) + "步，先手落子" : "第" + (Role/2+1) + "步，后手落子";
+            return str;
+        }else{//奇数次进入
+            recordFrom.x = xy % config.COLS;
+            recordFrom.y = xy / config.ROWS;
+            return null;
+        }
     }
+
 
     @Override
     public String GetResult() {
@@ -172,7 +200,7 @@ public class CCController extends Controller {
             }
         }
         System.out.println("模式为："+GAMEMODE);
-        chessRules.GetBegin();
+        chessRules.GetBegin();//重新获取棋子
         config.currentPlayer = Part.FIRST;
         config.gameResult = GameResult.NOTSTARTED;
         System.out.println("初始化完成！");
@@ -186,10 +214,10 @@ public class CCController extends Controller {
 //        }
     }
 
-    @Override
-    public int[] call() throws Exception {
-        return null;
-    }
+//    @Override
+//    public int[] call() throws Exception {
+//        return null;
+//    }
 
 
     class listener implements MouseListener, MouseMotionListener {

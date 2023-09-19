@@ -131,10 +131,9 @@ public class ExamplePage {
                     TaskScheduler scheduler = new TaskScheduler(10);
                     try {
                         scheduler.start();
-                    } catch (ExecutionException | InterruptedException | IOException ex) {
+                    } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-
                 }).start();
 
             } else if (obj == SaveButton) {
@@ -163,10 +162,10 @@ public class ExamplePage {
 
         }
 
-        public void start() throws ExecutionException, InterruptedException, IOException {
+        public void start() throws ExecutionException, InterruptedException, IOException, IllegalAccessException, InstantiationException {
             List<FutureTask> futures = new ArrayList<>();
             for (int i = 0; i < num; i++) {
-                Controller controller = new GoBangController();
+                Controller controller = chess.getClass().newInstance();
                 controller.GameModeSelect("AI VS AI");
                 // 创建 FutureTask 对象，并将控制器作为任务传入
                 FutureTask future = new FutureTask<>(controller);

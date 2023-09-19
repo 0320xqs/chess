@@ -3,6 +3,7 @@ package ChessGames.template;
 
 import ChessGames.template.Model.PlayerType;
 
+import javax.sound.sampled.Control;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -70,7 +71,7 @@ public abstract class Controller implements Callable {
      * @Descrition 播放记录
      * @Return null
      **/
-    public abstract void playRecond(int xy, int Role);
+    public abstract String playRecond(int xy, int Role);
 
     /**
      * @Date 18:39 2023/6/7

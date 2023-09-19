@@ -4,6 +4,7 @@ import CentralControl.Home;
 import ChessGames.GoBang.GoBangController;
 import ChessGames.template.Controller;
 import Util.GetChess;
+import Util.Write;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -153,37 +154,37 @@ public class PlayPage {
 
     }
 
-    public List<int[]> FindRecord(Path path) throws IOException {
-        Gson gson = new Gson();
-        BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(path)));
-
-        // 读取整个文件内容
-        StringBuilder sb = new StringBuilder();
-        String line = reader.readLine();
-        while (line != null) {
-            sb.append(line);
-            line = reader.readLine();
-        }
-        reader.close();
-
-        // 解析JSON字符串
-        JsonParser parser = new JsonParser();
-        JsonObject json = parser.parse(sb.toString()).getAsJsonObject();
-        JsonArray array = json.getAsJsonArray("list");
-
-        // 将JSON数组中的整数数组转换为Java的List<int[]>对象
-        List<int[]> result = new ArrayList<>();
-        for (int i = 0; i < array.size(); i++) {
-            JsonObject obj = array.get(i).getAsJsonObject();
-            JsonArray board = obj.getAsJsonArray("board");
-            int[] intArray = new int[board.size()];
-            for (int j = 0; j < board.size(); j++) {
-                intArray[j] = board.get(j).getAsInt();
-            }
-            result.add(intArray);
-        }
-        return result;
-    }
+//    public List<int[]> FindRecord(Path path) throws IOException {
+//        Gson gson = new Gson();
+//        BufferedReader reader = new BufferedReader(new FileReader(String.valueOf(path)));
+//
+//        // 读取整个文件内容
+//        StringBuilder sb = new StringBuilder();
+//        String line = reader.readLine();
+//        while (line != null) {
+//            sb.append(line);
+//            line = reader.readLine();
+//        }
+//        reader.close();
+//
+//        // 解析JSON字符串
+//        JsonParser parser = new JsonParser();
+//        JsonObject json = parser.parse(sb.toString()).getAsJsonObject();
+//        JsonArray array = json.getAsJsonArray("list");
+//
+//        // 将JSON数组中的整数数组转换为Java的List<int[]>对象
+//        List<int[]> result = new ArrayList<>();
+//        for (int i = 0; i < array.size(); i++) {
+//            JsonObject obj = array.get(i).getAsJsonObject();
+//            JsonArray board = obj.getAsJsonArray("board");
+//            int[] intArray = new int[board.size()];
+//            for (int j = 0; j < board.size(); j++) {
+//                intArray[j] = board.get(j).getAsInt();
+//            }
+//            result.add(intArray);
+//        }
+//        return result;
+//    }
 
 
     private class MyButtonLister implements ActionListener {
@@ -201,8 +202,8 @@ public class PlayPage {
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
-                        chess.playRecond(Play[i], i % 2 == 0 ? 1 : 2);
-                        String s = i % 2 == 0 ? "第" + i + "步，先手落子" : "第" + i + "步，后手落子";
+                        String s = chess.playRecond(Play[i], i);
+//                        String s = i % 2 == 0 ? "第" + i + "步，先手落子" : "第" + i + "步，后手落子";
                         textArea.append(s + "\n");
                     }
                 }).start();
@@ -231,7 +232,7 @@ public class PlayPage {
                 Record.addActionListener(mb);
             } else if (obj == Record) {//选择记录文件
                 try {
-                    OneRecordList = FindRecord(RecordMap.get(Record.getSelectedItem().toString()));
+                    OneRecordList = Write.FindRecord(RecordMap.get(Record.getSelectedItem().toString()));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

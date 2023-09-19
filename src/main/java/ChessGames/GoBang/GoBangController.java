@@ -99,7 +99,16 @@ public class GoBangController extends Controller {
     }
 
     @Override
-    public void playRecond(int xy, int Role) {
+    public int[] GameRecord() {
+        int[] temp = new int[config.pieceList.size()];
+        for (int i = 0; i < config.pieceList.size(); i++) {
+            temp[i] = config.pieceList.get(i).getX_coordinate() * ROWS + config.pieceList.get(i).getY_coordinate();
+        }
+        return temp;
+    }
+
+    @Override
+    public String playRecond(int xy, int Role) {
         int x = xy / ROWS;
         int y = xy % ROWS;
 //        ChessRole chessRole = config.currentPlayer == Part.SECOND ? ChessRole.BLACKCHESS : ChessRole.WHITECHESS;
@@ -108,16 +117,10 @@ public class GoBangController extends Controller {
         config.pieceList.add(tempChess);
         config.pieceArray[x][y] = tempChess;
         chessBoard.repaint();
+        String str = Role % 2 == 0 ? "第" + (Role+1) + "步，先手落子" : "第" + (Role+1) + "步，后手落子";
+        return str;
     }
 
-    @Override
-    public int[] GameRecord() {
-        int[] temp = new int[config.pieceList.size()];
-        for (int i = 0; i < config.pieceList.size(); i++) {
-            temp[i] = config.pieceList.get(i).getX_coordinate() * ROWS + config.pieceList.get(i).getY_coordinate();
-        }
-        return temp;
-    }
 
     @Override
     public JPanel GetBoard() {
