@@ -14,7 +14,7 @@ public class CCConfig extends Config{
     public static int ROWS = 10;//行数
     public static int COLS = 9;//列数
 
-    public ArrayList<ChessPieces> eatenList = new ArrayList<>();//存储下棋顺序
+    public ArrayList<ChessPieces> eatenList = new ArrayList<>();//存储吃子顺序
 
     public Boolean checkFlag = true;//阻断man与AI
 

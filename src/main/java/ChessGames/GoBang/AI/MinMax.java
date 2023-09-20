@@ -91,7 +91,7 @@ public class MinMax {
         comy = 0;
         chessXYList = arouse(Role);
 
-        int value1 = maxMin(Role, Depth, -100000000, 100000000);
+        int value1 = maxMin(Role, Depth, -1000000000, 1000000000);
         int judgeKill = 0;
         int judgeX = -1;
         int judgeY = -1;
@@ -117,10 +117,18 @@ public class MinMax {
                 }
             }
         }
-//        System.out.println("可选棋子长度："+chessList.size());
-//        if (chessList.size() == 0){
+        System.out.println("可选棋子长度："+chessList.size());
+        if (chessList.size() == 0){
+            System.out.println("可选为0");
+            System.out.println("分数为："+value1);
+            for (int i = 0; i < 15; i++) {
+                System.out.println("\n");
+                for (int j = 0; j < 15; j++) {
+                    System.out.println(board[i][j]);
+                }
+            }
 //            chessList.add(new ChessXY(0, 0));
-//        }
+        }
         int n = rand.nextInt(chessList.size()); // 电脑根据分值一样的点随机走，防止每次都走相同的步数
         comx = chessList.get(n).x;
         comy = chessList.get(n).y;

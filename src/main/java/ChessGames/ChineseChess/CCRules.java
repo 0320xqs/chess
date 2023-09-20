@@ -17,8 +17,9 @@ import java.util.List;
 
 
 public class CCRules extends ChessRules {
-    int eatenNum;
-    public static CCChessPieces eatenPiece;
+    int eatenNum;//吃子数量
+
+    public CCChessPieces eatenPiece;
 
     private CCConfig ccConfig;
 

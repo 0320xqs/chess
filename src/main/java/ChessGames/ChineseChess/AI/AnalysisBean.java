@@ -45,6 +45,7 @@ public class AnalysisBean {
      */
     private int pieceScore;
 
+    AlphaBeta alphaBeta = new AlphaBeta();
     public AnalysisBean(CCChessPieces[][] rawPieceArrays) {
         this.pieces = rawPieceArrays;
         redPieceExistScore = 0;
@@ -82,7 +83,7 @@ public class AnalysisBean {
     /**
      * 计算棋盘评估分数
      */
-    public static int calcPieceScore(final CCChessPieces[][] pieces) {
+    public int calcPieceScore(final CCChessPieces[][] pieces) {
         int num = 0;
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 10; y++) {
@@ -336,7 +337,7 @@ public class AnalysisBean {
      * AI 计算 curPart 方若是走一步棋是否能够吃掉对方的 KING
      */
    public boolean canEatKingAfterOneAIStep(Part part) {
-       final Set<StepBean> nextStepAgainEvalPlace = AlphaBeta.getEvaluatedPlace(pieces, part, 1, null);
+       final Set<StepBean> nextStepAgainEvalPlace = alphaBeta.getEvaluatedPlace(pieces, part, 1, null);
         // 计算后的步骤中, 是否存在能吃掉 KING 的一步
         for (StepBean stepBean : nextStepAgainEvalPlace) {
             final CCChessPieces piece = getPiece(stepBean.to);
@@ -370,7 +371,7 @@ public class AnalysisBean {
      * @param part 当前方
      */
     public boolean canAvoidBeEatKingAfterOneAIStep(Part part) {
-        final Set<StepBean> nextStepAgainEvalPlace = AlphaBeta.getEvaluatedPlace(pieces, part, 2, null);
+        final Set<StepBean> nextStepAgainEvalPlace = alphaBeta.getEvaluatedPlace(pieces, part, 2, null);
         // 计算后的步骤中, 是否存在能吃掉 KING 的一步
         for (StepBean stepBean : nextStepAgainEvalPlace) {
             final CCChessPieces eatenPiece = getPiece(stepBean.to);

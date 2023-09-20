@@ -34,16 +34,16 @@ public class CCSecondPlayer extends SecondPlayer {
                 break;
         }
         final CCChessPieces fromPiece = (CCChessPieces) config.pieceArray[from.x][from.y];
-        CCRules.eatenPiece = (CCChessPieces) config.pieceArray[to.x][to.y];
+        CCChessPieces eatenPiece = (CCChessPieces) config.pieceArray[to.x][to.y];
         Objects.requireNonNull(fromPiece, "找不到移动的棋子");
         //存入走棋记录list
         config.pieceList.add(new ChessPieces(from.x,from.y));
         config.pieceList.add(new ChessPieces(to.x,to.y));
         System.out.println(config.pieceList);
         // 判断是否是吃子, 如果棋子被吃掉, 则将棋子移动列表
-        if (CCRules.eatenPiece != null) {
-            config.eatenList.add(CCRules.eatenPiece);
-            System.out.println("我吃了"+CCRules.eatenPiece.getChessRole());
+        if (eatenPiece != null) {
+            config.eatenList.add(eatenPiece);
+            System.out.println("我吃了"+eatenPiece.getChessRole());
             config.pieceArray[to.x][to.y] = null;
         }else {
             config.eatenList.add(null);

@@ -22,7 +22,8 @@ public class MinMax {
              }
         }
         System.out.println(Integer.parseInt(ccConfig.minMinDepth));
-        ArrayList<StepBean> list = new ArrayList(AlphaBeta.getEvaluatedPlace(pieceArray,ccConfig.currentPlayer,Integer.parseInt(ccConfig.minMinDepth),null));
+        AlphaBeta alphaBeta = new AlphaBeta();
+        ArrayList<StepBean> list = new ArrayList(alphaBeta.getEvaluatedPlace(pieceArray,ccConfig.currentPlayer,Integer.parseInt(ccConfig.minMinDepth),null));
         int randomIndex = new Random().nextInt(list.size());
         StepBean bestPlace = list.get(randomIndex);
         System.out.println("最终选取的最佳："+bestPlace);

@@ -201,7 +201,7 @@ public class AlphaBeta {
      * @param forbidStep 禁止的步骤(长捉或长拦)
      * @return 下一步的位置
      */
-    public static Set<StepBean> getEvaluatedPlace(final CCChessPieces[][] srcPieces, final Part curPart, final int deep, final StepBean forbidStep) {
+    public Set<StepBean> getEvaluatedPlace(final CCChessPieces[][] srcPieces, final Part curPart, final int deep, final StepBean forbidStep) {
         // 1. 初始化各个变量
         final AnalysisBean analysisBean = new AnalysisBean(srcPieces);
         // 2. 下一步list
