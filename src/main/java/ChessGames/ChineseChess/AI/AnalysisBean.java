@@ -1,6 +1,7 @@
 package ChessGames.ChineseChess.AI;
 
 import ChessGames.ChineseChess.CCChessPieces;
+import ChessGames.ChineseChess.CCUtil.MyList;
 import ChessGames.ChineseChess.Model.ChessRole;
 import ChessGames.template.Model.Part;
 import ChessGames.ChineseChess.CCUtil.ArrayUtils;

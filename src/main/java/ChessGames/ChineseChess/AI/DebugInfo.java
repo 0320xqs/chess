@@ -13,7 +13,7 @@ public class DebugInfo {
     /**
      * CPU线程数
      */
-    private static final int CPU_PROCESSORS = Runtime.getRuntime().availableProcessors();
+    private final int CPU_PROCESSORS = Runtime.getRuntime().availableProcessors();
 
     private static final AtomicInteger alphaBeta = new AtomicInteger(0);
     private static final AtomicInteger alphaBetaOrder = new AtomicInteger(0);

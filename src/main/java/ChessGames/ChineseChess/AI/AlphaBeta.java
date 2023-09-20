@@ -3,6 +3,7 @@ package ChessGames.ChineseChess.AI;
 import ChessGames.ChineseChess.CCChessPieces;
 import ChessGames.ChineseChess.CCConfig;
 import ChessGames.ChineseChess.CCRules;
+import ChessGames.ChineseChess.CCUtil.MyList;
 import ChessGames.ChineseChess.Model.ChessRole;
 import ChessGames.template.Model.Part;
 import ChessGames.ChineseChess.CCUtil.ListPool;
@@ -24,11 +25,11 @@ import java.util.Set;
  **/
 public class AlphaBeta {
 
-    private static final int MAX = 100_000_000;
+    private final int MAX = 100_000_000;
     /**
      * ???????? Min + Max = 0, ??????????????????????·???????
      */
-    private static final int MIN = -MAX;
+    private final int MIN = -MAX;
 
     /**
      * ????????????, ??????????????
@@ -36,7 +37,7 @@ public class AlphaBeta {
      * @param pieceNum ????????
      * @return ?????????????
      */
-    public static int searchDeepSuit(final int pieceNum) {
+    public int searchDeepSuit(final int pieceNum) {
         // ????????????, ??????????????
 
         if (pieceNum > 20) {
@@ -58,7 +59,7 @@ public class AlphaBeta {
      * @param deep         ???????
      * @return ??????????λ????
      */
-    private static MyList<StepBean> geneNestStepPlaces(final AnalysisBean analysisBean, final Part curPart, final int deep) {
+    private MyList<StepBean> geneNestStepPlaces(final AnalysisBean analysisBean, final Part curPart, final int deep) {
         final CCChessPieces[][] pieces = analysisBean.pieces;
         // ??????
         MyList<StepBean> stepBeanList = ListPool.localPool().getAStepBeanList();
@@ -102,7 +103,7 @@ public class AlphaBeta {
      * @param stepBeanList ??????????λ?б?
      * @param curPart      ??????巽
      */
-    private static void orderStep(final AnalysisBean analysisBean, final MyList<StepBean> stepBeanList, final Part curPart) {
+    private void orderStep(final AnalysisBean analysisBean, final MyList<StepBean> stepBeanList, final Part curPart) {
         final CCChessPieces[][] srcPieces = analysisBean.pieces;
         // ?????????????????????ó???
         MyList<DoubleBean<Integer, StepBean>> bestPlace = ListPool.localPool().getADoubleBeanList();
@@ -154,7 +155,7 @@ public class AlphaBeta {
      * @param curPart      ??????巽
      * @return ???????????????????
      */
-    private static int negativeMaximumWithNoCut(AnalysisBean analysisBean, Part curPart, int alphaBeta) {
+    private int negativeMaximumWithNoCut(AnalysisBean analysisBean, Part curPart, int alphaBeta) {
         // 1. ?????????????
         final CCChessPieces[][] pieces = analysisBean.pieces;
         int best = MIN;
@@ -224,7 +225,8 @@ public class AlphaBeta {
         final Object[] objects = stepBeanList.eleTemplateDate();
         int temp_flag = 0;
         final int temp_nextDeep = nextDeep;
-
+//临时
+        int score_temp = 0;
         for (int i = 0, len = stepBeanList.size(); i < len; i++) {
             temp_flag ++;
             StepBean item = (StepBean) objects[i];
@@ -242,11 +244,13 @@ public class AlphaBeta {
                 // ????
                 if (deep <= 1) {
                     score = analysisBean.getCurPartEvaluateScore(curPart);
+                    score_temp = score;
                 } else {
 //                    System.out.println(analysisBean.pieces);
 //                    System.out.println(oppositeCurPart);
 //                    System.out.println(nextDeep);
                     score = negativeMaximum(analysisBean, oppositeCurPart, nextDeep, -best);
+                    System.out.println("里面现在分数为:"+score);
                 }
                 // ????????
                 analysisBean.backStep(item.from, to, eatenPiece, invScr);
@@ -259,6 +263,13 @@ public class AlphaBeta {
                 bestPlace.clear();
                 bestPlace.add(item);
             }
+//            if (score == 100000001  || score == -100000001) { // 用例生成改错
+//                bestPlace.clear();
+//                System.out.println("看一看："+item);
+//                bestPlace.add(item);
+//                System.out.println(bestPlace);
+//
+//            }
         }
         System.out.println("最佳有："+bestPlace.size()+"个");
 //        Iterator<StepBean> bestItertor = bestPlace.iterator();
@@ -269,6 +280,8 @@ public class AlphaBeta {
             System.out.println("最佳："+place);
         }
         if (bestPlace.size() == 0){
+            System.out.println("现在分数："+score_temp);
+            System.out.println("最优分数："+best);
             System.out.println("深度："+nextDeep);
             System.out.println("循环："+temp_flag);
             System.out.println("待选长度："+stepBeanList.size());
@@ -291,7 +304,7 @@ public class AlphaBeta {
      * @param alphaBeta    alphaBeta ??????
      * @return ???????????????????
      */
-    private static int negativeMaximum(AnalysisBean analysisBean, Part curPart, int deep, int alphaBeta) {
+    private int negativeMaximum(AnalysisBean analysisBean, Part curPart, int deep, int alphaBeta) {
         // 1. ?????????????
         final CCChessPieces[][] pieces = analysisBean.pieces;
         int best = MIN;

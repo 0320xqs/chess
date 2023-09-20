@@ -1,7 +1,6 @@
 package ChessGames.ChineseChess.CCUtil;
 
 import ChessGames.ChineseChess.AI.DebugInfo;
-import ChessGames.ChineseChess.AI.MyList;
 import ChessGames.ChineseChess.AI.StepBean;
 import com.github.cosycode.common.ext.bean.DoubleBean;
 import com.github.cosycode.common.lang.ShouldNotHappenException;

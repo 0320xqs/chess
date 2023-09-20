@@ -21,7 +21,7 @@ import java.util.concurrent.*;
 
 public class ExamplePage {
     public List<int[]> Example;
-    public String[] AI_Rate = {"10", "50", "100", "1000"};
+    public String[] AI_Rate = {"5","10", "50", "100", "1000"};
     public Controller chess;
     public JButton StartButton;//开始按钮
     public JButton SaveButton;
@@ -37,7 +37,7 @@ public class ExamplePage {
     public ExamplePage(String chessName) {
         this.chessName = chessName;
         Example = new ArrayList<>();
-        num = 10;
+        num = 5;
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
 

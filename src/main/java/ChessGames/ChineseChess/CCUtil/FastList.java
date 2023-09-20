@@ -1,6 +1,5 @@
 package ChessGames.ChineseChess.CCUtil;
 
-import ChessGames.ChineseChess.AI.MyList;
 import com.github.cosycode.common.lang.ShouldNotHappenException;
 import com.github.cosycode.common.util.common.ArrUtils;
 

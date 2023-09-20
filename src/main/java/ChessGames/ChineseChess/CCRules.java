@@ -1,7 +1,7 @@
 package ChessGames.ChineseChess;
 
 import ChessGames.ChineseChess.AI.AnalysisBean;
-import ChessGames.ChineseChess.AI.MyList;
+import ChessGames.ChineseChess.CCUtil.MyList;
 import ChessGames.ChineseChess.Model.ChessRole;
 
 import ChessGames.template.Model.GameResult;

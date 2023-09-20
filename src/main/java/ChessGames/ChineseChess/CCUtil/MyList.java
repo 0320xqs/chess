@@ -1,4 +1,4 @@
-package ChessGames.ChineseChess.AI;
+package ChessGames.ChineseChess.CCUtil;
 
 import java.util.List;
 import java.util.function.Predicate;
