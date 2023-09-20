@@ -131,6 +131,9 @@ public class ExamplePage {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (obj == StartButton) {
+                if (exampleThread != null){
+                    exampleThread.stop();//关闭线程
+                }
                 exampleThread = new Thread(() -> {
                     TaskScheduler scheduler = new TaskScheduler(10);
                     try {
@@ -172,26 +175,107 @@ public class ExamplePage {
 
         public void start() throws ExecutionException, InterruptedException, IOException, IllegalAccessException, InstantiationException {
             List<FutureTask> futures = new ArrayList<>();
+            CountDownLatch latch = new CountDownLatch(num);
             for (int i = 0; i < num; i++) {
                 Controller controller = chess.getClass().newInstance();
                 controller.GameModeSelect("AI VS AI");
                 // 创建 FutureTask 对象，并将控制器作为任务传入
                 FutureTask future = new FutureTask<>(controller);
+//                textArea.append("完成一局，目前进度" + (i + 1) + "/" + num + "\n");
                 // 使用线程池 executor 执行任务
-                executor.execute(future);
+                executor.execute(() -> {
+                    future.run();
+                    // 进程执行完毕后，计数器减一
+                    latch.countDown();
+                });
                 futures.add(future);
+//                executor.awaitTermination(1, TimeUnit.SECONDS);
             }
-
             // 关闭线程池
             executor.shutdown();
-            for (int i = 0; i < futures.size(); i++) {
-                // 获取 FutureTask 的结果，并将结果添加到 Example 列表中(get方法调用的是控制器中的call)
-                Example.add((int[]) futures.get(i).get());
-                textArea.append("完成一局，目前进度" + (i + 1) + "/" + num + "\n");
+            // 等待所有任务完成
+            try {
+                latch.await();
+                System.out.println("占位置");
+                int activeTasks = ((ThreadPoolExecutor) executor).getActiveCount();
+                for (int i = 0; i < futures.size(); i++) {
+                    System.out.println("正在运行中的线程数量:"+activeTasks);
+                    // 获取 FutureTask 的结果，并将结果添加到 Example 列表中(get方法调用的是控制器中的call)
+                    Example.add((int[]) futures.get(i).get());//自带阻塞效果
+                    //显示信息
+                    textArea.append("完成一局，目前进度" + (i + 1) + "/" + num + "\n");
+                }
+                textArea.append("结束");
+                // 将 Example 列表写入文件
+                Write.write(Example, chessName);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            textArea.append("结束");
-            // 将 Example 列表写入文件
-            Write.write(Example, chessName);
+
+
+
+//            for (int i = 0; i < futures.size(); i++) {
+//                int activeTasks = ((ThreadPoolExecutor) executor).getActiveCount();
+//                System.out.println("正在运行中的线程数量:"+activeTasks);
+//                System.out.println("我来获取"+i+"数据了");
+//                System.out.println(futures.get(i));
+//                // 获取 FutureTask 的结果，并将结果添加到 Example 列表中(get方法调用的是控制器中的call)
+//                try {
+//                    Example.add((int[]) futures.get(i).get(10, TimeUnit.SECONDS));//自带阻塞效果
+//                } catch (TimeoutException e) {
+//                    System.out.println("超时了未完成！");
+//                    e.printStackTrace();
+//                }
+//                //显示信息
+//                textArea.append("完成一局，目前进度" + (i + 1) + "/" + num + "\n");
+//            }
+//
+//            textArea.append("结束");
+//            // 将 Example 列表写入文件
+//            Write.write(Example, chessName);
+//            try {
+//                // 等待所有任务完成
+//                while (!executor.isTerminated()) {
+//                    executor.awaitTermination(1, TimeUnit.SECONDS);
+//                }
+//                System.out.println("换行");
+//                System.out.println("所有任务都结束了！！！！！");
+//                System.out.println(futures.size());
+//                for (int i = 0; i < futures.size(); i++) {
+//                    // 获取 FutureTask 的结果，并将结果添加到 Example 列表中(get方法调用的是控制器中的call)
+//                    Example.add((int[]) futures.get(i).get());
+//                    textArea.append("完成一局，目前进度" + (i + 1) + "/" + num + "\n");
+//                }
+//                textArea.append("结束");
+//                // 将 Example 列表写入文件
+//                Write.write(Example, chessName);
+//                // 所有任务已完成，继续执行后续代码
+//                System.out.println("所有任务已完成，继续执行后续代码");
+//            } catch (InterruptedException e) {
+//                // 线程被中断
+//                e.printStackTrace();
+//            }
+//            try {
+//                boolean terminated = executor.awaitTermination(10, TimeUnit.SECONDS);
+//                if (terminated) {
+//                    // 所有任务已完成
+//                    System.out.println("结束");
+//                    System.out.println(futures.size());
+//                    for (int i = 0; i < futures.size(); i++) {
+//                        // 获取 FutureTask 的结果，并将结果添加到 Example 列表中(get方法调用的是控制器中的call)
+//                        Example.add((int[]) futures.get(i).get());
+//                        textArea.append("完成一局，目前进度" + (i + 1) + "/" + num + "\n");
+//                    }
+//                    textArea.append("结束");
+//                    // 将 Example 列表写入文件
+//                    Write.write(Example, chessName);
+//                } else {
+//                    // 超时时间内未能完成所有任务
+//                }
+//            } catch (InterruptedException e) {
+//                // 线程被中断
+//            }
+
         }
     }
 }

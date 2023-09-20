@@ -208,10 +208,10 @@ public class AlphaBeta {
         MyList<StepBean> stepBeanList = geneNestStepPlaces(analysisBean, curPart, deep);
         // 3. 去除不该下的步
         stepBeanList.remove(forbidStep);
-        for (int i = 0; i < stepBeanList.size(); i++) {
-            System.out.println("下一步列表_from："+stepBeanList.get(i).from.x+" "+stepBeanList.get(i).from.y);
-            System.out.println("下一步列表_to："+stepBeanList.get(i).to.x+" "+stepBeanList.get(i).to.y);
-        }
+//        for (int i = 0; i < stepBeanList.size(); i++) {
+//            System.out.println("下一步列表_from："+stepBeanList.get(i).from.x+" "+stepBeanList.get(i).from.y);
+//            System.out.println("下一步列表_to："+stepBeanList.get(i).to.x+" "+stepBeanList.get(i).to.y);
+//        }
         // 进入循环之前计算好循环内使用常量
         Set<StepBean> bestPlace = new HashSet<>();
         int best = MIN;
@@ -222,7 +222,11 @@ public class AlphaBeta {
         System.out.println("size : {"+stepBeanList.size()+"}, content: {"+stepBeanList+"}");
 //        log.debug("size : {}, content: {}", stepBeanList.size(), stepBeanList);
         final Object[] objects = stepBeanList.eleTemplateDate();
+        int temp_flag = 0;
+        final int temp_nextDeep = nextDeep;
+
         for (int i = 0, len = stepBeanList.size(); i < len; i++) {
+            temp_flag ++;
             StepBean item = (StepBean) objects[i];
             final Point to = item.to;
             // 备份
@@ -239,9 +243,9 @@ public class AlphaBeta {
                 if (deep <= 1) {
                     score = analysisBean.getCurPartEvaluateScore(curPart);
                 } else {
-                    System.out.println(analysisBean.pieces);
-                    System.out.println(oppositeCurPart);
-                    System.out.println(nextDeep);
+//                    System.out.println(analysisBean.pieces);
+//                    System.out.println(oppositeCurPart);
+//                    System.out.println(nextDeep);
                     score = negativeMaximum(analysisBean, oppositeCurPart, nextDeep, -best);
                 }
                 // ????????
@@ -256,8 +260,6 @@ public class AlphaBeta {
                 bestPlace.add(item);
             }
         }
-        ListPool.end();
-        ListPool.localPool().addListToStepBeanListPool(stepBeanList);
         System.out.println("最佳有："+bestPlace.size()+"个");
 //        Iterator<StepBean> bestItertor = bestPlace.iterator();
 //        while (bestItertor.hasNext()){
@@ -266,6 +268,17 @@ public class AlphaBeta {
         for (StepBean place : bestPlace) {
             System.out.println("最佳："+place);
         }
+        if (bestPlace.size() == 0){
+            System.out.println("深度："+nextDeep);
+            System.out.println("循环："+temp_flag);
+            System.out.println("待选长度："+stepBeanList.size());
+//            System.out.println("取第一个");
+//                bestPlace.add(stepBeanList.get(0));
+//            System.out.println(stepBeanList.size());
+//                System.out.println("取第一个失败！");
+        }
+        ListPool.end();
+        ListPool.localPool().addListToStepBeanListPool(stepBeanList);//清空stepBeanList
         return bestPlace;
     }
 
@@ -287,7 +300,7 @@ public class AlphaBeta {
         // ??????
         final int nextDeep = deep - 1;
         // 2. ?????????б??????????????б?
-        System.out.println(nextDeep);
+//        System.out.println("下一步深度："+nextDeep);
         final MyList<StepBean> stepBeanList = geneNestStepPlaces(analysisBean, curPart, deep);
 
         final Object[] objects = stepBeanList.eleTemplateDate();

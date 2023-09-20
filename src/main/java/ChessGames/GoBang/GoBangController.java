@@ -94,12 +94,15 @@ public class GoBangController extends Controller {
                 }
                 break;
         }
+        System.out.println("完成一局++++++++++++++");
 
     }
 
     @Override
     public int[] GameRecord() {
         int[] temp = new int[config.pieceList.size()];
+        System.out.println("完成！！！！！！！！！！！！！");
+
         for (int i = 0; i < config.pieceList.size(); i++) {
             temp[i] = config.pieceList.get(i).getX_coordinate() * config.ROWS + config.pieceList.get(i).getY_coordinate();
         }

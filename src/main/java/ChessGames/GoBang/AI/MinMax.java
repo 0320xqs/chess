@@ -117,6 +117,10 @@ public class MinMax {
                 }
             }
         }
+//        System.out.println("可选棋子长度："+chessList.size());
+//        if (chessList.size() == 0){
+//            chessList.add(new ChessXY(0, 0));
+//        }
         int n = rand.nextInt(chessList.size()); // 电脑根据分值一样的点随机走，防止每次都走相同的步数
         comx = chessList.get(n).x;
         comy = chessList.get(n).y;

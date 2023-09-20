@@ -102,15 +102,16 @@ public class CCController extends Controller {
 
     @Override
     public int[] GameRecord() {
-//        System.out.println("gameRecond++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("gameRecond++++++++++++++++++++++++++++++++++++++++++++++++");
         int[] temp = new int[config.pieceList.size()];
-//        System.out.println(config.pieceList.get(0).getX_coordinate()+" "+config.pieceList.get(0).getY_coordinate());
+
         for (int i = 0; i < config.pieceList.size(); i++) {
             temp[i] = config.pieceList.get(i).getX_coordinate() * config.ROWS  + config.pieceList.get(i).getY_coordinate();
         }
         for (int i = 0; i < config.pieceList.size(); i++) {
             System.out.print(temp[i]+" ");
         }
+
         return temp;
     }
 
@@ -122,8 +123,6 @@ public class CCController extends Controller {
             int x = xy / config.ROWS ;
             int y = xy % config.ROWS ;
 
-//            ChessRole chessRole = Role == 1 ? ChessRole.WHITECHESS : ChessRole.BLACKCHESS;
-//            GoBangChessPieces tempChess = new GoBangChessPieces(x, y, chessRole);
             System.out.println("起点"+recordFrom);
             System.out.println("终点"+x+" "+y);
             System.out.println();
@@ -136,8 +135,7 @@ public class CCController extends Controller {
             //更改棋子内部坐标
             config.pieceArray[x][y].setX_coordinate(x);
             config.pieceArray[x][y].setY_coordinate(y);
-//            config.pieceList.add();
-//            config.pieceArray[x][y] = tempChess;
+
             chessBoard.repaint();
             String str = Role/2 % 2 == 0 ? "第" + (Role/2+1) + "步，先手落子" : "第" + (Role/2+1) + "步，后手落子";
             return str;
