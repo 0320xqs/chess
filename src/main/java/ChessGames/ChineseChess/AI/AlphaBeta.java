@@ -70,10 +70,10 @@ public class AlphaBeta {
                     // TO DO 获取每个棋子的候选步
 //                    final MyList<Point> list = fromPiece.chessRole.find(analysisBean, curPart, from);
                     final MyList<Point> list = CCRules.find(analysisBean, curPart, from);
-                    System.out.println("find"+fromPiece.getChessRole()+"的候选步："+list);
-                    for (int i = 0; i < list.size(); i++) {
-                        System.out.println(list.get(i).x+" "+list.get(i).y);
-                    }
+//                    System.out.println("find"+fromPiece.getChessRole()+"的候选步："+list);
+//                    for (int i = 0; i < list.size(); i++) {
+//                        System.out.println(list.get(i).x+" "+list.get(i).y);
+//                    }
                     if (list.isEmpty()) {
                         ListPool.localPool().addListToPool(list);
                         continue;

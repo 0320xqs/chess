@@ -206,11 +206,11 @@ public class AnalysisBean {
      * 模拟后退
      */
     public void backStep(Point from, Point to, CCChessPieces eatenPiece, int tmpScore) {
-        System.out.println("模拟后退_from："+from);
-        System.out.println("模拟后退_to："+to);
-        if (eatenPiece != null){
-            System.out.println("模拟后退_eatenPiece："+eatenPiece.getChessRole());
-        }
+//        System.out.println("模拟后退_from："+from);
+//        System.out.println("模拟后退_to："+to);
+//        if (eatenPiece != null){
+//            System.out.println("模拟后退_eatenPiece："+eatenPiece.getChessRole());
+//        }
         final CCChessPieces movePiece = pieces[to.x][to.y];
         pieces[from.x][from.y] = movePiece;
         pieces[to.x][to.y] = eatenPiece;

@@ -43,6 +43,7 @@ public class PlayPage {
     MyButtonLister mb;
     int[] Play;//棋子位置
     JFrame frame;
+    Thread recordPlay;//回放进程
 
 
     public PlayPage() {
@@ -195,7 +196,7 @@ public class PlayPage {
             if (obj == StartButton) {
                 textArea.replaceRange("", 0, textArea.getDocument().getLength()); // 删除整个文本
                 chess.init();
-                new Thread(() -> {
+                recordPlay = new Thread(() -> {
                     for (int i = 0; i < Play.length; i++) {
                         try {
                             Thread.sleep(500);
@@ -206,12 +207,19 @@ public class PlayPage {
 //                        String s = i % 2 == 0 ? "第" + i + "步，先手落子" : "第" + i + "步，后手落子";
                         textArea.append(s + "\n");
                     }
-                }).start();
+                });
+                recordPlay.start();
 
             } else if (obj == ExitButton) {
+                if (recordPlay != null){
+                    recordPlay.stop();//关闭回放进程
+                }
                 frame.dispose();
                 new Home();
             } else if (obj == Chess) {
+                if (recordPlay != null){
+                    recordPlay.stop();//关闭回放进程
+                }
                 Container parent = chess.chessBoard.getParent();
                 int index = parent.getComponentZOrder(chess.chessBoard);
                 parent.remove(chess.chessBoard);
@@ -231,6 +239,9 @@ public class PlayPage {
                 OneRecord.addActionListener(mb);
                 Record.addActionListener(mb);
             } else if (obj == Record) {//选择记录文件
+                if (recordPlay != null){
+                    recordPlay.stop();//关闭回放进程
+                }
                 try {
                     OneRecordList = Write.FindRecord(RecordMap.get(Record.getSelectedItem().toString()));
                 } catch (IOException ex) {
@@ -243,6 +254,9 @@ public class PlayPage {
                 OneRecord.repaint();
                 OneRecord.addActionListener(mb);
             } else if (obj == OneRecord) {//选择第几局
+                if (recordPlay != null){
+                    recordPlay.stop();//关闭回放进程
+                }
                 if (Record.getSelectedIndex() == -1) {
                     return;
                 }

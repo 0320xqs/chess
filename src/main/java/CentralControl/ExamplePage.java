@@ -32,6 +32,7 @@ public class ExamplePage {
     Dimension dim = new Dimension(100, 200);
     String chessName;
     JFrame frame;
+    Thread exampleThread;//用例生成线程
 
     public ExamplePage(String chessName) {
         this.chessName = chessName;
@@ -65,6 +66,9 @@ public class ExamplePage {
         AIMode = new JComboBox<>(AI_Rate);
         AIMode.setRenderer(new CenteredComboBoxRenderer());
         AIMode.addItemListener(evt -> {
+            if (exampleThread != null){
+                exampleThread.stop();//关闭线程
+            }
             if (evt.getStateChange() == ItemEvent.SELECTED) {
                 num = Integer.parseInt(evt.getItem().toString());
             }
@@ -127,18 +131,22 @@ public class ExamplePage {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (obj == StartButton) {
-                new Thread(() -> {
+                exampleThread = new Thread(() -> {
                     TaskScheduler scheduler = new TaskScheduler(10);
                     try {
                         scheduler.start();
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                }).start();
+                });
+                exampleThread.start();
 
             } else if (obj == SaveButton) {
                 chess.chessRules.GoBack();
             } else if (obj == ExitButton) {
+                if (exampleThread != null){
+                    exampleThread.stop();//关闭线程
+                }
                 frame.dispose();
                 new Home();
             }

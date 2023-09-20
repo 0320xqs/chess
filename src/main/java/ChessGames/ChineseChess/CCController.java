@@ -3,6 +3,7 @@ package ChessGames.ChineseChess;
 
 import ChessGames.GoBang.GoBangChessPieces;
 import ChessGames.GoBang.Model.ChessRole;
+import ChessGames.template.ChessPieces;
 import ChessGames.template.Controller;
 import ChessGames.template.Model.GameResult;
 import ChessGames.template.Model.Part;
@@ -15,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.lang.reflect.InvocationTargetException;
 
+import static ChessGames.GoBang.GoBangConfig.COLS;
 import static ChessGames.GoBang.GoBangConfig.ROWS;
 
 
@@ -100,33 +102,49 @@ public class CCController extends Controller {
 
     @Override
     public int[] GameRecord() {
-        System.out.println("gameRecond++++++++++++++++++++++++++++++++++++++++++++++++");
+//        System.out.println("gameRecond++++++++++++++++++++++++++++++++++++++++++++++++");
         int[] temp = new int[config.pieceList.size()];
+//        System.out.println(config.pieceList.get(0).getX_coordinate()+" "+config.pieceList.get(0).getY_coordinate());
         for (int i = 0; i < config.pieceList.size(); i++) {
-            temp[i] = config.pieceList.get(i).getX_coordinate() * ROWS + config.pieceList.get(i).getY_coordinate();
+            temp[i] = config.pieceList.get(i).getX_coordinate() * config.ROWS  + config.pieceList.get(i).getY_coordinate();
         }
         for (int i = 0; i < config.pieceList.size(); i++) {
-            System.out.println(temp+" ");
+            System.out.print(temp[i]+" ");
         }
         return temp;
     }
 
     @Override
     public String playRecond(int xy, int Role) {
-        if (Role % 2 == 0){//偶数次进入
-            int x = xy % config.COLS;
-            int y = xy / config.ROWS;
+        System.out.println(Role);
+        if (Role % 2 == 1){//偶数次进入
+            System.out.println("偶数次进入");
+            int x = xy / config.ROWS ;
+            int y = xy % config.ROWS ;
 
 //            ChessRole chessRole = Role == 1 ? ChessRole.WHITECHESS : ChessRole.BLACKCHESS;
 //            GoBangChessPieces tempChess = new GoBangChessPieces(x, y, chessRole);
-//            config.pieceList.add(tempChess);
+            System.out.println("起点"+recordFrom);
+            System.out.println("终点"+x+" "+y);
+            System.out.println();
+            //走棋记录存储
+            config.pieceList.add(config.pieceArray[recordFrom.x][recordFrom.y]);
+            config.pieceList.add(new ChessPieces(x,y));
+            //更改棋子数组
+            config.pieceArray[x][y] = config.pieceArray[recordFrom.x][recordFrom.y];
+            config.pieceArray[recordFrom.x][recordFrom.y] = null;
+            //更改棋子内部坐标
+            config.pieceArray[x][y].setX_coordinate(x);
+            config.pieceArray[x][y].setY_coordinate(y);
+//            config.pieceList.add();
 //            config.pieceArray[x][y] = tempChess;
-//            chessBoard.repaint();
+            chessBoard.repaint();
             String str = Role/2 % 2 == 0 ? "第" + (Role/2+1) + "步，先手落子" : "第" + (Role/2+1) + "步，后手落子";
             return str;
         }else{//奇数次进入
-            recordFrom.x = xy % config.COLS;
-            recordFrom.y = xy / config.ROWS;
+            System.out.println("奇数次进入");
+            recordFrom.x = xy / config.ROWS;
+            recordFrom.y = xy % config.ROWS;
             return null;
         }
     }

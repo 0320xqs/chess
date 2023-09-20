@@ -56,7 +56,6 @@ public class GoBangController extends Controller {
     public void StartGame() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Point point;
         init();
-        config.gameResult = GameResult.UNFINISHED;
         switch (GAMEMODE) {
             case "人 VS 人":
                 while (config.gameResult == GameResult.UNFINISHED) {
@@ -102,17 +101,16 @@ public class GoBangController extends Controller {
     public int[] GameRecord() {
         int[] temp = new int[config.pieceList.size()];
         for (int i = 0; i < config.pieceList.size(); i++) {
-            temp[i] = config.pieceList.get(i).getX_coordinate() * ROWS + config.pieceList.get(i).getY_coordinate();
+            temp[i] = config.pieceList.get(i).getX_coordinate() * config.ROWS + config.pieceList.get(i).getY_coordinate();
         }
         return temp;
     }
 
     @Override
     public String playRecond(int xy, int Role) {
-        int x = xy / ROWS;
-        int y = xy % ROWS;
-//        ChessRole chessRole = config.currentPlayer == Part.SECOND ? ChessRole.BLACKCHESS : ChessRole.WHITECHESS;
-        ChessRole chessRole = Role == 1 ? ChessRole.WHITECHESS : ChessRole.BLACKCHESS;
+        int x = xy / config.ROWS;
+        int y = xy % config.ROWS;
+        ChessRole chessRole = Role % 2 == 0 ? ChessRole.WHITECHESS : ChessRole.BLACKCHESS;
         GoBangChessPieces tempChess = new GoBangChessPieces(x, y, chessRole);
         config.pieceList.add(tempChess);
         config.pieceArray[x][y] = tempChess;
@@ -181,6 +179,7 @@ public class GoBangController extends Controller {
                 config.pieceArray[i][j] = null;
             }
         }
+        config.gameResult = GameResult.UNFINISHED;
         config.currentPlayer = Part.FIRST;
     }
 
