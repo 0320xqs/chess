@@ -117,7 +117,7 @@ public class MinMax {
                 }
             }
         }
-        System.out.println("可选棋子长度："+chessList.size());
+//        System.out.println("可选棋子长度："+chessList.size());
         if (chessList.size() == 0){
             System.out.println("可选为0");
             System.out.println("分数为："+value1);
