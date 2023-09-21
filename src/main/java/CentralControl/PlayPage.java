@@ -205,7 +205,9 @@ public class PlayPage {
                         }
                         String s = chess.playRecond(Play[i], i);
 //                        String s = i % 2 == 0 ? "第" + i + "步，先手落子" : "第" + i + "步，后手落子";
-                        textArea.append(s + "\n");
+                        if (s != null){
+                            textArea.append(s + "\n");
+                        }
                     }
                 });
                 recordPlay.start();

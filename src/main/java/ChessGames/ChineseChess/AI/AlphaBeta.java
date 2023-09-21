@@ -250,7 +250,7 @@ public class AlphaBeta {
 //                    System.out.println(oppositeCurPart);
 //                    System.out.println(nextDeep);
                     score = negativeMaximum(analysisBean, oppositeCurPart, nextDeep, -best);
-                    System.out.println("里面现在分数为:"+score);
+//                    System.out.println("里面现在分数为:"+score);
                 }
                 // ????????
                 analysisBean.backStep(item.from, to, eatenPiece, invScr);

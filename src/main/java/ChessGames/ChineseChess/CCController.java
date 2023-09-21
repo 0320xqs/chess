@@ -102,7 +102,6 @@ public class CCController extends Controller {
 
     @Override
     public int[] GameRecord() {
-        System.out.println("gameRecond++++++++++++++++++++++++++++++++++++++++++++++++");
         int[] temp = new int[config.pieceList.size()];
 
         for (int i = 0; i < config.pieceList.size(); i++) {
@@ -164,30 +163,7 @@ public class CCController extends Controller {
 
     @Override
     public JPanel ChangeList() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0,2));
-        String[] list = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
-        JComboBox<String> row = new JComboBox<>(list);
-        row.setSelectedIndex(14);
-        row.addItemListener(evt -> {
-            if (evt.getStateChange() == ItemEvent.SELECTED) {
-                SelecetRows = Integer.parseInt(evt.getItem().toString());
-                RowsIndex = Integer.parseInt(evt.getItem().toString()) - 1;
-            }
-        });
-        JComboBox<String> col = new JComboBox<>(list);
-        col.setSelectedIndex(14);
-        col.addItemListener(evt -> {
-            if (evt.getStateChange() == ItemEvent.SELECTED) {
-                SelectCols = Integer.parseInt(evt.getItem().toString());
-                ColsIndex = Integer.parseInt(evt.getItem().toString()) - 1;
-            }
-        });
-        panel.add(new Label("ROWS:"));
-        panel.add(row);
-        panel.add(new Label("COLS:"));
-        panel.add(col);
-        return panel;
+        return null;
     }
 
     @Override

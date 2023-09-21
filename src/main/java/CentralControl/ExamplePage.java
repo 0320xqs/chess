@@ -182,18 +182,19 @@ public class ExamplePage {
                 // 创建 FutureTask 对象，并将控制器作为任务传入
                 FutureTask future = new FutureTask<>(controller);
                 // 使用线程池 executor 执行任务
-                executor.execute(() -> {
-                    future.run();
-                    // 进程执行完毕后，计数器减一
-                    latch.countDown();
-                });
+//                executor.execute(() -> {
+//                    future.run();
+//                    // 进程执行完毕后，计数器减一
+//                    latch.countDown();
+//                });
+                executor.execute(future);
                 futures.add(future);
             }
             // 关闭线程池
             executor.shutdown();
             // 等待所有任务完成
             try {
-                latch.await();
+//                latch.await();
                 int activeTasks = ((ThreadPoolExecutor) executor).getActiveCount();
                 for (int i = 0; i < futures.size(); i++) {
                     // 获取 FutureTask 的结果，并将结果添加到 Example 列表中(get方法调用的是控制器中的call)

@@ -3,11 +3,12 @@ package ChessGames.GoBang;
 import ChessGames.GoBang.AI.GoBangGetAI;
 import ChessGames.GoBang.Model.ChessRole;
 import ChessGames.template.Config;
-import ChessGames.template.FirstPlayer;
+import ChessGames.template.SecondPlayer;
+
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
-public class GoBangSecondPlayer extends FirstPlayer {
+public class GoBangSecondPlayer extends SecondPlayer {
     private GoBangConfig config;
     private GoBangGetAI getAI;
 

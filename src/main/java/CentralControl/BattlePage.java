@@ -149,10 +149,11 @@ public class BattlePage {
         System.out.println("加载棋盘成功！");
         panel1.add(panel3);
 
-        changeList.add(chess.ChangeList());
-        changeList.add(ChangeButton);
-        changeList.pack();
-
+        if (chess.ChangeList() != null){//有修改操作
+            changeList.add(chess.ChangeList());
+            changeList.add(ChangeButton);
+            changeList.pack();
+        }
 
         frame.getContentPane().add(panel2, BorderLayout.EAST);
         frame.getContentPane().add(panel1, BorderLayout.CENTER);
