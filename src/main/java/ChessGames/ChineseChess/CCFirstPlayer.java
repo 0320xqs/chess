@@ -4,6 +4,8 @@ import ChessGames.ChineseChess.AI.CCGetAI;
 import ChessGames.ChineseChess.AI.StepBean;
 import ChessGames.template.ChessPieces;
 import ChessGames.template.FirstPlayer;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -27,9 +29,11 @@ public class CCFirstPlayer extends FirstPlayer {
             case AI:
                 getAI = new CCGetAI(config, 1);
                 System.out.println("我获取到了AI");
-                StepBean stepBean = getAI.play(config.secondAI);
-                from = stepBean.from;
-                to = stepBean.to;
+//                StepBean stepBean = getAI.play(config.secondAI);
+                JSONObject jsonObject = getAI.play(config.secondAI);
+                JSONArray jsonArray = (JSONArray) jsonObject.get("next");
+                from = new Point((int)jsonArray.get(0),(int)jsonArray.get(1));
+                to = new Point((int)jsonArray.get(2),(int)jsonArray.get(3));
                 break;
         }
         System.out.println(from.x);

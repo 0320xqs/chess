@@ -4,7 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af60ee24-14f1-40dc-a4c9-7f25c3108b85" name="Changes" comment="初步完成！" />
+    <list default="true" id="af60ee24-14f1-40dc-a4c9-7f25c3108b85" name="Changes" comment="初步完成！">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CentralControl/BattlePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CentralControl/BattlePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/CCGetAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/CCGetAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/MinMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/MinMax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/CCFirstPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/CCFirstPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/CCSecondPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/CCSecondPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/CNN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/CNN.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/GoBangGetAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/GoBangGetAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/MinMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/MinMax.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/GoBangFirstPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/GoBangFirstPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/GoBangSecondPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/GoBangSecondPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/template/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/template/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/CentralControl/BattlePage$CenteredComboBoxRenderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CentralControl/BattlePage$CenteredComboBoxRenderer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/CentralControl/BattlePage$MyButtonLister.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CentralControl/BattlePage$MyButtonLister.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/AlphaBeta.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/AlphaBeta.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/CCGetAI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/CCGetAI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/MinMax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/MinMax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController$BackGround.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController$BackGround.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController$listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController$listener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCFirstPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCFirstPlayer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCFirstPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCFirstPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCSecondPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCSecondPlayer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCSecondPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCSecondPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/CNN.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/CNN.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/GoBangGetAI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/GoBangGetAI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/MinMax$ChessXY.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/MinMax$ChessXY.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/MinMax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/MinMax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangFirstPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangFirstPlayer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangFirstPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangFirstPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangSecondPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangSecondPlayer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangSecondPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangSecondPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/template/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/template/Config.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,7 +105,7 @@
     <property name="ToolWindowBuild.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="G:/原E盘/javaproject/golang_抽象版_2023.05.22" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -195,7 +229,16 @@
       <workItem from="1695173552682" duration="7891000" />
       <workItem from="1695185209597" duration="28707000" />
       <workItem from="1695214341550" duration="2540000" />
-      <workItem from="1695260247715" duration="2323000" />
+      <workItem from="1695260247715" duration="5387000" />
+      <workItem from="1695284803444" duration="924000" />
+      <workItem from="1695343932233" duration="5880000" />
+      <workItem from="1697272270547" duration="1064000" />
+      <workItem from="1697274447555" duration="1765000" />
+      <workItem from="1697276261423" duration="1758000" />
+      <workItem from="1697278130415" duration="963000" />
+      <workItem from="1697279436301" duration="1766000" />
+      <workItem from="1697281263566" duration="1790000" />
+      <workItem from="1697283108518" duration="515000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1695040237242</created>
@@ -302,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695262662806</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="初步完成！">
+      <created>1695262889006</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1695262889006</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -345,53 +395,53 @@
     <state x="499" y="166" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695030350632" />
     <state x="499" y="166" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.832@0.0.1536.832" timestamp="1694786644686" />
     <state x="499" y="166" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.834@0.0.1536.834" timestamp="1694843209845" />
-    <state x="2223" y="16" key="CommitChangelistDialog2" timestamp="1695262660476">
-      <screen x="1920" y="0" width="1600" height="870" />
+    <state x="321" y="0" key="CommitChangelistDialog2" timestamp="1697283721816">
+      <screen x="0" y="0" width="1536" height="832" />
     </state>
-    <state x="291" y="15" key="CommitChangelistDialog2/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695213605516" />
-    <state x="2223" y="16" key="CommitChangelistDialog2/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262660476" />
+    <state x="321" y="0" key="CommitChangelistDialog2/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283721816" />
+    <state x="2223" y="16" key="CommitChangelistDialog2/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262887394" />
     <state x="291" y="15" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1695002418051" />
     <state x="93" y="93" width="1350" height="646" key="DiffContextDialog" timestamp="1694666832209">
       <screen x="0" y="0" width="1536" height="832" />
     </state>
     <state x="93" y="93" width="1350" height="646" key="DiffContextDialog/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1694666832209" />
-    <state x="549" y="176" key="FileChooserDialogImpl" timestamp="1695212873161">
+    <state x="549" y="176" key="FileChooserDialogImpl" timestamp="1697282576124">
       <screen x="0" y="0" width="1536" height="832" />
     </state>
-    <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695212873161" />
+    <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697282576124" />
     <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694601858130" />
     <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1694831761823" />
-    <state width="1557" height="234" key="GridCell.Tab.0.bottom" timestamp="1695262502546">
-      <screen x="1920" y="0" width="1600" height="870" />
+    <state width="1478" height="169" key="GridCell.Tab.0.bottom" timestamp="1697283630799">
+      <screen x="0" y="0" width="1536" height="832" />
     </state>
-    <state width="1478" height="31" key="GridCell.Tab.0.bottom/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695260988323" />
+    <state width="1478" height="169" key="GridCell.Tab.0.bottom/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283630799" />
     <state width="1557" height="234" key="GridCell.Tab.0.bottom/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262502546" />
     <state width="1493" height="185" key="GridCell.Tab.0.bottom/0.0.1536.832@0.0.1536.832" timestamp="1694795532584" />
     <state width="1492" height="166" key="GridCell.Tab.0.bottom/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694610853774" />
     <state width="1557" height="165" key="GridCell.Tab.0.bottom/0.0.1536.834/1920.0.1600.870@1920.0.1600.870" timestamp="1694615333331" />
     <state width="1478" height="215" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1694845818147" />
-    <state width="1557" height="234" key="GridCell.Tab.0.center" timestamp="1695262502546">
-      <screen x="1920" y="0" width="1600" height="870" />
+    <state width="1478" height="169" key="GridCell.Tab.0.center" timestamp="1697283630798">
+      <screen x="0" y="0" width="1536" height="832" />
     </state>
-    <state width="1478" height="31" key="GridCell.Tab.0.center/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695260988323" />
+    <state width="1478" height="169" key="GridCell.Tab.0.center/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283630798" />
     <state width="1557" height="234" key="GridCell.Tab.0.center/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262502546" />
     <state width="1493" height="185" key="GridCell.Tab.0.center/0.0.1536.832@0.0.1536.832" timestamp="1694795532583" />
     <state width="1492" height="166" key="GridCell.Tab.0.center/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694610853773" />
     <state width="1557" height="165" key="GridCell.Tab.0.center/0.0.1536.834/1920.0.1600.870@1920.0.1600.870" timestamp="1694615333331" />
     <state width="1478" height="215" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1694845818147" />
-    <state width="1557" height="234" key="GridCell.Tab.0.left" timestamp="1695262502546">
-      <screen x="1920" y="0" width="1600" height="870" />
+    <state width="1478" height="169" key="GridCell.Tab.0.left" timestamp="1697283630798">
+      <screen x="0" y="0" width="1536" height="832" />
     </state>
-    <state width="1478" height="31" key="GridCell.Tab.0.left/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695260988323" />
+    <state width="1478" height="169" key="GridCell.Tab.0.left/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283630798" />
     <state width="1557" height="234" key="GridCell.Tab.0.left/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262502546" />
     <state width="1493" height="185" key="GridCell.Tab.0.left/0.0.1536.832@0.0.1536.832" timestamp="1694795532583" />
     <state width="1492" height="166" key="GridCell.Tab.0.left/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694610853773" />
     <state width="1557" height="165" key="GridCell.Tab.0.left/0.0.1536.834/1920.0.1600.870@1920.0.1600.870" timestamp="1694615333331" />
     <state width="1478" height="215" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1694845818147" />
-    <state width="1557" height="234" key="GridCell.Tab.0.right" timestamp="1695262502546">
-      <screen x="1920" y="0" width="1600" height="870" />
+    <state width="1478" height="169" key="GridCell.Tab.0.right" timestamp="1697283630799">
+      <screen x="0" y="0" width="1536" height="832" />
     </state>
-    <state width="1478" height="31" key="GridCell.Tab.0.right/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695260988323" />
+    <state width="1478" height="169" key="GridCell.Tab.0.right/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283630799" />
     <state width="1557" height="234" key="GridCell.Tab.0.right/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262502546" />
     <state width="1493" height="185" key="GridCell.Tab.0.right/0.0.1536.832@0.0.1536.832" timestamp="1694795532584" />
     <state width="1492" height="166" key="GridCell.Tab.0.right/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694610853774" />
@@ -426,23 +476,28 @@
     </state>
     <state x="299" y="75" key="Maven.ArtifactSearchDialog/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695117683229" />
     <state x="299" y="75" key="Maven.ArtifactSearchDialog/0.0.1536.832@0.0.1536.832" timestamp="1694787324876" />
-    <state x="146" y="26" key="SettingsEditor" timestamp="1695216104983">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state x="2072" y="27" key="SettingsEditor" timestamp="1695263111208">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
     <state x="146" y="26" key="SettingsEditor/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695216104983" />
+    <state x="2072" y="27" key="SettingsEditor/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695263111208" />
     <state x="432" y="18" key="SettingsEditor/0.0.1536.832@0.0.1536.832" timestamp="1694794030750" />
     <state x="117" y="0" key="SettingsEditor/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694568025395" />
     <state x="432" y="18" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1694832339927" />
-    <state x="2292" y="160" key="Vcs.Push.Dialog.v2" timestamp="1695262772540">
-      <screen x="1920" y="0" width="1600" height="870" />
-    </state>
-    <state x="357" y="153" key="Vcs.Push.Dialog.v2/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695216132016" />
-    <state x="2292" y="160" key="Vcs.Push.Dialog.v2/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262772540" />
-    <state x="461" y="245" key="com.intellij.ide.util.TipDialog" timestamp="1695185208648">
+    <state x="357" y="153" key="Vcs.Push.Dialog.v2" timestamp="1697278148167">
       <screen x="0" y="0" width="1536" height="832" />
     </state>
-    <state x="461" y="245" key="com.intellij.ide.util.TipDialog/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695185208648" />
+    <state x="357" y="153" key="Vcs.Push.Dialog.v2/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697278148167" />
+    <state x="2292" y="160" key="Vcs.Push.Dialog.v2/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695263118074" />
+    <state x="461" y="245" key="com.intellij.ide.util.TipDialog" timestamp="1697281265876">
+      <screen x="0" y="0" width="1536" height="832" />
+    </state>
+    <state x="461" y="245" key="com.intellij.ide.util.TipDialog/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697281265876" />
     <state x="461" y="246" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1695002387086" />
+    <state x="504" y="223" key="git4idea.merge.GitPullDialog" timestamp="1697277769082">
+      <screen x="0" y="0" width="1536" height="832" />
+    </state>
+    <state x="504" y="223" key="git4idea.merge.GitPullDialog/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697277769082" />
     <state x="511" y="46" key="refactoring.ChangeSignatureDialog" timestamp="1695203119092">
       <screen x="0" y="0" width="1536" height="832" />
     </state>

@@ -2,6 +2,7 @@ package ChessGames.ChineseChess.AI;
 
 import ChessGames.ChineseChess.CCConfig;
 import ChessGames.template.Model.Part;
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +18,7 @@ public class CCGetAI {
         this.role = role;
     }
 
-    public StepBean play(String AI) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public JSONObject play(String AI) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         switch (AI) {
             case "CNN":
                 break;

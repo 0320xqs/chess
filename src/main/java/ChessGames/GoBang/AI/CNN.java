@@ -6,6 +6,7 @@ import ChessGames.template.Model.Part;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonArray;
 import org.deeplearning4j.datasets.iterator.impl.ListDataSetIterator;
 import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.conf.*;
@@ -371,10 +372,16 @@ public class CNN {
         return JSONObject.parseObject(jsonString);
     }
 
-    public Point play() {
+    public JSONObject play() {
 
         if (board.pieceList.size() == 0) {//先手
-            return new Point(board.COLS / 2, board.ROWS / 2);
+            JSONArray jsonElements = new JSONArray();
+            jsonElements.add(board.COLS / 2);
+            jsonElements.add(board.ROWS / 2);
+            JSONObject next = new JSONObject();
+            next.put("next",jsonElements);
+            return next;
+//            return new Point(board.COLS / 2, board.ROWS / 2);
         }
         //转换格式
         //处理数据
@@ -403,7 +410,13 @@ public class CNN {
         }
         int xPos = index / COLS;
         int yPos = index % ROWS;
-        ;
-        return new Point(xPos, yPos);
+        //封装结果
+        JSONArray jsonElements = new JSONArray();
+        jsonElements.add(xPos);
+        jsonElements.add(yPos);
+        JSONObject next = new JSONObject();
+        next.put("next",jsonElements);
+        return next;
+//        return new Point(xPos, yPos);
     }
 }

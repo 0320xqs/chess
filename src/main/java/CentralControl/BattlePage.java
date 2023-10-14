@@ -180,6 +180,9 @@ public class BattlePage {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (obj == RestartButton) {
+                if (gameThread != null){
+                    gameThread.stop();//关闭线程
+                }
                 gameThread = new Thread(() -> {
                     try {
                         chess.StartGame();
@@ -203,6 +206,9 @@ public class BattlePage {
                 chess.chessBoard.repaint();
             }
             if (obj == ExitButton) {
+                if (gameThread != null){
+                    gameThread.stop();//关闭线程
+                }
                 frame.dispose();
                 chess.init();
                 new Home();
