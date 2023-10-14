@@ -3,10 +3,16 @@ package ChessGames.GoBang.AI;
 import ChessGames.GoBang.GoBangChessPieces;
 import ChessGames.GoBang.GoBangConfig;
 import ChessGames.template.Model.Part;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
+
+import static ChessGames.GoBang.GoBangConfig.COLS;
+import static ChessGames.GoBang.GoBangConfig.ROWS;
 
 public class MinMax {
 
@@ -62,10 +68,16 @@ public class MinMax {
      * @return
      * @Description 获取下一步棋子位置
      */
-    public Point play() {
+    public JSONObject play() {
 
         if (Board.pieceList.size() == 0) {
-            return new Point(BOARD_SIZE / 2, BOARD_SIZE / 2);
+            JSONArray jsonElements = new JSONArray();
+            jsonElements.add(BOARD_SIZE / 2);
+            jsonElements.add(BOARD_SIZE / 2);
+            JSONObject next = new JSONObject();
+            next.put("next",jsonElements);
+            return next;
+//            return new Point(BOARD_SIZE / 2, BOARD_SIZE / 2);
         }
 //        for (int i = 0; i < BOARD_SIZE; i++) {
 //            for (int j = 0; j < BOARD_SIZE; j++) {
@@ -134,7 +146,15 @@ public class MinMax {
         comy = chessList.get(n).y;
         chessList.clear();
         chessXYList.clear();
-        return new Point(comx, comy);
+
+        //封装结果
+        JSONArray jsonElements = new JSONArray();
+        jsonElements.add(comx);
+        jsonElements.add(comy);
+        JSONObject next = new JSONObject();
+        next.put("next",jsonElements);
+        return next;
+//        return new Point(comx, comy);
     }
 
     /**
@@ -255,15 +275,16 @@ public class MinMax {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 if (board[i][j] == 0) {
+//                    System.out.println(i+" "+j);
                     getScore(i, j, role);//得到每个空位得分，更新得分数组
                 }
             }
         }
         int count = 0;
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-            }
-        }
+//        for (int i = 0; i < BOARD_SIZE; i++) {
+//            for (int j = 0; j < BOARD_SIZE; j++) {
+//            }
+//        }
         int[][] maxList = new int[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
