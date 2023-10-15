@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonArray;
+import org.bytedeco.tesseract.ROW;
 import org.deeplearning4j.datasets.iterator.impl.ListDataSetIterator;
 import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.conf.*;
@@ -41,11 +42,25 @@ public class CNN {
     int seed = 123; //
     int batchSize = 64; // batch size
     double learningRate = 0.001;
-    GoBangConfig board;
+//    GoBangConfig board;
+    int [][] board;
+    int ROWS;
+    int COLS;
     int role, depth=4;
 
-    public CNN(GoBangConfig board) {
-        this.board = board;
+    public CNN(JSONObject json) {
+        //获取参数
+        this.board = new int[(int) json.get("COLS")][(int) json.get("ROWS")];
+        ROWS = (int) json.get("ROWS");
+        COLS = (int) json.get("COLS");
+        JSONArray jsonArray = (JSONArray) json.get("board");
+        int h = 0;
+        for (int i = 0; i < COLS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                board[i][j] = (int) jsonArray.get(h);
+                h++;
+            }
+        }
     }
 
     public void train() throws IOException {
@@ -373,11 +388,20 @@ public class CNN {
     }
 
     public JSONObject play() {
-
-        if (board.pieceList.size() == 0) {//先手
+        //判断传入board是否为空
+        boolean emptyFlag = true;
+        for (int i = 0; i < COLS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                if (board[i][j] != 0){
+                    emptyFlag = false;
+                    break;
+                }
+            }
+        }
+        if (emptyFlag) {//先手
             JSONArray jsonElements = new JSONArray();
-            jsonElements.add(board.COLS / 2);
-            jsonElements.add(board.ROWS / 2);
+            jsonElements.add(COLS / 2);
+            jsonElements.add(ROWS / 2);
             JSONObject next = new JSONObject();
             next.put("next",jsonElements);
             return next;
@@ -389,10 +413,10 @@ public class CNN {
         INDArray features = Nd4j.zeros(new int[]{1, 1, 15, 15});
         for (int i = 0; i < COLS; i++) {
             for (int j = 0; j < ROWS; j++) {
-                if (board.pieceArray[i][j] != null){
-                    if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.SECOND) {
+                if (board[i][j] != 0){
+                    if (board[i][j] == 2) {
                         features.putScalar(0, 0, i, j, 1);
-                    } else if (((GoBangChessPieces)board.pieceArray[i][j]).getChessRole().getPart() == Part.FIRST) {
+                    } else if (board[i][j] == 1) {
                         features.putScalar(0, 0, i, j, -1);
                     }
                     boardState.add((i * ROWS) + j);//棋盘不为空的位置

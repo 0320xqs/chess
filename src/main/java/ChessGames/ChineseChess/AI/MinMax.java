@@ -2,6 +2,7 @@ package ChessGames.ChineseChess.AI;
 
 import ChessGames.ChineseChess.CCChessPieces;
 import ChessGames.ChineseChess.CCConfig;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -11,7 +12,9 @@ import java.util.Random;
 public class MinMax {
     CCConfig ccConfig;
     int role;
+//    MinMax(String config, int role){
     MinMax(CCConfig config, int role){
+//        this.ccConfig = JSON.parseObject(config,CCConfig.class);
         this.ccConfig = config;
         this.role = role;
     }

@@ -2,6 +2,10 @@ package ChessGames.ChineseChess.AI;
 
 
 import ChessGames.template.Model.Part;
+import com.alibaba.fastjson.annotation.JSONField;
+import lombok.ToString;
+
+import java.util.Arrays;
 
 /**
  * <b>Description : </b>
@@ -11,6 +15,7 @@ import ChessGames.template.Model.Part;
  *    <br/> 3. 写了一方的，另一方的直接转换一下
  * </p>
  **/
+@ToString()
 public enum PieceScore {
 
 //原
@@ -199,4 +204,5 @@ public enum PieceScore {
             return placeScores[x * 10 + y];
         }
     }
+
 }

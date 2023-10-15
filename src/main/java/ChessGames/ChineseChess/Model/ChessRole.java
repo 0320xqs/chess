@@ -2,9 +2,19 @@ package ChessGames.ChineseChess.Model;
 
 import ChessGames.ChineseChess.AI.PieceScore;
 import ChessGames.template.Model.Part;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
-import java.awt.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.nd4j.shade.jackson.annotation.JsonValue;
 
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+@Getter
+@ToString
 public enum ChessRole {
     BLACK_KING(Part.SECOND, ChessImage.BLACK_KING.image, PieceScore.KING),
     BLACK_MINISTER(Part.SECOND, ChessImage.BLACK_MINISTER.image, PieceScore.MINISTER),
@@ -30,27 +40,17 @@ public enum ChessRole {
         this.pieceScore = pieceScore;
     }
 
-    public Part getPart() {
-        return part;
-    }
 
     public void setPart(Part part) {
         this.part = part;
-    }
-
-    public Image getImage() {
-        return image;
     }
 
     public void setImage(Image image) {
         this.image = image;
     }
 
-    public PieceScore getPieceScore() {
-        return pieceScore;
-    }
-
     public void setPieceScore(PieceScore pieceScore) {
         this.pieceScore = pieceScore;
     }
+
 }

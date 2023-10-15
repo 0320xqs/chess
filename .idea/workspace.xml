@@ -4,40 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af60ee24-14f1-40dc-a4c9-7f25c3108b85" name="Changes" comment="初步完成！">
+    <list default="true" id="af60ee24-14f1-40dc-a4c9-7f25c3108b85" name="Changes" comment="修改AI传输个数为json、修复棋子覆盖BUG">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CentralControl/BattlePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CentralControl/BattlePage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/CCGetAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/CCGetAI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/MinMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/MinMax.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/CCFirstPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/CCFirstPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/CCSecondPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/CCSecondPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/PieceScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/AI/PieceScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/Model/ChessRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/ChineseChess/Model/ChessRole.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/CNN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/CNN.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/GoBangGetAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/GoBangGetAI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/MinMax.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/AI/MinMax.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/GoBangFirstPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/GoBangFirstPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/GoBangSecondPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/GoBang/GoBangSecondPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ChessGames/template/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChessGames/template/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/CentralControl/BattlePage$CenteredComboBoxRenderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CentralControl/BattlePage$CenteredComboBoxRenderer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/CentralControl/BattlePage$MyButtonLister.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CentralControl/BattlePage$MyButtonLister.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/AlphaBeta.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/AlphaBeta.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/CCGetAI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/CCGetAI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/MinMax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/MinMax.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController$BackGround.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController$BackGround.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController$listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController$listener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCFirstPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCFirstPlayer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCFirstPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCFirstPlayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCSecondPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCSecondPlayer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCSecondPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/CCSecondPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/PieceScore.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/AI/PieceScore.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/Model/ChessRole.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/ChineseChess/Model/ChessRole.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/CNN.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/CNN.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/GoBangGetAI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/GoBangGetAI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/MinMax$ChessXY.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/MinMax$ChessXY.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/MinMax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/AI/MinMax.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangFirstPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangFirstPlayer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangFirstPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangFirstPlayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangSecondPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangSecondPlayer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangSecondPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/GoBang/GoBangSecondPlayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ChessGames/template/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChessGames/template/Config.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -238,7 +221,19 @@
       <workItem from="1697278130415" duration="963000" />
       <workItem from="1697279436301" duration="1766000" />
       <workItem from="1697281263566" duration="1790000" />
-      <workItem from="1697283108518" duration="515000" />
+      <workItem from="1697283108518" duration="1349000" />
+      <workItem from="1697356996579" duration="1741000" />
+      <workItem from="1697358805116" duration="1695000" />
+      <workItem from="1697360661628" duration="1777000" />
+      <workItem from="1697362487405" duration="1773000" />
+      <workItem from="1697364737622" duration="1773000" />
+      <workItem from="1697366550522" duration="1772000" />
+      <workItem from="1697368362452" duration="1785000" />
+      <workItem from="1697370224527" duration="1782000" />
+      <workItem from="1697372050919" duration="1774000" />
+      <workItem from="1697373876437" duration="1773000" />
+      <workItem from="1697375690196" duration="1773000" />
+      <workItem from="1697377513960" duration="1338000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1695040237242</created>
@@ -352,7 +347,21 @@
       <option name="project" value="LOCAL" />
       <updated>1695262889006</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="修改AI传输个数为json、修复棋子覆盖BUG">
+      <created>1697283723981</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1697283723981</updated>
+    </task>
+    <task id="LOCAL-00018" summary="修改AI传输个数为json、修复棋子覆盖BUG">
+      <created>1697283764538</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1697283764538</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,13 +383,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changes" />
     <MESSAGE value="初步完成！" />
-    <option name="LAST_COMMIT_MESSAGE" value="初步完成！" />
+    <MESSAGE value="修改AI传输个数为json、修复棋子覆盖BUG" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改AI传输个数为json、修复棋子覆盖BUG" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1695203736415">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state x="2518" y="137" key="#com.intellij.ide.util.MemberChooser" timestamp="1697365621597">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
     <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695203736415" />
+    <state x="2518" y="137" key="#com.intellij.ide.util.MemberChooser/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697365621597" />
     <state x="553" y="306" width="429" height="225" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1694744235305">
       <screen x="0" y="0" width="1536" height="832" />
     </state>
@@ -395,11 +406,15 @@
     <state x="499" y="166" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695030350632" />
     <state x="499" y="166" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.832@0.0.1536.832" timestamp="1694786644686" />
     <state x="499" y="166" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.834@0.0.1536.834" timestamp="1694843209845" />
-    <state x="321" y="0" key="CommitChangelistDialog2" timestamp="1697283721816">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state x="2450" y="185" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1697362215807">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
-    <state x="321" y="0" key="CommitChangelistDialog2/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283721816" />
-    <state x="2223" y="16" key="CommitChangelistDialog2/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262887394" />
+    <state x="2450" y="185" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697362215807" />
+    <state x="2223" y="16" key="CommitChangelistDialog2" timestamp="1697378867335">
+      <screen x="1920" y="0" width="1600" height="870" />
+    </state>
+    <state x="321" y="0" key="CommitChangelistDialog2/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283761140" />
+    <state x="2223" y="16" key="CommitChangelistDialog2/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697378867335" />
     <state x="291" y="15" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1695002418051" />
     <state x="93" y="93" width="1350" height="646" key="DiffContextDialog" timestamp="1694666832209">
       <screen x="0" y="0" width="1536" height="832" />
@@ -411,38 +426,38 @@
     <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697282576124" />
     <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694601858130" />
     <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1694831761823" />
-    <state width="1478" height="169" key="GridCell.Tab.0.bottom" timestamp="1697283630799">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state width="1557" height="2" key="GridCell.Tab.0.bottom" timestamp="1697378532325">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
-    <state width="1478" height="169" key="GridCell.Tab.0.bottom/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283630799" />
-    <state width="1557" height="234" key="GridCell.Tab.0.bottom/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262502546" />
+    <state width="1478" height="169" key="GridCell.Tab.0.bottom/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697284606568" />
+    <state width="1557" height="2" key="GridCell.Tab.0.bottom/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697378532325" />
     <state width="1493" height="185" key="GridCell.Tab.0.bottom/0.0.1536.832@0.0.1536.832" timestamp="1694795532584" />
     <state width="1492" height="166" key="GridCell.Tab.0.bottom/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694610853774" />
     <state width="1557" height="165" key="GridCell.Tab.0.bottom/0.0.1536.834/1920.0.1600.870@1920.0.1600.870" timestamp="1694615333331" />
     <state width="1478" height="215" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1694845818147" />
-    <state width="1478" height="169" key="GridCell.Tab.0.center" timestamp="1697283630798">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state width="1557" height="2" key="GridCell.Tab.0.center" timestamp="1697378532325">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
-    <state width="1478" height="169" key="GridCell.Tab.0.center/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283630798" />
-    <state width="1557" height="234" key="GridCell.Tab.0.center/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262502546" />
+    <state width="1478" height="169" key="GridCell.Tab.0.center/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697284606568" />
+    <state width="1557" height="2" key="GridCell.Tab.0.center/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697378532325" />
     <state width="1493" height="185" key="GridCell.Tab.0.center/0.0.1536.832@0.0.1536.832" timestamp="1694795532583" />
     <state width="1492" height="166" key="GridCell.Tab.0.center/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694610853773" />
     <state width="1557" height="165" key="GridCell.Tab.0.center/0.0.1536.834/1920.0.1600.870@1920.0.1600.870" timestamp="1694615333331" />
     <state width="1478" height="215" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1694845818147" />
-    <state width="1478" height="169" key="GridCell.Tab.0.left" timestamp="1697283630798">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state width="1557" height="2" key="GridCell.Tab.0.left" timestamp="1697378532325">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
-    <state width="1478" height="169" key="GridCell.Tab.0.left/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283630798" />
-    <state width="1557" height="234" key="GridCell.Tab.0.left/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262502546" />
+    <state width="1478" height="169" key="GridCell.Tab.0.left/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697284606568" />
+    <state width="1557" height="2" key="GridCell.Tab.0.left/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697378532325" />
     <state width="1493" height="185" key="GridCell.Tab.0.left/0.0.1536.832@0.0.1536.832" timestamp="1694795532583" />
     <state width="1492" height="166" key="GridCell.Tab.0.left/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694610853773" />
     <state width="1557" height="165" key="GridCell.Tab.0.left/0.0.1536.834/1920.0.1600.870@1920.0.1600.870" timestamp="1694615333331" />
     <state width="1478" height="215" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1694845818147" />
-    <state width="1478" height="169" key="GridCell.Tab.0.right" timestamp="1697283630799">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state width="1557" height="2" key="GridCell.Tab.0.right" timestamp="1697378532325">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
-    <state width="1478" height="169" key="GridCell.Tab.0.right/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283630799" />
-    <state width="1557" height="234" key="GridCell.Tab.0.right/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695262502546" />
+    <state width="1478" height="169" key="GridCell.Tab.0.right/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697284606568" />
+    <state width="1557" height="2" key="GridCell.Tab.0.right/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697378532325" />
     <state width="1493" height="185" key="GridCell.Tab.0.right/0.0.1536.832@0.0.1536.832" timestamp="1694795532584" />
     <state width="1492" height="166" key="GridCell.Tab.0.right/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694610853774" />
     <state width="1557" height="165" key="GridCell.Tab.0.right/0.0.1536.834/1920.0.1600.870@1920.0.1600.870" timestamp="1694615333331" />
@@ -484,15 +499,16 @@
     <state x="432" y="18" key="SettingsEditor/0.0.1536.832@0.0.1536.832" timestamp="1694794030750" />
     <state x="117" y="0" key="SettingsEditor/0.0.1536.834/1920.0.1600.870@0.0.1536.834" timestamp="1694568025395" />
     <state x="432" y="18" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1694832339927" />
-    <state x="357" y="153" key="Vcs.Push.Dialog.v2" timestamp="1697278148167">
+    <state x="357" y="153" key="Vcs.Push.Dialog.v2" timestamp="1697283823905">
       <screen x="0" y="0" width="1536" height="832" />
     </state>
-    <state x="357" y="153" key="Vcs.Push.Dialog.v2/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697278148167" />
+    <state x="357" y="153" key="Vcs.Push.Dialog.v2/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697283823905" />
     <state x="2292" y="160" key="Vcs.Push.Dialog.v2/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1695263118074" />
-    <state x="461" y="245" key="com.intellij.ide.util.TipDialog" timestamp="1697281265876">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state x="2400" y="256" key="com.intellij.ide.util.TipDialog" timestamp="1697377512892">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
     <state x="461" y="245" key="com.intellij.ide.util.TipDialog/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1697281265876" />
+    <state x="2400" y="256" key="com.intellij.ide.util.TipDialog/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697377512892" />
     <state x="461" y="246" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1695002387086" />
     <state x="504" y="223" key="git4idea.merge.GitPullDialog" timestamp="1697277769082">
       <screen x="0" y="0" width="1536" height="832" />
@@ -506,10 +522,11 @@
       <screen x="0" y="0" width="1536" height="832" />
     </state>
     <state x="425" y="189" key="run.anything.popup/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1694742770039" />
-    <state x="430" y="153" width="672" height="678" key="search.everywhere.popup" timestamp="1695220226519">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state x="2368" y="160" width="700" height="709" key="search.everywhere.popup" timestamp="1697371613530">
+      <screen x="1920" y="0" width="1600" height="870" />
     </state>
     <state x="430" y="153" width="672" height="678" key="search.everywhere.popup/0.0.1536.832/1920.0.1600.870@0.0.1536.832" timestamp="1695220226519" />
+    <state x="2368" y="160" width="700" height="709" key="search.everywhere.popup/0.0.1536.832/1920.0.1600.870@1920.0.1600.870" timestamp="1697371613530" />
     <state x="430" y="153" width="672" height="680" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1694845090117" />
   </component>
   <component name="XDebuggerManager">

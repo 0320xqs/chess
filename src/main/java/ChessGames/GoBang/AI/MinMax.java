@@ -79,18 +79,6 @@ public class MinMax {
             return next;
 //            return new Point(BOARD_SIZE / 2, BOARD_SIZE / 2);
         }
-//        for (int i = 0; i < BOARD_SIZE; i++) {
-//            for (int j = 0; j < BOARD_SIZE; j++) {
-//                if (((GoBangChessPieces) Board.pieceArray[i][j]) != null){
-//                    if (((GoBangChessPieces) Board.pieceArray[i][j]).getChessRole().getPart() == Part.FIRST)
-//                        this.board[i][j] = 1;
-//                    if (((GoBangChessPieces)Board.pieceArray[i][j]).getChessRole().getPart() == Part.SECOND)
-//                        this.board[i][j] = 2;
-//                }else {
-//                    this.board[i][j] = 0;
-//                }
-//            }
-//        }
 
         //初始化参数
         for (int i = 0; i < BOARD_SIZE; ++i) {
